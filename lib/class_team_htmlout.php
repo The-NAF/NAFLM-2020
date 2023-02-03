@@ -253,7 +253,9 @@ class Team_HTMLOUT extends Team
 					break;
 				case 'removeNiggle': status($p->removeNiggle()); break;
 				case 'addniggle': status($p->addniggle()); break;
-				case 'removeMNG': status($p->removeMNG()); break;
+				case 'removeMNG': status($p->removeMNG()); 
+					SQLTriggers::run(T_SQLTRIG_TEAM_DPROPS, array('obj' => T_OBJ_TEAM, 'id' => $team->team_id));
+					break;
 				case 'removenegastat': status($p->removenegastat($_POST['stat'])); break;
 			}
 		}
