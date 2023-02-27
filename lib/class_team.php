@@ -308,8 +308,25 @@ class Team
         /* 
             Checks whether maximum number of allowed positionals is reached. 
         */
-        $query = "SELECT IFNULL(COUNT(*) < qty, TRUE) FROM players, game_data_players 
-            WHERE f_pos_id = pos_id AND owned_by_team_id = $this->team_id AND f_pos_id = $pos_id AND date_died IS NULL AND date_sold IS NULL";
+        $query = "SELECT CASE WHEN r.format = 'BB' THEN
+		(SELECT IFNULL(COUNT(*) < qty, TRUE) FROM players, game_data_players 
+		WHERE f_pos_id = pos_id AND owned_by_team_id = $this->team_id AND f_pos_id = $pos_id AND date_died IS NULL AND date_sold IS NULL)
+		ELSE
+		(SELECT IFNULL(COUNT(p.player_id) <  
+			CASE WHEN gdp.pos_type = 'BZ'THEN r.bz_qty 
+			WHEN gdp.pos_type = 'RN'THEN r.rn_qty
+			WHEN gdp.pos_type = 'TH'THEN r.th_qty
+			WHEN gdp.pos_type = 'BK'THEN r.bk_qty
+			WHEN gdp.pos_type = 'SP'THEN r.sp_qty END, TRUE) 
+		FROM players p 
+		INNER JOIN game_data_players gdp ON gdp.pos_id = p.f_pos_id 
+		INNER JOIN races r ON r.race_id = gdp.f_race_id 
+		WHERE p.owned_by_team_id = $this->team_id 
+		AND gdp.pos_type = (SELECT pos_type FROM game_data_players WHERE pos_id = $pos_id) 
+		AND p.date_died IS NULL AND p.date_sold IS NULL)  
+		END 
+		FROM races r JOIN teams t on r.race_id = t.f_race_id 
+		WHERE t.team_id =$this->team_id";
         $result = mysql_query($query);
         $row = mysql_fetch_row($result);
         return ((bool) $row[0]) && $this->isPlayerPosValid($pos_id);

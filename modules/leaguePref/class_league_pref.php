@@ -163,8 +163,9 @@ public $helf = 0;
 public $vamps = 0;
 public $khemri = 0;
 public $slann = 0;
+public $dungeon = 0;
 
-function __construct($lid, $name, $ptid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann) {
+function __construct($lid, $name, $ptid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -184,6 +185,7 @@ function __construct($lid, $name, $ptid, $league_name, $forum_url, $welcome, $ru
     $this->vamps = $vamps;
     $this->khemri = $khemri;
     $this->slann = $slann;
+    $this->dungeon = $dungeon;
 }
 
 /* Gets the preferences for the current league */
@@ -204,13 +206,13 @@ public static function getLeaguePreferences() {
                 $row['welcome'], $row['rules'], true, $theme_css, 
                 $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon']);
         }
     } else {
 		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
             $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon']);
 	}
 }
 
@@ -263,6 +265,11 @@ function save() {
 		$settingsFileContents = preg_replace("/rules\['slann'\]\s*=\s['A-Za-z0-9_]+/", "rules['slann'] = $this->slann", $settingsFileContents);
 	} else {
         $settingsFileContents = preg_replace("/rules\['slann'\]\s*=\s['A-Za-z0-9_]+/", "rules['slann'] = 0", $settingsFileContents);
+    }
+	if ($this->dungeon == 1) {
+		$settingsFileContents = preg_replace("/rules\['dungeon'\]\s*=\s['A-Za-z0-9_]+/", "rules['dungeon'] = $this->dungeon", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['dungeon'\]\s*=\s['A-Za-z0-9_]+/", "rules['dungeon'] = 0", $settingsFileContents);
     }
     FileManager::writeFile(FileManager::getSettingsDirectoryName() . "/settings_$this->lid.php", $settingsFileContents);
     
@@ -437,6 +444,16 @@ public static function showLeaguePreferences() {
                         </td>                        
                     </tr>
 
+                    <tr title="<?php echo $lng->getTrn('dungeonbowl_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('dungeonbowl_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='dungeon' value='1' onclick='slideToggleFast("dungeon");'	<?php if($rules['dungeon'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('dungeonbowl', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
+
                     <tr title="<?php echo $submit_title; ?>">
                         <td colspan="2">
                             <input type="submit" name="action" <?php echo $canEdit; ?> value="<?php echo $submit_text; ?>" style="position:relative; right:-200px;">
@@ -462,7 +479,8 @@ public static function handleActions() {
                 $_POST['rules'], $_POST['existing'], $_POST['theme_css'], 
                 $_POST['core_theme_id'], $_POST['tv'], $_POST['language'],
 				$_POST['amazon'],$_POST['chorf'],$_POST['helf'],
-				$_POST['vamps'],$_POST['khemri'],$_POST['slann']);
+				$_POST['vamps'],$_POST['khemri'],$_POST['slann'],
+				$_POST['dungeon']);
 			if($l_pref->validate()) {
 				if($l_pref->save()) {
 					echo "<div class='boxWide'>";

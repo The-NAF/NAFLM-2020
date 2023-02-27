@@ -11,7 +11,19 @@ class Race_HTMLOUT extends Race
 		<!-- Following HTML from class_race_htmlout.php profile -->
 		<center><img src="<?php echo RACE_ICONS.'/'.$roster['other']['icon'];?>" alt="Race icon"></center>
 		<ul>
+			<li><b><?php echo $lng->getTrn('common/format')?>:</b> 
+			<?php 
+			if ($roster['other']['format'] == 'BB') {
+			echo "Blood Bowl";
+			}
+			elseif ($roster['other']['format'] == 'DB') {
+			echo "Dungeon Bowl";
+			}
+			;?>
+			</li>
+			<?php if ($roster['other']['format'] == 'BB')  : ?>
 			<li><b><?php echo $lng->getTrn('common/tier')?>:</b> <?php echo $roster['other']['tier'];?></li>
+			<?php endif; ?>
 			<li><b><?php echo $lng->getTrn('common/reroll')?>:</b> <?php echo $roster['other']['rr_cost']/1000;?>k</li>		
 			<li><b><?php echo $lng->getTrn('common/maxbigguys')?>:</b> <?php echo $roster['other']['bigguy_qty'];?></li>
 			<li><b><?php echo $lng->getTrn('common/specialrules')?>:</b> <?php echo specialsTrans($race->special_rules);?></li>

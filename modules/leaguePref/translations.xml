@@ -56,6 +56,8 @@
 <teams_legend_khemri>Tomb Kings (Teams of Legend)</teams_legend_khemri>
 <teams_legend_slann>Slann (Optional NAF roster)</teams_legend_slann>
 
-
+<dungeonbowl_title>Dungeon Bowl Team Rosters Toggle&lt;br/&gt; Disable Dungeon Bowl team rosters from the team creation page.&lt;br/&gt;&lt;i&gt;(does not interfere with teams already created)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_help>Tick the box to disable Dungeon Bowl teams from being available on the team creation page: Ticked box = Disabled.</dungeonbowl_help>
+<dungeonbowl>Dungeon Bowl Teams</dungeonbowl>
 
 </en-GB>

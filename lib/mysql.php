@@ -156,6 +156,12 @@ $core_tables = array(
         'bigguy_qty'  => 'TINYINT UNSIGNED',
         'tier'  	=> 'TINYINT UNSIGNED',
         'special_rules' => 'VARCHAR(20)',
+        'format'  	=> 'VARCHAR(4)', # Determines if race is for Blood Bowl, Dungeon Bowl, or 7's
+        'bz_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
+        'rn_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
+        'th_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
+        'bk_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
+        'sp_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
     ),
     'leagues' => array(
         'lid'       => $CT_cols[T_NODE_LEAGUE].' NOT NULL PRIMARY KEY AUTO_INCREMENT',
@@ -268,6 +274,7 @@ $core_tables = array(
         'norm'   => 'VARCHAR(6)', # Max used is 4 chars, but set to 6 to be sure.
         'doub'   => 'VARCHAR(6)', # Max used is 4 chars, but set to 6 to be sure.
         'is_bigguy'   => 'TINYINT UNSIGNED',
+        'pos_type'   => 'VARCHAR(4)', # Used by Dungeon Bowl rosters to determine position type.
     ),
     'game_data_stars' => array(
         'star_id'=> $CT_cols[T_OBJ_STAR].' NOT NULL PRIMARY KEY',

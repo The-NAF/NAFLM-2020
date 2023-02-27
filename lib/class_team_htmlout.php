@@ -1586,7 +1586,7 @@ class Team_HTMLOUT extends Team
 					$active_players = array_filter($players, create_function('$p', "return (\$p->is_sold || \$p->is_dead || \$p->is_mng) ? false : true;"));
 					$DISABLE = true;
 					foreach ($DEA[$team->f_rname]['players'] as $pos => $details) {
-						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit.
+						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit. Aslo Checking for big guy limits via isMaxBigGuys and dungeon bowl positional limits via isPlayerBuyable
 						if ($team->isMaxBigGuys()) {
 							if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
 								(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {

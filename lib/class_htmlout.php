@@ -1102,15 +1102,49 @@ class HTMLOUT
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=23" style="height:10px;line-height:10px;">Underworld Denizens</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=20" style="height:10px;line-height:10px;">Wood Elf</a></li>
 			</ul></li>
+			
+			<?php if ($rules['amazon'] == 1 && $rules['helf'] == 1 && $rules['vamps'] == 1 && $rules['chorf'] == 1 && $rules['khemri'] == 1)  : ?>
+			<?php else : ?>
 			<li class="subfirst"><a rel="nofollow" href="#">Teams of Legend Rosters ></a>
-				<ul><li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=0" style="height:10px;line-height:10px;">Amazon</a></li><li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=2" style="height:10px;line-height:10px;">Chaos Dwarf</a></li>
+			<ul>
+				<?php if ($rules['amazon'] == 0)  : ?>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=0" style="height:10px;line-height:10px;">Amazon</a></li>
+				<?php endif; ?>
+				<?php if ($rules['chorf'] == 0)  : ?>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=2" style="height:10px;line-height:10px;">Chaos Dwarf</a></li>
+				<?php endif; ?>
+				<?php if ($rules['helf'] == 0)  : ?>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=8" style="height:10px;line-height:10px;">High Elf</a></li>
+				<?php endif; ?>
+				<?php if ($rules['khemri'] == 0)  : ?>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=10" style="height:10px;line-height:10px;">Tomb Kings</a></li>
+				<?php endif; ?>
+				<?php if ($rules['vamps'] == 0)  : ?>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=18" style="height:10px;line-height:10px;">Vampire</a></li>
+				<?php endif; ?>
 			</ul></li>
+			<?php endif; ?>
+			
+			<?php if ($rules['slann'] == 0)  : ?>
 			<li class="subfirst"><a rel="nofollow" href="#">Optional Rosters ></a>
 				<ul><li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=22" style="height:10px;line-height:10px;">Slann</a></li>
 			</ul></li>
+			<?php endif; ?>
+			
+			<?php if ($rules['dungeon'] == 0)  : ?>
+			<li class="subfirst"><a rel="nofollow" href="#">Dungeon Bowl Rosters ></a>
+				<ul>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=40" style="height:10px;line-height:10px;">College of Fire</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=41" style="height:10px;line-height:10px;">College of Shadow</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=42" style="height:10px;line-height:10px;">College of Metal</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=43" style="height:10px;line-height:10px;">College of Light</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=44" style="height:10px;line-height:10px;">College of Death</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=45" style="height:10px;line-height:10px;">College of Life</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=47" style="height:10px;line-height:10px;">College of Beasts</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=49" style="height:10px;line-height:10px;">College of Heavens</a></li>
+			</ul></li>
+			<?php endif; ?>
+			
 			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
 			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/WaqXNL0tUi3iKuw0.pdf">BB2020 Latest FAQ & Errata</a></li> 
 		</ul>

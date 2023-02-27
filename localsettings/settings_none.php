@@ -38,7 +38,8 @@ $rules['chorf'] 				= 0; 	//Chaos Dwarf (teams of legend)
 $rules['helf'] 					= 0; 	//High Elf (teams of legend)
 $rules['vamps'] 				= 0; 	//Vampires (teams of legend)
 $rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
-$rules['slann'] 				= 0; 	//Slann (teams of legend)
+
+$rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
 
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen

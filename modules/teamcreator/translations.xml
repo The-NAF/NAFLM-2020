@@ -9,6 +9,11 @@
 <tooExpensive>Your team costs more than the available funds</tooExpensive>
 <tooFewPlayers>You must have at least 11 players</tooFewPlayers>
 <tooManyBigGuys>Too many big guys</tooManyBigGuys>
+<tooManyBlitzers>Too many players of type: Blitzer</tooManyBlitzers>
+<tooManyRunners>Too many players of type: Runner</tooManyRunners>
+<tooManyThrowers>Too many players of type: Thrower</tooManyThrowers>
+<tooManyBlockers>Too many players of type: Blocker</tooManyBlockers>
+<tooManySpecial>Too many players of type: Special</tooManySpecial>
 <tooManyPlayers>Too many players</tooManyPlayers>
 <tooManyRR>Too many rerolls</tooManyRR>
 <tooManyFF>Too many fans</tooManyFF>

@@ -63,6 +63,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <number>Number</number>
     <opponent>Opponent</opponent>
     <tier>Tier</tier>
+    <format>Format</format>
     <reroll>Re-roll</reroll>
     <maxbigguys>Max no of big guys allowed</maxbigguys>
     <specialrules>Special Rules</specialrules>
@@ -540,6 +541,15 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<blackorc>Black Orc</blackorc>
 	<imperialnobility>Imperial Nobility</imperialnobility>
 	<amazons>Amazon</amazons>
+	<!-- Dungeon Bowl Teams -->
+	<collegeoffire>College of Fire</collegeoffire>
+	<collegeofshadow>College of Shadow</collegeofshadow>
+	<collegeofmetal>College of Metal</collegeofmetal>
+	<collegeoflight>College of Light</collegeoflight>
+	<collegeofdeath>College of Death</collegeofdeath>
+	<collegeoflife>College of Life</collegeoflife>
+	<collegeofbeasts>College of Beasts</collegeofbeasts>
+	<collegeofheavens>College of Heavens</collegeofheavens>
 </race>
 
 <position>
@@ -698,6 +708,34 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <imperialthrower>Imperial Thrower</imperialthrower>
     <nobleblitzer>Noble Blitzer</nobleblitzer>
     <bodyguard>Bodyguard</bodyguard>
+	<!-- Dungeon Bowl Teams -->
+	<!-- College of Fire -->
+    <dwarfrunner>Dwarf Runner</dwarfrunner>
+    <dwarfblitzer>Dwarf Blitzer</dwarfblitzer>
+	<!-- College of Shadow -->
+    <skavenlineman>Skaven Lineman</skavenlineman>
+    <darkelfrunner>Dark Elf Runner</darkelfrunner>
+    <darkelfblitzer>Dark Elf Blitzer</darkelfblitzer>
+	<!-- College of Metal -->
+    <orcblitzer>Orc Blitzer</orcblitzer>
+    <orcthrower>Orc Thrower</orcthrower>
+    <humanblitzer>Human Blitzer</humanblitzer>
+	<!-- College of Light -->
+    <elvenunionlineman>Elven Union Lineman</elvenunionlineman>
+    <elvenunioncatcher>Elven Union Catcher</elvenunioncatcher>
+    <humancatcher>Human Catcher</humancatcher>
+    <elvenunionblitzer>Elven Union Blitzer</elvenunionblitzer>
+    <elvenunionthrower>Elven Union Thrower</elvenunionthrower>
+	<!-- College of Death -->
+	<!-- College of Life -->
+    <woodelfthrower>Wood Elf Thrower</woodelfthrower>
+    <woodelfcatcher>Wood Elf Catcher</woodelfcatcher>
+    <treeman>Treeman</treeman>
+	<!-- College of Beasts -->
+    <chaoschosenblocker>Chaos Chosen Blocker</chaoschosenblocker>
+	<!-- College of Heavens -->
+    <humanthrower>Human Thrower</humanthrower>
+
 </position>
 
 <skill>

@@ -32,14 +32,14 @@ class SQLCore
 		$status &= Table::createTable($specialrulestbl,$core_tables[$specialrulestbl]);
 
 		foreach ($DEA as $race_name => $race_details) {
-			$query = "INSERT INTO $races(race_id, name, cost_rr, bigguy_qty, tier, special_rules) VALUES (".$race_details['other']['race_id'].", '".mysql_real_escape_string($race_name)."', ".$race_details['other']['rr_cost'].", ".$race_details['other']['bigguy_qty'].", ".$race_details['other']['tier'].", '".implode(',',$race_details['other']['special_rules'])."')";
+			$query = "INSERT INTO $races(race_id, name, cost_rr, bigguy_qty, bz_qty, rn_qty, th_qty, bk_qty, sp_qty, format, tier, special_rules) VALUES (".$race_details['other']['race_id'].", '".mysql_real_escape_string($race_name)."', ".$race_details['other']['rr_cost'].", ".$race_details['other']['bigguy_qty'].", ".$race_details['other']['bz_qty'].", ".$race_details['other']['rn_qty'].", ".$race_details['other']['th_qty'].", ".$race_details['other']['bk_qty'].", ".$race_details['other']['sp_qty'].", '".$race_details['other']['format']."', ".$race_details['other']['tier'].", '".implode(',',$race_details['other']['special_rules'])."')";
 			$status &= mysql_query($query);
 			foreach ($race_details['players'] as $player_name => $PD) { # Player Details
 				$query = "INSERT INTO $players(
-						pos_id, f_race_id, pos, cost, qty, ma,st,ag,pa,av, skills,norm,doub, is_bigguy
+						pos_id,f_race_id,pos,cost,qty,ma,st,ag,pa,av,skills,norm,doub,is_bigguy,pos_type
 					) VALUES (
 						$PD[pos_id], ".$race_details['other']['race_id'].", '".mysql_real_escape_string($player_name)."', $PD[cost], $PD[qty], $PD[ma],$PD[st],$PD[ag],$PD[pa],$PD[av],
-						'".implode(',',$PD['def'])."', '".implode('',$PD['norm'])."', '".implode('',$PD['doub'])."',$PD[is_bigguy]
+						'".implode(',',$PD['def'])."', '".implode('',$PD['norm'])."', '".implode('',$PD['doub'])."',$PD[is_bigguy],'".mysql_real_escape_string($PD[pos_type])."'
 					)";
 				$status &= mysql_query($query);
 			}

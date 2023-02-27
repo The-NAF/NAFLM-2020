@@ -156,6 +156,9 @@ class TeamCreator implements ModuleInterface
 			if ($rules['slann'] == 1) {
 			unset($raceididx[22]);
 			}
+			//$race = array();
+			
+		//foreach ($dbraceididx as $rid => $rname)
 			$race = array();
 			$race['name'] = $rname;
 			$race['rid'] = $rid;
@@ -276,6 +279,11 @@ class TeamCreator implements ModuleInterface
 		$cl = $_POST['qtyo2'];
 		$ac = $_POST['qtyo3'];
 		$bg = $race['other']['bigguy_qty'];
+		$bz = $race['other']['bz_qty'];
+		$rn = $race['other']['rn_qty'];
+		$th = $race['other']['th_qty'];
+		$bk = $race['other']['bk_qty'];
+		$sp = $race['other']['sp_qty'];
 		if (array_key_exists($rid, $rules['initial_team_treasury'])) {
 			$init_treasury = $rules['initial_team_treasury'][$rid];
 		} else {
@@ -316,6 +324,27 @@ class TeamCreator implements ModuleInterface
 			for($i = 0; $i < $qty; $i++) {
 				$treasury -= $d['cost'];
 				$bg -= $d['is_bigguy'];
+				if  ($race['other']['format'] == 'DB') {
+					if ($d['pos_type'] == 'BZ') {
+					$bz -= 1;
+					}
+					if ($d['pos_type'] == 'RN') {
+					$rn -= 1;
+					}
+					if ($d['pos_type'] == 'TH') {
+					$th -= 1;
+					}
+					if ($d['pos_type'] == 'Bk') {
+					$bk -= 1;
+					}
+					if ($d['pos_type'] == 'SP') {
+					$sp -= 1;
+					}
+				}
+				$rn -= $d['pos_type'];
+				$th -= $d['pos_type'];
+				$bk -= $d['pos_type'];
+				$sp -= $d['pos_type'];
 				$player = array();
 				$player['name'] = "";
 				$player['nr'] = $rosterNum++;
@@ -332,6 +361,21 @@ class TeamCreator implements ModuleInterface
 		}
 		if ($bg < 0) {
 			$errors[] = $lng->getTrn('tooManyBigGuys', 'TeamCreator');
+		}
+		if ($bz < 0) {
+			$errors[] = $lng->getTrn('tooManyBlitzers', 'TeamCreator');
+		}
+		if ($rn < 0) {
+			$errors[] = $lng->getTrn('tooManyRunners', 'TeamCreator');
+		}
+		if ($th < 0) {
+			$errors[] = $lng->getTrn('tooManyThrowers', 'TeamCreator');
+		}
+		if ($bk < 0) {
+			$errors[] = $lng->getTrn('tooManyBlockers', 'TeamCreator');
+		}
+		if ($sp < 0) {
+			$errors[] = $lng->getTrn('tooManySpecial', 'TeamCreator');
 		}
 		if (sizeof($players) < 11) {
 			$errors[] = $lng->getTrn('tooFewPlayers', 'TeamCreator');
@@ -719,11 +763,24 @@ EOQ;
 		$i = 0;
 		foreach ($raceididx as $rname) {
 			$translatedRaceName = $lng->getTrn('race/'.strtolower(str_replace(' ','', $rname)));
+			if ( substr($translatedRaceName, 0, 7) != 'College' ) {
 			echo "<option value='$i'>$translatedRaceName</option>";
+			}
 			$i++;
 		}
+		if ($rules['dungeon'] == 0) {
+			echo  "<optgroup label='Dungeon Bowl Teams'>";
+			$i = 0;
+			foreach ($raceididx as $rname) {
+				$translatedRaceName = $lng->getTrn('race/'.strtolower(str_replace(' ','', $rname)));
+				if ( substr($translatedRaceName, 0, 7) == 'College' ) {
+				echo "<option value='$i'>$translatedRaceName</option>";
+				}
+				$i++;
+			}
+		}
 		echo <<<EOQ
-		</select></td>
+		</optgroup></select></td>
 EOQ;
 		if (isset($coach)) {
 			$lgeDiv = $lng->getTrn('common/league') . '/' . $lng->getTrn('common/division');
