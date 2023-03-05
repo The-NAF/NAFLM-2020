@@ -61,6 +61,7 @@ global $skillarray;
 global $rules;
 global $inducements;
 global $starpairs;
+global $lng;
 
 define("MARGINX", 20);
 define("MARGINY", 20);
@@ -473,6 +474,11 @@ if ($_POST) {
 		  'misc'=>$s->mv_misc, 'spp'=>$s->mv_spp, 'value'=>$pdf->Mf($s->cost));
           $currenty+=$pdf->print_srow($ss, $currentx, $currenty, $h, $bgc, DEFLINECOLOR, 0.5, 8);
       }
+	  //$sp = array('special'=>$lng->getTrn($s->specialdesc.'desc', 'PDFroster'));
+	  //$sp = $lng->getTrn($s->specialdesc.'desc', 'PDFroster');
+	  //$currenty+=$pdf->print_srow($sp, $currentx, $currenty, $h, $bgc, DEFLINECOLOR, 0.5, 8);
+	  $sp = utf8_decode($lng->getTrn($s->specialdesc.'desc', 'PDFroster'));
+	  $currenty+=$pdf->print_sprow($sp, $currentx, $currenty, $h, $bgc, DEFLINECOLOR, 0.5, 8);
     }
   }
   // Then Mercs

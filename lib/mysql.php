@@ -288,6 +288,7 @@ $core_tables = array(
         'av'     => $CT_cols['chr'],
         'skills' => $CT_cols['skills'],
         'special' => $CT_cols['special'],
+        'specialdesc' => 'VARCHAR(20)',
     ),
     'game_data_skills' => array(
         'skill_id' => $CT_cols['skill_id'].' NOT NULL PRIMARY KEY',

@@ -4638,6 +4638,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(30),
+       'specialdesc'  => 'sneakiestotl',
    ),
    'Deeproot Strongbranch' => array (
        'id'     => -11,
@@ -4651,6 +4652,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(31),
+       'specialdesc'  => 'reliable',
    ),
    'Eldril Sidewinder' => array (
        'id'     => -12,
@@ -4664,6 +4666,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(3, 5, 8, 20),
        'special'  => array(32),
+       'specialdesc'  => 'mesmerizingdance',
    ),
     'Glart Smashrip' => array (
         'id'    => -13,
@@ -4677,6 +4680,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
         'special'  => array(33),
+       'specialdesc'  => 'frenziedrush',
     ),   
     'Gloriel Summerbloom' => array (
         'id'    => -14,
@@ -4689,7 +4693,8 @@ $stars = array(
         'cost'  => 150000,
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
-        'special'  => array(34),	
+        'special'  => array(34),
+       'specialdesc'  => 'shottonothing',	
 	),  
 	'Grak (+ Crumbleberry)' => array (
        'id'     => -15,
@@ -4703,6 +4708,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
        'special'  => array(35),
+       'specialdesc'  => 'twoforone',
     ),
 	'Crumbleberry (included with Grak)' => array (
        'id'     => -16,
@@ -4716,6 +4722,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
        'special'  => array(35),
+       'specialdesc'  => 'twoforone',
     ),
     'Gretchen Wachter \'The Blood Bowl Widow\'' => array (
         'id'    => -17,
@@ -4729,6 +4736,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(10, 13, 17, 18),	
         'special'  => array(36),
+       'specialdesc'  => 'incorporeal',
 	),
    'Griff Oberwald' => array (
        'id'     => -18,
@@ -4742,6 +4750,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(37),
+       'specialdesc'  => 'consummatepro',
    ),
    'Grim Ironjaw' => array (
        'id'     => -19,
@@ -4755,6 +4764,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 4, 7, 9, 14, 16, 24, 27),
        'special'  => array(38),
+       'specialdesc'  => 'slayer',
    ),
    'Hakflem Skuttlespike' => array (
        'id'     => -20,
@@ -4768,6 +4778,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
        'special'  => array(39),
+       'specialdesc'  => 'treacherous',
    ),
    'Helmut Wulf' => array (
        'id'     => -21,
@@ -4781,6 +4792,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
        'special'  => array(40),
+       'specialdesc'  => 'oldpro',
    ),
     'Karla von Kill' => array (
         'id'    => -22,
@@ -4794,6 +4806,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(0, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
        'special'  => array(41),
+       'specialdesc'  => 'indomitable',
     ),
    'Lord Borak the Despoiler' => array (
        'id'     => -23,
@@ -4807,6 +4820,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
        'special'  => array(42),
+       'specialdesc'  => 'lordofchaos',
    ),
    'Mighty Zug' => array (
        'id'     => -24,
@@ -4820,6 +4834,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
        'special'  => array(43),
+       'specialdesc'  => 'crushingblow',
    ),
    'Morg \'n\' Thorg' => array (
        'id'     => -25,
@@ -4833,6 +4848,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array (0,1,2,3,4,5,6,7,8,9,11,12,14,15,16,19,20,21,22,23,24,25,26,27,28,29),
        'special'  => array(44),
+       'specialdesc'  => 'theballista',
    ),
     'Roxanna Darknail' => array (
         'id'    => -26,
@@ -4846,6 +4862,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
         'special'  => array(45),
+       'specialdesc'  => 'burstofspeed',
     ),
     'Rumbelow Sheepskin' => array (
         'id'    => -27,
@@ -4859,6 +4876,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(2, 4, 7, 9, 14, 16, 24, 27),	
         'special'  => array(46),
+       'specialdesc'  => 'ram',
 	),	
     'Skrull Halfheight' => array (
         'id'    => -28,
@@ -4872,6 +4890,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(2, 4, 10, 13, 17, 18),	
         'special'  => array(47),
+       'specialdesc'  => 'strongpassinggame',
 	),	
     'Lucien Swift (+ Valen Swift)' => array (
         'id'    => -29,
@@ -4885,6 +4904,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
         'special'  => array(35),
+       'specialdesc'  => 'twoforone',
     ),
     'Valen Swift (included with Lucien Swift)' => array (
         'id'    => -30,
@@ -4898,6 +4918,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
         'special'  => array(35),
+       'specialdesc'  => 'twoforone',
     ),	
    'Varag Ghoul-Chewer' => array (
        'id'     => -31,
@@ -4911,6 +4932,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(43),
+       'specialdesc'  => 'crushingblow',
    ),
 	'Grombrindal the White Dwarf' => array (
        'id'     => -32,
@@ -4924,6 +4946,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 2, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
        'special'  => array(48),
+       'specialdesc'  => 'wisdomotwd',
    ),
     'Willow Rosebark' => array (
         'id'    => -33,
@@ -4937,6 +4960,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
         'special'  => array(41),
+       'specialdesc'  => 'indomitable',
     ),
     'Zolcath the Zoat' => array (
         'id'    => -34,
@@ -4950,6 +4974,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(0, 3, 5, 8, 11, 20, 22, 29),	
         'special'  => array(49),
+       'specialdesc'  => 'excuseme',
 	),
 	//Added BB2016 Spike! #11
     'Bryce \'The Slice\' Cambuel' => array (
@@ -4964,6 +4989,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(10, 13, 17, 18),	
         'special'  => array(52),
+       'specialdesc'  => 'ghostlyflames',
 	),	
     'Frank N Stein' => array (
         'id'    => -36,
@@ -4977,6 +5003,7 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(4, 7, 9, 10, 13, 14, 16, 17, 18, 24, 27),
         'special'  => array(50),
+       'specialdesc'  => 'brutalblock',
     ),
    'Wilhelm Chaney' => array (
        'id'     => -37,
@@ -4990,6 +5017,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(10, 13, 17, 18),
        'special'  => array(51),
+       'specialdesc'  => 'savagemauling',
    ),
 	//Added in White Dwarf
     'Akhorne the Squirrel' => array (
@@ -5004,6 +5032,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,11,12,14,15,16,19,20,21,22,23,24,25,26,27,28,29),
        'special'  => array(53),
+       'specialdesc'  => 'blindrage',
    ), 
     'Kreek Rustgouger' => array (
        'id'     => -39,
@@ -5017,6 +5046,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
        'special'  => array(54),
+       'specialdesc'  => 'illbeback',
    ),
 	//Added BB2020 Spike! #13   
     'Grashnak Blackhoof' => array (
@@ -5031,6 +5061,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
        'special'  => array(55),
+       'specialdesc'  => 'goredbythebull',
    ), 
     'Scyla Anfingrimm' => array (
        'id'     => -41,
@@ -5042,8 +5073,9 @@ $stars = array(
        'def'    => array (71, 5, 99, 54, 76, 59, 114),
        'cost'   => 200000,
        'icon'   => 'star',
-       'races'  => array(1, 2, 14, 15, 21, 28),
+       'races'  => array(14, 28),
        'special'  => array(56),
+       'specialdesc'  => 'furyotbg',
    ),
     'Max Spleenripper' => array (
        'id'     => -42,
@@ -5055,8 +5087,9 @@ $stars = array(
        'def'    => array (95, 99, 105),
        'cost'   => 130000,
        'icon'   => 'star',
-       'races'  => array(1, 2, 14, 15, 21, 28),
+       'races'  => array(14, 28),
        'special'  => array(57),
+       'specialdesc'  => 'maximumcarnage',
    ),
 	//Added 2021 Almanac  
     'Barik Farblast' => array (
@@ -5071,6 +5104,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 4, 7, 9, 14, 16, 24, 27),
        'special'  => array(58),
+       'specialdesc'  => 'blastit',
    ),
     'Fungus The Loon' => array (
        'id'     => -44,
@@ -5084,6 +5118,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(59),
+       'specialdesc'  => 'whirlingdervish',
    ),
     'Bomber Dribblesnot' => array (
        'id'     => -45,
@@ -5097,6 +5132,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(60),
+       'specialdesc'  => 'kaboom',
    ),
 	//Added BB2020 Spike! #14  
     'Ivar Eriksson' => array (
@@ -5111,6 +5147,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(61),
+       'specialdesc'  => 'raidingparty',
    ),
     'Skrorg Snowpelt' => array (
        'id'     => -47,
@@ -5124,6 +5161,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(62),
+       'specialdesc'  => 'pumpupthecrowd',
    ),
     'Thorsson Stoutmead' => array (
        'id'     => -48,
@@ -5137,6 +5175,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(63),
+       'specialdesc'  => 'beerbarrelbash',
    ),
     'Boa Kon\'ssstriktr' => array (
        'id'     => -49,
@@ -5150,6 +5189,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
        'special'  => array(64),
+       'specialdesc'  => 'lookintomyeyes',
    ),
     'Estelle La Veneaux' => array (
        'id'     => -50,
@@ -5163,6 +5203,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
        'special'  => array(65),
+       'specialdesc'  => 'balefulhex',
    ),
     'Glotl Stop' => array (
        'id'     => -51,
@@ -5176,6 +5217,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
        'special'  => array(66),
+       'specialdesc'  => 'primalsavagery',
    ),
 	//Added 2022 Almanac
     'Puggy Baconbreath' => array (
@@ -5190,6 +5232,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(67),
+       'specialdesc'  => 'halflingluck',
    ),
     'Cindy Piewhistle' => array (
        'id'     => -53,
@@ -5203,6 +5246,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
        'special'  => array(68),
+       'specialdesc'  => 'allyoucaneat',
    ),
     'Dribl (+ Drull)' => array (
        'id'     => -54,
@@ -5216,6 +5260,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
        'special'  => array(69),
+       'specialdesc'  => 'asneakypair',
    ),
     'Drull (Included with Dribl)' => array (
        'id'     => -55,
@@ -5229,6 +5274,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
        'special'  => array(69),
+       'specialdesc'  => 'asneakypair',
    ),
     'Bilerot Vomitflesh' => array (
        'id'     => -56,
@@ -5242,6 +5288,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
        'special'  => array(70),
+       'specialdesc'  => 'putridregurgitation',
    ),
     'Ripper Bolgrot' => array (
        'id'     => -57,
@@ -5255,6 +5302,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(71),
+       'specialdesc'  => 'thinkingmanstroll',
    ),
     'Nobbla Blackwart' => array (
        'id'     => -58,
@@ -5268,6 +5316,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(72),
+       'specialdesc'  => 'kickemwtd',
    ),
     'Scrappa Sorehead' => array (
        'id'     => -59,
@@ -5281,6 +5330,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
        'special'  => array(73),
+       'specialdesc'  => 'yoink',
    ),
     'Withergrasp Doubledrool' => array (
        'id'     => -60,
@@ -5294,6 +5344,7 @@ $stars = array(
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
        'special'  => array(74),
+       'specialdesc'  => 'watchout',
    ),
 );
 /*  Paired Stars  ***************************************************************************************** */

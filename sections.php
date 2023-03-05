@@ -780,7 +780,8 @@ function sec_stars() {
 		foreach ($stars as $s => $d) {  
 		$tmp = new Star($d['id']);
 		$tmp->skills = skillsTrans($tmp->skills);    
-		$tmp->special = specialsTrans($tmp->special);     
+		$tmp->special = specialsTrans($tmp->special);   
+		$tmp->specialdesc = $lng->getTrn('specialrules/'.$tmp->specialdesc.'desc');
 		$tmp->races = racesTrans($tmp->races);            
 		$racestars[] = $tmp;
 			if ($tmp->pa == 0) {       
@@ -789,10 +790,10 @@ function sec_stars() {
 			if ($tmp->pa != '-' && $tmp->pa != '1+' && $tmp->pa != '2+' && $tmp->pa != '3+' && $tmp->pa != '4+' && $tmp->pa != '5+' && $tmp->pa != '6+') {       
 				$tmp->pa = $tmp->pa.'+';
 			}
-			if ($tmp->races == 'Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Lizardman, Orc, Norse, Nurgle, Ogre, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne') {       
+			if ($tmp->races == 'Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Lizardman, Orc, Norse, Nurgle, Ogre, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne, Amazons') {       
 				$tmp->races = 'ALL RACES EXCEPT UNDEAD ONES';
 			}
-			if ($tmp->races == 'Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Tomb Kings, Lizardman, Orc, Necromantic Horror, Norse, Nurgle, Ogre, Shambling Undead, Vampire, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne') {       
+			if ($tmp->races == 'Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Tomb Kings, Lizardman, Orc, Necromantic Horror, Norse, Nurgle, Ogre, Shambling Undead, Vampire, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne, Amazons') {       
 				$tmp->races = 'ALL RACES';
 			}
 		}
@@ -806,6 +807,7 @@ function sec_stars() {
 			'skills' => array('desc' => $lng->getTrn('common/skills'), 'nosort' => true),
 			'cost'   => array('desc' => $lng->getTrn('common/price'), 'kilo' => true, 'suffix' => 'k'),
 			'special' => array('desc' => $lng->getTrn('common/specialrule')),
+			'specialdesc' => array('desc' => $lng->getTrn('common/specialruledesc')),
 			'races' => array('desc' => $lng->getTrn('common/playsfor'), 'nosort' => true),
 		);
 		HTMLOUT::sort_table(

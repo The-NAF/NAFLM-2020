@@ -45,8 +45,8 @@ class SQLCore
 			}
 		}
 		foreach ($stars as $star_name => $SD) {
-			$query = "INSERT INTO $starstbl(star_id, name, cost, races, ma,st,ag,pa,av, skills, special) VALUES (
-				$SD[id], '".mysql_real_escape_string($star_name)."', $SD[cost], '".implode(',', $SD['races'])."', $SD[ma],$SD[st],$SD[ag],$SD[pa],$SD[av], '".implode(',', $SD['def'])."', '".implode(',', $SD['special'])."'
+			$query = "INSERT INTO $starstbl(star_id, name, cost, races, ma,st,ag,pa,av, skills, special,specialdesc) VALUES (
+				$SD[id], '".mysql_real_escape_string($star_name)."', $SD[cost], '".implode(',', $SD['races'])."', $SD[ma],$SD[st],$SD[ag],$SD[pa],$SD[av], '".implode(',', $SD['def'])."', '".implode(',', $SD['special'])."', '".mysql_real_escape_string($SD['specialdesc'])."'
 			)";
 			$status = mysql_query($query);
 		}

@@ -1,5 +1,4 @@
 <?php
-
 class Star_HTMLOUT extends Star
 {
 	public function profile($sid) {
@@ -9,6 +8,7 @@ class Star_HTMLOUT extends Star
 		echo '<center><a href="'.urlcompile(T_URL_STANDINGS,T_OBJ_STAR,false,false,false).'">'.$lng->getTrn('common/back').'</a></center><br><br>';
 		echo "<b>".$lng->getTrn('common/skills').":</b> ".skillsTrans($s->skills)."<br><br>";
 		echo "<b>".$lng->getTrn('common/specialrules').":</b> ".specialsTrans($s->special)."<br><br>";
+		echo "<b>".$lng->getTrn('common/specialruledesc').":</b> ".$lng->getTrn('specialrules/'.$s->specialdesc.'desc')."<br><br>";
 		echo "<b>".$lng->getTrn('common/races').":</b> ".racesTrans($s->races)."<br><br>";
 		self::starHireHistory(false, false, false, false, $s->star_id, array('url' => urlcompile(T_URL_PROFILE,T_OBJ_STAR, $s->star_id,false,false)));
 	}

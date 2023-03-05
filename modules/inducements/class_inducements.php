@@ -53,7 +53,7 @@ class IndcPage implements ModuleInterface
         if (!get_alt_col('teams', 'team_id', $team_id, 'team_id'))
             fatal("Invalid team ID.");
 
-        global $stars, $DEA, $rules, $skillarray, $inducements, $racesNoApothecary, $starpairs;
+        global $lng, $stars, $DEA, $rules, $skillarray, $inducements, $racesNoApothecary, $starpairs;
 
         // Move these constants to header.php?
         define('MAX_STARS', 2);
@@ -119,10 +119,11 @@ function SendToPDF()
         <th>PA</th>
         <th>AV</th>
         <th class="left">Skills</th> 
-        <th class="left">Special Rules</th>
+        <th class="left">Special Rule</th>
+        <th class="left">Special Rule Description</th>
     </tr>
-<?php
-        $i=1;
+<?php     
+		$i=1;
         $starcnt = 1;
         while ($i <= MAX_STARS) {
             print "  <tr>\n";
@@ -130,6 +131,8 @@ function SendToPDF()
                 $sid=$_POST["Star$starcnt"];
                 if ($sid != 0) {
                     $s = new Star($sid);
+					
+					//$special_rule_desc = $lng->getTrn(.$s->specialdesc.'desc', 'inducements');
                     $star_list[$starcnt] = $star_list[0];
                     // Update display of selected Star
                     // Ignore if Child Star, will be handled by parent entry
@@ -144,7 +147,7 @@ function SendToPDF()
                         print $star_list[$starcnt];
                         print '    </SELECT></td>' . "\n";
                         print '<td class="cent">'.str_replace('000','',$s->cost)."k</td>\n<td class=\"cent\">".
-                            $s->ma."</td>\n<td class=\"cent\">".$s->st."</td>\n<td class=\"cent\">".$s->ag."+</td>\n<td class=\"cent\">".$s->pa."+</td>\n<td class=\"cent\">".$s->av."+</td>\n<td>\n<small>".skillsTrans($s->skills)."</small></td>\n<td>\n<small>".specialsTrans($s->special)."</small></td>\n";
+                            $s->ma."</td>\n<td class=\"cent\">".$s->st."</td>\n<td class=\"cent\">".$s->ag."+</td>\n<td class=\"cent\">".$s->pa."+</td>\n<td class=\"cent\">".$s->av."+</td>\n<td>\n<small>".skillsTrans($s->skills)."</small></td>\n<td>\n<small>".specialsTrans($s->special)."</small></td>\n<td>\n<small>".$lng->getTrn($s->specialdesc.'desc', 'IndcPage')."</small></td>\n";
                         print "</tr>\n";
                         $ind_cost+=$s->cost;
                     }
@@ -159,7 +162,7 @@ function SendToPDF()
                         print '    <option value="'.$sid.'">'.$s->name.'</option>' . "\n";
                         print '    </SELECT></td>' . "\n";
                         print '<td class="cent">'.str_replace('000','',$s->cost)."k</td>\n<td class=\"cent\">".
-                            $s->ma."</td>\n<td class=\"cent\">".$s->st."</td>\n<td class=\"cent\">".$s->ag."+</td>\n<td class=\"cent\">".$s->pa."+</td>\n<td class=\"cent\">".$s->av."+</td>\n<td>\n<small>".skillsTrans($s->skills)."</small></td>\n<td>\n<small>".specialsTrans($s->special)."</small></td>\n";
+                            $s->ma."</td>\n<td class=\"cent\">".$s->st."</td>\n<td class=\"cent\">".$s->ag."+</td>\n<td class=\"cent\">".$s->pa."+</td>\n<td class=\"cent\">".$s->av."+</td>\n<td>\n<small>".skillsTrans($s->skills)."</small></td>\n<td>\n<small>".specialsTrans($s->special)."</small></td>\n<td>\n<small>As Above</small></td>\n";
                         print "</tr>\n";
                     } 
                     $i++;

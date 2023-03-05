@@ -208,7 +208,7 @@ function print_srow($p, $x, $y, $h, $bgcolor='#FFFFFF', $bordercolor='#000000', 
     $this->SetFontSize($fontsize);
   }
   else 
-    $this->MultiCell(253, $h, $p['skills'], 0, 'L', true);
+    $this->MultiCell(260, $h, $p['skills'], 0, 'L', true);
   $this->SetXY($x+170+18+18+18+18+18+260,$y);
   $this->Cell(86, $h, $p['special'], 0, 0, 'L', true);
   $this->Cell(19, $h, $p['cp'], 0, 0, 'C', true, '');
@@ -221,6 +221,30 @@ function print_srow($p, $x, $y, $h, $bgcolor='#FFFFFF', $bordercolor='#000000', 
   $this->Cell(21, $h, $p['spp'], 0, 0, 'C', true, '');
   //$this->Cell(38, $h, $p['value'], 0, 1, 'R', true, '');
   $this->Cell(38, $h, ($p['st']>0) ? $p['value'] : (($p['st']==0) ? "" : ""), 0, 1, 'R', true, '');
+  return $h; // To know y pos for next row
+}
+
+function print_sprow($sp, $x, $y, $h, $bgcolor='#FFFFFF', $bordercolor='#000000', $linewidth, $fontsize) {
+  $this->SetFillColorBB($this->hex2cmyk($bgcolor));
+  $this->SetDrawColorBB($this->hex2cmyk($bordercolor));
+  $this->SetFontSize($fontsize);
+  $this->SetLineWidth($linewidth);
+  $this->SetXY($x,$y);
+  $newheight = $h;
+  $newfontsize=$fontsize;
+  // Needs to correct fontsize and height for special rule, if text doesn't fit
+  list($newheight, $newfontsize) = $this->FitTextInCell($h, 780, $fontsize, $sp);
+  if ($newheight<$h)
+    $h=$newheight*3;
+  $this->SetFontSize($fontsize);
+  // Print the cell with the special rule
+  if ($newfontsize<$fontsize) {
+    $this->SetFontSize($newfontsize);
+    $this->MultiCell(780, $newheight, $sp, 0, 'L', true);
+    $this->SetFontSize($fontsize);
+  }
+  else 
+	$this->MultiCell(780, $h, $sp, 0, 'L', true);
   return $h; // To know y pos for next row
 }
 
