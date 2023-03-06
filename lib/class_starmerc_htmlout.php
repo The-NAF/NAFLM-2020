@@ -2,14 +2,65 @@
 class Star_HTMLOUT extends Star
 {
 	public function profile($sid) {
-		global $lng;
+		global $lng, $rules;
 		$s = new self($sid);
 		title($s->name);
+		$s->races = racesTrans($s->races);  
+			if (preg_match('/, Amazons/',$s->races)) {       
+				if ($rules['amazon'] == 1) {   
+				$s->races = preg_replace("/, Amazons/", "", $s->races);
+				}
+				else {
+				$s->races = preg_replace("/, Amazons/", ", Amazon (teams of legend)", $s->races);
+				}
+			}
+			if (preg_match('/, Chaos Dwarves/',$s->races)) {       
+				if ($rules['chorf'] == 1) {   
+				$s->races = preg_replace("/, Chaos Dwarves/", "", $s->races);
+				}
+				else {
+				$s->races = preg_replace("/, Chaos Dwarves/", ", Chaos Dwarves (teams of legend)", $s->races);
+				}
+			}
+			if (preg_match('/, High Elves/',$s->races)) {       
+				if ($rules['helfs'] == 1) {   
+				$s->races = preg_replace("/, High Elves/", "", $s->races);
+				}
+				else {
+				$s->races = preg_replace("/, High Elves/", ", High Elves (teams of legend)", $s->races);
+				}
+			}
+			if (preg_match('/, Vampires/',$s->races)) {       
+				if ($rules['vamps'] == 1) {   
+				$s->races = preg_replace("/, Vampires/", "", $s->races);
+				}
+				else {
+				$s->races = preg_replace("/, Vampires/", ", Vampires (teams of legend)", $s->races);
+				}
+			}
+			if (preg_match('/, Khemri Tomb Kings/',$s->races)) {       
+				if ($rules['khemri'] == 1) {   
+				$s->races = preg_replace("/, Tomb Kings/", "", $s->races);
+				}
+				else {
+				$s->races = preg_replace("/, Tomb Kings/", ", Tomb Kings (teams of legend)", $s->races);
+				}
+			}	
+			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Lizardman, Orc, Norse, Nurgle, Ogre, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$s->races)) {       
+				$s->races = 'ALL RACES EXCEPT UNDEAD ONES';
+			}
+			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Tomb Kings, Lizardman, Orc, Necromantic Horror, Norse, Nurgle, Ogre, Shambling Undead, Vampire, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$s->races)) {       
+				$s->races = 'ALL RACES';
+			}	
+			if (preg_match('/, Slann/',$s->races) && $rules['slann'] == 1) {   
+				$s->races = preg_replace("/, Slann/", "", $s->races);
+			}
+		
 		echo '<center><a href="'.urlcompile(T_URL_STANDINGS,T_OBJ_STAR,false,false,false).'">'.$lng->getTrn('common/back').'</a></center><br><br>';
 		echo "<b>".$lng->getTrn('common/skills').":</b> ".skillsTrans($s->skills)."<br><br>";
 		echo "<b>".$lng->getTrn('common/specialrules').":</b> ".specialsTrans($s->special)."<br><br>";
 		echo "<b>".$lng->getTrn('common/specialruledesc').":</b> ".$lng->getTrn('specialrules/'.$s->specialdesc.'desc')."<br><br>";
-		echo "<b>".$lng->getTrn('common/races').":</b> ".racesTrans($s->races)."<br><br>";
+		echo "<b>".$lng->getTrn('common/races').":</b> ".$s->races."<br><br>";
 		self::starHireHistory(false, false, false, false, $s->star_id, array('url' => urlcompile(T_URL_PROFILE,T_OBJ_STAR, $s->star_id,false,false)));
 	}
 
