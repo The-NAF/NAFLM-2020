@@ -1146,7 +1146,7 @@ class HTMLOUT
 			<?php endif; ?>
 			
 			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
-			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/WaqXNL0tUi3iKuw0.pdf">BB2020 Latest FAQ & Errata</a></li> 
+			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2023/01/d4EGmrdz0lylahgt.pdf">BB2020 Latest FAQ & Errata</a></li> 
 		</ul>
 	</li>  
 
