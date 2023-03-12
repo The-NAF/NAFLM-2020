@@ -877,17 +877,19 @@ class Team_HTMLOUT extends Team
 						<td><?php echo $lng->getTrn('common/teamspecialrules');?></td>
 						<td><?php echo specialsTrans($race->special_rules);?></td>
 					</tr>
-					<tr>
-						<td><?php echo $lng->getTrn('common/teamfavspecialrules');?></td>
-						<td><?php 
-						if (strlen($team->getFavrulechosen()) >= 1 ) {
+					<?php 
+					if (strlen($team->getFavruleoptions()) != 0) {
+						echo '<tr><td>';
+						echo $lng->getTrn('common/teamfavspecialrules');
+						echo '</td><td>';
+						if (strlen($team->getFavrulechosen()) >= 1) { 
 							$fr_text = 'profile/team/box_tm/favrule/r'.$team->getFavrulechosen();
 							echo $lng->getTrn($fr_text);
-						}
-						else {
+						} else {
 							echo '<i>'.$lng->getTrn('common/notyetselected').'</i>';
-						}?></td>
-					</tr>
+						}
+						echo '</td></tr>';
+					}?>
 					<tr>
 						<td><?php echo $lng->getTrn('common/league');?></td>
 						<td><?php if (isset($leagues[$team->f_lid])) {
