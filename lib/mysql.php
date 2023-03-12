@@ -156,6 +156,7 @@ $core_tables = array(
         'bigguy_qty'  => 'TINYINT UNSIGNED',
         'tier'  	=> 'TINYINT UNSIGNED',
         'special_rules' => 'VARCHAR(20)',
+        'fav_rules' => 'VARCHAR(20)',
         'format'  	=> 'VARCHAR(4)', # Determines if race is for Blood Bowl, Dungeon Bowl, or 7's
         'bz_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
         'rn_qty'  => 'TINYINT UNSIGNED', # Used by Dungeon Bowl Rosters only
@@ -280,7 +281,8 @@ $core_tables = array(
         'star_id'=> $CT_cols[T_OBJ_STAR].' NOT NULL PRIMARY KEY',
         'name'   => $CT_cols['name'],
         'cost'   => 'MEDIUMINT UNSIGNED',
-        'races'  => 'VARCHAR('.(29+30*2).')', # Race IDs that may hire star. Total of (less than) 30 races of each two digit race ID + 29 commas = 29+30*2
+        'races'  => 'VARCHAR(500)', # Race IDs that may hire star.
+        'teamrules'  => 'VARCHAR(500)', # Team rule IDs that may hire star. 
         'ma'     => $CT_cols['chr'],
         'st'     => $CT_cols['chr'],
         'ag'     => $CT_cols['chr'],
@@ -289,6 +291,7 @@ $core_tables = array(
         'skills' => $CT_cols['skills'],
         'special' => $CT_cols['special'],
         'specialdesc' => 'VARCHAR(20)',
+		'megastar'  => 'TINYINT UNSIGNED',
     ),
     'game_data_skills' => array(
         'skill_id' => $CT_cols['skill_id'].' NOT NULL PRIMARY KEY',

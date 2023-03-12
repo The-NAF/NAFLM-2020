@@ -101,11 +101,14 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <coaches>Coaches</coaches>
     <race>Race</race>
     <races>Races</races>
-    <star>Star</star>
+    <star>Star/Mega-Star*</star>
     <starlist>Star Player List</starlist>
     <specialrule>Special Rule</specialrule>
     <specialruledesc>Special Rule Description</specialruledesc>
     <teamspecialrules>Team Special Rules</teamspecialrules>
+    <teamfavspecialrules>Team Selected Special Rule</teamfavspecialrules>
+    <notyetselected>Not yet selected</notyetselected>
+    <chooseone>Choose one of: </chooseone>
     <playsfor>Plays For</playsfor>
     <stars>Stars</stars>
     <roster>Roster</roster>
@@ -286,7 +289,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <tmanage>Management &amp; Stats</tmanage>
         <!-- About sec. -->
         <logo>Team's logo</logo>
-        <stad>Team's stadium</stad>
+        <stad>Team's stadium image</stad>
+        <sponsor>Team's sponsor</sponsor>
+        <stadium>Team's stadium</stadium>
+        <nosponsor>--Enter a sponsor name--</nosponsor>
+        <nostadium>--Enter a stadium name--</nostadium>
         <!-- News sec. -->            
         <news>News</news>
         <tnews>Team news</tnews>
@@ -303,12 +310,14 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         
         <box_tm>
             <title>Team management</title>
+            <select_rule>Select team special rule</select_rule>
             <hire_player>Hire player</hire_player>
             <hire_journeyman>Hire journeymen</hire_journeyman>
             <fire_player>Fire player</fire_player>
             <unbuy_player>Un-hire player</unbuy_player>
             <rename_player>Rename player</rename_player>
             <renumber_player>Renumber player</renumber_player>
+            <retire_player>Temp Retire player</retire_player>
             <rename_team>Rename team</rename_team>
             <buy_goods>Buy team goods</buy_goods>
             <drop_goods>Let go of team goods</drop_goods>
@@ -324,13 +333,25 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <suredeleteteam>Are you sure you wish to delete this team?</suredeleteteam>
             </fdescs>
 
+            <!-- Favoured of rule selector-->
+            <favrule>
+                <r1>Old World Classic</r1>
+                <r11>Favoured of Chaos Undivided</r11>
+                <r12>Favoured of Nurgle</r12>
+                <r13>Favoured of Khorne</r13>
+                <r14>Favoured of Slaanesh</r14>
+                <r15>Favoured of Tzeentch</r15>
+            </favrule>
+
             <desc>
+                <select_rule> <![CDATA[ Select a team special rule.<br> Teams that have multiple special rules to choose from must make a selection here, to determine which star players they can induce.<br> Please select carefully as once chosen it cannot be changed.<br> <b>Please Note:</b> Some stars will not be available in inducements try-out until a rule choice is selected. ]]> </select_rule>
                 <hire_player> <![CDATA[ Hire a new player.<br> Hiring a player as a journeyman is free, but only players from a 0-16 allowed position on your team's roster are hire-able as journeymen. ]]> </hire_player>
                 <hire_journeyman> <![CDATA[ Hire one of your journeymen to permanently play on your team. ]]> </hire_journeyman>
                 <fire_player> <![CDATA[ Fire a player. Refund rate: ]]> </fire_player>
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>
+                <retire_player> <![CDATA[ Temporarily retire a player.<br> No refund wil apply.<br> Player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
                 <rename_team> <![CDATA[ Rename your team. ]]> </rename_team>
                 <buy_goods> <![CDATA[ Buy team goods. ]]> </buy_goods>
                 <buy_goods_warn> <![CDATA[ <br><br>Please note that re-roll prices are currently <font color='red'><b>doubled</b></font>.<br>If your intention is to buy a non-doubled RR, then buy it anyway and reclaim the lost gold by asking an admin to reinsert the overcharged amount. ]]> </buy_goods_warn>
@@ -353,9 +374,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <extra_skills>Manage extra player skills</extra_skills>
             <ach_skills>Remove ach. player skills</ach_skills>
             <ff>Manage team Dedicated Fans</ff>
+            <resetrule>Reset selected team special rule</resetrule>
             <removeNiggle>Remove player niggle</removeNiggle>
             <addniggle>Add player niggle</addniggle>
-            <removeMNG>Remove player MNG</removeMNG>
+            <removeMNG>Remove player MNG/Unretire</removeMNG>
             <removenegastat>Remove stat injuries</removenegastat>
 
             <desc>
@@ -369,9 +391,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <extra_skills> <![CDATA[ Manage a player's extra skills. ]]> </extra_skills>
                 <ach_skills> <![CDATA[ Remove a player's achieved skills. This makes the player able to rechoose a skill. ]]> </ach_skills>
                 <ff> <![CDATA[ Make changes to team's Dedicated Fans .]]> </ff>
+                <resetrule> <![CDATA[ Reset the currently selected team special rule .]]> </resetrule>
                 <removeNiggle> <![CDATA[ Remove a niggling injury from a player.]]> </removeNiggle>
                 <addniggle> <![CDATA[ Add a niggling injury to a player.]]> </addniggle>
-                <removeMNG> <![CDATA[ Remove the player's MNG status.<br><b>WARNING</b>: Cannot be undone!]]> </removeMNG>
+                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone!]]> </removeMNG>
                 <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone!]]> </removenegastat>
             </desc>
         </box_admin>

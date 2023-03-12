@@ -26,7 +26,20 @@ class Race_HTMLOUT extends Race
 			<?php endif; ?>
 			<li><b><?php echo $lng->getTrn('common/reroll')?>:</b> <?php echo $roster['other']['rr_cost']/1000;?>k</li>		
 			<li><b><?php echo $lng->getTrn('common/maxbigguys')?>:</b> <?php echo $roster['other']['bigguy_qty'];?></li>
-			<li><b><?php echo $lng->getTrn('common/specialrules')?>:</b> <?php echo specialsTrans($race->special_rules);?></li>
+			<li><b><?php echo $lng->getTrn('common/specialrules')?>:</b> <?php echo specialsTrans($race->special_rules);?>
+			<?php if (strlen($race->getraceFavruleoptions()) >= 1 ) {
+				$fav_str = specialsTrans($race->getraceFavruleoptions());
+				//separate OWC choice for norse
+				if (preg_match('/Old World Classic, /',$fav_str)) { 
+					$fav_str = preg_replace("/Old World Classic, /", "", $fav_str);
+					$fav_str =  $fav_str.") OR Old World Classic";
+				echo " (".$lng->getTrn('common/chooseone').$fav_str;	
+				}
+				else {
+				echo " (".$lng->getTrn('common/chooseone').$fav_str.")";	
+				}
+			}				
+			?></li>
 		</ul><br>
 		<?php
 		//List available player positions for race

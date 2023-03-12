@@ -40,6 +40,7 @@ $rules['vamps'] 				= 0; 	//Vampires (teams of legend)
 $rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
 
 $rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
+$rules['megastars'] 			= 0; 	//Mega-Stars
 
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen

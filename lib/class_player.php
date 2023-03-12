@@ -82,6 +82,7 @@ class Player
     public $is_sold             = false;
     public $is_dead             = false;
     public $is_mng              = false;
+    public $is_retired          = false;
     public $is_journeyman       = false;
     public $is_used_journeyman  = false;
 
@@ -118,7 +119,8 @@ class Player
         $this->def_skills = empty($this->def_skills) ? array() : explode(',', $this->def_skills);
         $this->setSkills();
         $this->is_dead              = ($this->status == DEAD);
-        $this->is_mng               = !in_array($this->status, array(NONE, DEAD));
+        $this->is_retired           = ($this->status == RETIRED);
+        $this->is_mng               = !in_array($this->status, array(NONE, DEAD, RETIRED));
         $this->is_sold              = (bool) $this->date_sold;
         $this->is_journeyman        = ($this->type == PLAYER_TYPE_JOURNEY);
         $this->is_journeyman_used   = ($this->type == PLAYER_TYPE_JOURNEY) && ($this->mv_played > 0);
@@ -419,6 +421,13 @@ class Player
         global $T_ALLOWED_PLAYER_NR;
         return (in_array($number, $T_ALLOWED_PLAYER_NR) && mysql_query("UPDATE players SET nr = $number WHERE player_id = $this->player_id"));
     }
+    
+    public function retirePlayer() {
+        if ($this->is_journeyman || $this->is_sold || $this->is_dead || $this->is_retired)
+            return false;
+        $query = "UPDATE players SET status = 0 WHERE player_id = $this->player_id";
+        return mysql_query($query);
+    }
 
     public function dspp($delta) {
         $query = "UPDATE players SET extra_spp = IF(extra_spp IS NULL, $delta, extra_spp + ($delta)) WHERE player_id = $this->player_id";
@@ -651,6 +660,7 @@ class Player
             if ($this->inj_ni > 0) array_push($injs, "$this->inj_ni Ni");
         }
         if ($this->is_mng)     array_push($injs, "MNG");
+        if ($this->is_retired)     array_push($injs, "Retired");
         return implode(', ', $injs);
     }
     
@@ -704,6 +714,7 @@ class Player
             switch ($row['inj']) {
                 case NONE: return NONE;
                 case DEAD: return DEAD;
+                case RETIRED: return RETIRED;
                 default:   return MNG;
             }
         } else {

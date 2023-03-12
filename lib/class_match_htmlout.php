@@ -358,7 +358,7 @@ class Match_HTMLOUT extends Match
 						continue;
 					// We create zero entries for MNG player(s). This is required!
 					$pid = $p->player_id; # Shortcut
-					if ($p->getStatus($m->match_id) == MNG) {
+					if (($p->getStatus($m->match_id) == MNG) || ($p->getStatus($m->match_id) == RETIRED)) {
 						$_POST["mvp_$pid"]      = 0;
 						$_POST["cp_$pid"]       = 0;
 						$_POST["td_$pid"]       = 0;
@@ -674,9 +674,10 @@ class Match_HTMLOUT extends Match
 					if ($p->is_journeyman_used && !$m->is_played)   {$bgcolor = COLOR_HTML_JOURNEY_USED;    $NORMSTAT = false;}
 					elseif ($p->is_journeyman)                      {$bgcolor = COLOR_HTML_JOURNEY;         $NORMSTAT = false;}
 					elseif ($status == MNG)                         {$bgcolor = COLOR_HTML_MNG;             $NORMSTAT = false;}
+					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : ''),$bgcolor, $mdat, $DIS || ($status == MNG));
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || ($status == RETIRED));
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -685,6 +686,7 @@ class Match_HTMLOUT extends Match
 					if (1) {
 						?>
 						<td style="background-color: <?php echo COLOR_HTML_MNG;     ?>;"><font color='black'><b>&nbsp;MNG&nbsp;</b></font></td>
+						<td style="background-color: <?php echo COLOR_HTML_RETIRED;     ?>;"><font color='black'><b>&nbsp;RET&nbsp;</b></font></td>
 						<td style="background-color: <?php echo COLOR_HTML_JOURNEY; ?>;"><font color='black'><b>&nbsp;Journeyman&nbsp;</b></font></td>
 						<td style="background-color: <?php echo COLOR_HTML_JOURNEY_USED; ?>;"><font color='black'><b>&nbsp;Used&nbsp;journeyman&nbsp;</b></font></td>
 						<td style="background-color: <?php echo COLOR_HTML_NEWSKILL;?>;"><font color='black'><b>&nbsp;New&nbsp;skill&nbsp;available&nbsp;</b></font></td>

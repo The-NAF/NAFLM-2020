@@ -95,7 +95,7 @@ public static function getModuleTables()
         'league_prefs' => array(
 			'f_lid'       => $CT_cols[T_NODE_LEAGUE].' NOT NULL PRIMARY KEY ',
 	        'prime_tid'   => $CT_cols[T_NODE_TOURNAMENT],
-	        'second_tid'  => $CT_cols[T_NODE_DIVISION],
+	        'second_tid'  => $CT_cols[T_NODE_TOURNAMENT],
 	        'league_name' => 'VARCHAR(128) ',
 	        'forum_url'   => 'VARCHAR(256) ',
 	        'welcome'     => 'TEXT ',
@@ -164,12 +164,14 @@ public $vamps = 0;
 public $khemri = 0;
 public $slann = 0;
 public $dungeon = 0;
+public $megastars = 0;
 
-function __construct($lid, $name, $ptid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon) {
+function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon, $megastars) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
 	$this->p_tour = $ptid;
+	$this->s_tour = $stid;
 	$this->league_name = isset($league_name) ? $league_name: $settings['league_name'];
 	$this->forum_url = isset($forum_url) ? $forum_url: $settings['forum_url'];
 	$this->welcome = isset($welcome) ? $welcome: $settings['welcome'];
@@ -186,6 +188,7 @@ function __construct($lid, $name, $ptid, $league_name, $forum_url, $welcome, $ru
     $this->khemri = $khemri;
     $this->slann = $slann;
     $this->dungeon = $dungeon;
+    $this->megastars = $megastars;
 }
 
 /* Gets the preferences for the current league */
@@ -195,24 +198,24 @@ public static function getLeaguePreferences() {
     list($sel_lid, $HTML_LeagueSelector) = HTMLOUT::simpleLeagueSelector();
     echo $HTML_LeagueSelector;
 
-	$result = mysql_query("SELECT lid, name, prime_tid, league_name, forum_url, welcome, rules FROM leagues LEFT OUTER JOIN league_prefs on lid=f_lid WHERE lid=$sel_lid");
+	$result = mysql_query("SELECT lid, name, prime_tid, second_tid, league_name, forum_url, welcome, rules FROM leagues LEFT OUTER JOIN league_prefs on lid=f_lid WHERE lid=$sel_lid");
 
     if ($result && mysql_num_rows($result) > 0) {
         while ($row = mysql_fetch_assoc($result)) {
             $theme_css = FileManager::readFile(FileManager::getCssDirectoryName() . "/league_override_$sel_lid.css"); 
             
             return new LeaguePref($row['lid'], $row['name'],
-                $row['prime_tid'], $row['league_name'], $row['forum_url'],
+                $row['prime_tid'], $row['second_tid'], $row['league_name'], $row['forum_url'],
                 $row['welcome'], $row['rules'], true, $theme_css, 
                 $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars']);
         }
     } else {
 		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
             $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars']);
 	}
 }
 
@@ -225,7 +228,7 @@ function save() {
     
     $hasLeaguePref = mysql_fetch_object(mysql_query("SELECT f_lid from league_prefs where f_lid=$this->lid"));
     if($hasLeaguePref) {
-        $query = "UPDATE league_prefs SET prime_tid=$this->p_tour, league_name='".mysql_real_escape_string($this->league_name)."', forum_url='".mysql_real_escape_string($this->forum_url)."' , welcome='".mysql_real_escape_string($this->welcome)."' , rules='".mysql_real_escape_string($this->rules)."'  WHERE f_lid=$this->lid";
+        $query = "UPDATE league_prefs SET prime_tid=$this->p_tour,second_tid=$this->s_tour, league_name='".mysql_real_escape_string($this->league_name)."', forum_url='".mysql_real_escape_string($this->forum_url)."' , welcome='".mysql_real_escape_string($this->welcome)."' , rules='".mysql_real_escape_string($this->rules)."'  WHERE f_lid=$this->lid";
     } else {
         $query = "INSERT INTO league_prefs (f_lid, prime_tid, second_tid, league_name, forum_url, welcome, rules) VALUE ($this->lid, $this->p_tour, $this->s_tour, '".mysql_real_escape_string($this->league_name)."', '".mysql_real_escape_string($this->forum_url)."', '".mysql_real_escape_string($this->welcome)."', '".mysql_real_escape_string($this->rules)."')";
     }
@@ -271,6 +274,11 @@ function save() {
 	} else {
         $settingsFileContents = preg_replace("/rules\['dungeon'\]\s*=\s['A-Za-z0-9_]+/", "rules['dungeon'] = 0", $settingsFileContents);
     }
+	if ($this->megastars == 1) {
+		$settingsFileContents = preg_replace("/rules\['megastars'\]\s*=\s['A-Za-z0-9_]+/", "rules['megastars'] = $this->megastars", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['megastars'\]\s*=\s['A-Za-z0-9_]+/", "rules['megastars'] = 0", $settingsFileContents);
+    }
     FileManager::writeFile(FileManager::getSettingsDirectoryName() . "/settings_$this->lid.php", $settingsFileContents);
     
     $settings['stylesheet'] = $this->core_theme_id;
@@ -289,6 +297,9 @@ public static function showLeaguePreferences() {
 	// short cuts to text lookups
 	$prime_title = $lng->getTrn('prime_title', 'LeaguePref');
 	$prime_help = $lng->getTrn('prime_help', 'LeaguePref');
+	
+	$second_title = $lng->getTrn('second_title', 'LeaguePref');
+	$second_help = $lng->getTrn('second_help', 'LeaguePref');
 
 	$league_name_title = $lng->getTrn('league_name_title', 'LeaguePref');
 	$league_name_help = $lng->getTrn('league_name_help', 'LeaguePref');
@@ -372,6 +383,8 @@ public static function showLeaguePreferences() {
                             <textarea rows="4" cols="90" class="html_edit" name="rules" <?php echo $canEdit; ?>><?php echo $l_pref->rules; ?></textarea>
                         </td>
                     </tr>
+					
+					
                     <tr title="<?php echo $prime_help; ?>">
                         <td>
                             <?php echo $prime_title; ?>:
@@ -381,6 +394,21 @@ public static function showLeaguePreferences() {
                                 <?php
                                     foreach ($rTours as $trid => $desc) {
                                         echo "<option value='$trid'" . ($trid==$l_pref->p_tour ? 'SELECTED' : '') . " " . $canEdit . ">" . $desc['tname'] . "</option>\n";
+                                    }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
+					<tr title="<?php echo $second_help; ?>">
+                        <td>
+                            <?php echo $second_title; ?>:
+                        </td>
+                        <td>
+                            <select name="s_tour">
+								<option value="0">--Select--</option>
+                                <?php
+                                    foreach ($rTours as $trid => $desc) {
+                                        echo "<option value='$trid'" . ($trid==$l_pref->s_tour ? 'SELECTED' : '') . " " . $canEdit . ">" . $desc['tname'] . "</option>\n";
                                     }
                                 ?>
                             </select>
@@ -443,7 +471,6 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('teams_legend_slann', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
-
                     <tr title="<?php echo $lng->getTrn('dungeonbowl_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('dungeonbowl_title', 'LeaguePref'); ?>
@@ -453,7 +480,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('dungeonbowl', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
-
+                    <tr title="<?php echo $lng->getTrn('megastars_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('megastars_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='megastars' value='1' onclick='slideToggleFast("megastars");'	<?php if($rules['megastars'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('megastars', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $submit_title; ?>">
                         <td colspan="2">
                             <input type="submit" name="action" <?php echo $canEdit; ?> value="<?php echo $submit_text; ?>" style="position:relative; right:-200px;">
@@ -474,13 +509,13 @@ public static function handleActions() {
     
     if (isset($_POST['action'])) {
     	if (is_object($coach) && $coach->isNodeCommish(T_NODE_LEAGUE, $_POST['lid'])) {
-			$l_pref = new LeaguePref($_POST['lid'], "", $_POST['p_tour'],
+			$l_pref = new LeaguePref($_POST['lid'], "", $_POST['p_tour'], $_POST['s_tour'],
                 $_POST['league_name'], $_POST['forum_url'], $_POST['welcome'], 
                 $_POST['rules'], $_POST['existing'], $_POST['theme_css'], 
                 $_POST['core_theme_id'], $_POST['tv'], $_POST['language'],
 				$_POST['amazon'],$_POST['chorf'],$_POST['helf'],
 				$_POST['vamps'],$_POST['khemri'],$_POST['slann'],
-				$_POST['dungeon']);
+				$_POST['dungeon'],$_POST['megastars']);
 			if($l_pref->validate()) {
 				if($l_pref->save()) {
 					echo "<div class='boxWide'>";

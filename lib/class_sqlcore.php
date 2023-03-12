@@ -32,7 +32,7 @@ class SQLCore
 		$status &= Table::createTable($specialrulestbl,$core_tables[$specialrulestbl]);
 
 		foreach ($DEA as $race_name => $race_details) {
-			$query = "INSERT INTO $races(race_id, name, cost_rr, bigguy_qty, bz_qty, rn_qty, th_qty, bk_qty, sp_qty, format, tier, special_rules) VALUES (".$race_details['other']['race_id'].", '".mysql_real_escape_string($race_name)."', ".$race_details['other']['rr_cost'].", ".$race_details['other']['bigguy_qty'].", ".$race_details['other']['bz_qty'].", ".$race_details['other']['rn_qty'].", ".$race_details['other']['th_qty'].", ".$race_details['other']['bk_qty'].", ".$race_details['other']['sp_qty'].", '".$race_details['other']['format']."', ".$race_details['other']['tier'].", '".implode(',',$race_details['other']['special_rules'])."')";
+			$query = "INSERT INTO $races(race_id, name, cost_rr, bigguy_qty, bz_qty, rn_qty, th_qty, bk_qty, sp_qty, format, tier, special_rules, fav_rules) VALUES (".$race_details['other']['race_id'].", '".mysql_real_escape_string($race_name)."', ".$race_details['other']['rr_cost'].", ".$race_details['other']['bigguy_qty'].", ".$race_details['other']['bz_qty'].", ".$race_details['other']['rn_qty'].", ".$race_details['other']['th_qty'].", ".$race_details['other']['bk_qty'].", ".$race_details['other']['sp_qty'].", '".$race_details['other']['format']."', ".$race_details['other']['tier'].", '".implode(',',$race_details['other']['special_rules'])."', '".implode(',',$race_details['other']['fav_rules'])."')";
 			$status &= mysql_query($query);
 			foreach ($race_details['players'] as $player_name => $PD) { # Player Details
 				$query = "INSERT INTO $players(
@@ -45,8 +45,8 @@ class SQLCore
 			}
 		}
 		foreach ($stars as $star_name => $SD) {
-			$query = "INSERT INTO $starstbl(star_id, name, cost, races, ma,st,ag,pa,av, skills, special,specialdesc) VALUES (
-				$SD[id], '".mysql_real_escape_string($star_name)."', $SD[cost], '".implode(',', $SD['races'])."', $SD[ma],$SD[st],$SD[ag],$SD[pa],$SD[av], '".implode(',', $SD['def'])."', '".implode(',', $SD['special'])."', '".mysql_real_escape_string($SD['specialdesc'])."'
+			$query = "INSERT INTO $starstbl(star_id, name, cost, races, teamrules, ma,st,ag,pa,av, skills, special,specialdesc,megastar) VALUES (
+				$SD[id], '".mysql_real_escape_string($star_name)."', $SD[cost], '".implode(',', $SD['races'])."', '".implode(',', $SD['teamrules'])."', $SD[ma],$SD[st],$SD[ag],$SD[pa],$SD[av], '".implode(',', $SD['def'])."', '".implode(',', $SD['special'])."', '".mysql_real_escape_string($SD['specialdesc'])."', $SD[megastar]
 			)";
 			$status = mysql_query($query);
 		}
@@ -342,24 +342,28 @@ class SQLCore
 				READS SQL DATA
 			BEGIN
 				DECLARE status '.$core_tables['players']['status'].' DEFAULT NULL;
-
-				IF !EXISTS(SELECT f_match_id FROM match_data WHERE f_player_id = pid LIMIT 1) THEN
+				
+				IF EXISTS(SELECT players.player_id FROM players WHERE players.player_id = pid AND players.status = '.RETIRED.') THEN
+					RETURN '.RETIRED.';
+				ELSE 
+					IF !EXISTS(SELECT f_match_id FROM match_data WHERE f_player_id = pid LIMIT 1) THEN
 					RETURN '.NONE.';
-				END IF;
+					END IF;
 
-				IF mid = -1 OR EXISTS(SELECT match_id FROM matches WHERE match_id = mid AND date_played IS NULL) THEN
-					SELECT inj INTO status FROM match_data, matches WHERE
-						f_player_id = pid AND
-						match_id = f_match_id AND
-						date_played IS NOT NULL
-						ORDER BY date_played DESC LIMIT 1;
-				ELSE
-					SELECT inj INTO status FROM match_data, matches WHERE
-						match_data.f_player_id = pid AND
-						matches.match_id = match_data.f_match_id AND
-						matches.date_played IS NOT NULL AND
-						matches.date_played < (SELECT date_played FROM matches WHERE matches.match_id = mid)
-						ORDER BY date_played DESC LIMIT 1;
+					IF mid = -1 OR EXISTS(SELECT match_id FROM matches WHERE match_id = mid AND date_played IS NULL) THEN
+						SELECT inj INTO status FROM match_data, matches WHERE
+							f_player_id = pid AND
+							match_id = f_match_id AND
+							date_played IS NOT NULL
+							ORDER BY date_played DESC LIMIT 1;
+					ELSE
+						SELECT inj INTO status FROM match_data, matches WHERE
+							match_data.f_player_id = pid AND
+							matches.match_id = match_data.f_match_id AND
+							matches.date_played IS NOT NULL AND
+							matches.date_played < (SELECT date_played FROM matches WHERE matches.match_id = mid)
+							ORDER BY date_played DESC LIMIT 1;
+					END IF;
 				END IF;
 				RETURN IF(status IS NULL, '.NONE.', status);
 			END',

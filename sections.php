@@ -782,6 +782,7 @@ function sec_stars() {
 		$tmp->skills = skillsTrans($tmp->skills);    
 		$tmp->special = specialsTrans($tmp->special);   
 		$tmp->specialdesc = $lng->getTrn('specialrules/'.$tmp->specialdesc.'desc');
+		$tmp->teamrules = specialsTrans($tmp->teamrules);            
 		$tmp->races = racesTrans($tmp->races);            
 		$racestars[] = $tmp;
 			if ($tmp->pa == 0) {       
@@ -790,6 +791,10 @@ function sec_stars() {
 			if ($tmp->pa != '-' && $tmp->pa != '1+' && $tmp->pa != '2+' && $tmp->pa != '3+' && $tmp->pa != '4+' && $tmp->pa != '5+' && $tmp->pa != '6+') {       
 				$tmp->pa = $tmp->pa.'+';
 			}
+			if ($tmp->megastar == 1) {       
+				$tmp->name = $tmp->name.'*';
+			}
+			/* //following race text filters deprecated once switched using rules to determine who stars play for
 			if (preg_match('/, Amazons/',$tmp->races)) {       
 				if ($rules['amazon'] == 1) {   
 				$tmp->races = preg_replace("/, Amazons/", "", $tmp->races);
@@ -839,6 +844,7 @@ function sec_stars() {
 			if (preg_match('/, Slann/',$tmp->races) && $rules['slann'] == 1) {   
 				$tmp->races = preg_replace("/, Slann/", "", $tmp->races);
 			}
+			*/
 		}
 		$fields = array(
 			'name'   => array('desc' => $lng->getTrn('common/star'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'star_id')),
@@ -851,7 +857,8 @@ function sec_stars() {
 			'cost'   => array('desc' => $lng->getTrn('common/price'), 'kilo' => true, 'suffix' => 'k'),
 			'special' => array('desc' => $lng->getTrn('common/specialrule')),
 			'specialdesc' => array('desc' => $lng->getTrn('common/specialruledesc')),
-			'races' => array('desc' => $lng->getTrn('common/playsfor'), 'nosort' => true),
+			//'races' => array('desc' => $lng->getTrn('common/playsfor'), 'nosort' => true),
+			'teamrules' => array('desc' => $lng->getTrn('common/playsfor'), 'nosort' => true),
 		);
 		HTMLOUT::sort_table(
 			$lng->getTrn('common/starlist'),
@@ -888,13 +895,13 @@ function sec_about() {
 		This version of NAFLM last released on the <?php echo NAFLM_BUILD_DATE; ?>.<br><br>
 		Updated game data was sourced from <?php echo CONTENT_DETAIL; ?> and was current at <?php echo CONTENT_DATE; ?>.
 		<br><br>
-        This software was based on the OBBLM software, and was developed under <a href="https://github.com/TheNAF/naflm">TheNAF/naflm fork</a> by <?php $lc = array_pop($naflmcredits); echo implode(', ', $naflmcredits)." and $lc"; ?>.
+        This software was based on the original OBBLM software, and was developed based on this BB2016 (now outdated) fork <a href="https://github.com/TheNAF/naflm">TheNAF/naflm fork</a> by <?php $lc = array_pop($naflmcredits); echo implode(', ', $naflmcredits)." and $lc"; ?>.
         <br><br>
-		Latest version can be found at <a href="https://github.com/TheNAF/naflm/releases">https://github.com/TheNAF/naflm/releases</a><br><br>
+		This latest BB2020 version can be found at <a href="https://github.com/The-NAF/NAFLM-2020">https://github.com/The-NAF/NAFLM-2020</a>, updated by Val Catella.<br><br>
 		<h1>OBBLM</h1>
 		<b>This NAFLM build is based on OBBLM version <?php echo OBBLM_VERSION; ?></b>
         Online Blood Bowl League Manager is an online game management system for Game Workshop's board game Blood Bowl.<br><br>    
-        The authors of the OBBLM program are
+        The authors of the original OBBLM program are
         <ul>
             <li> <a href="http://www.nicholasmr.dk/">Nicholas Mossor Rathmann</a>
             <li> <a href="http://www.mercuryvps.com">William Leonard</a>

@@ -64,15 +64,26 @@ class IndcPage implements ModuleInterface
         $redirectlink = 'handler.php?type=roster&detailed=0&team_id='.$team_id;
 
         $t = new Team($team_id);
-
+		
         $star_list[0] = '      <option value="0">-No Induced Stars-</option>' . "\n";
         foreach ($stars as $s => $d) {
-            if (in_array($t->f_race_id, $d['races'])) { // Only display available Stars
-                if (in_array($d['id'], $starpairs)) // Hide Child Stars
-                    $star_list[0] .= "      <option ".((in_array($t->f_race_id, $d['races'])) ? 'style="display: none; background-color: '.COLOR_HTML_READY.';" ' : '')."value=\"$d[id]\">$s</option>\n";
-                else
-                    $star_list[0] .= "      <option ".((in_array($t->f_race_id, $d['races'])) ? 'style="background-color: '.COLOR_HTML_READY.';" ' : '')."value=\"$d[id]\">$s</option>\n";
-            }
+			//Checking for megastar use rule
+            if ($rules['megastars'] == 0 || ($d['megastar'] == 0 && $rules['megastars'] == 1)) {
+				//Deprecatd below use of race to determine if star can be induced, switched to team rules
+				//if (in_array($t->f_race_id, $d['races'])) { // Only display available Stars
+				//Now checking a combination of team rules and selected favoured of rule instead	
+				$starplaysfor = $d['teamrules']; //defining team rules the star plays for
+				$teamdefrules = explode(",", $t->getTeamrules()); //defining team standard rules
+				$teamdfavrule = explode(",", $t->getFavrulechosen()); //defining team chosen rule
+				$allteamrules = array_merge($teamdefrules, $teamdfavrule); //combining standard and chosen
+				$starcanplay = array_intersect($starplaysfor, $allteamrules); //checking for rules in common with star
+				if (!empty($starcanplay))  { //hide stars where rules do not match
+					if (in_array($d['id'], $starpairs)) // Hide Child Stars
+						$star_list[0] .= "      <option style=\"display: none\" value=\"$d[id]\">$s</option>\n";
+					else
+						$star_list[0] .= "      <option value=\"$d[id]\">$s</option>\n";
+				}
+			}
         }
 
 ?>
@@ -131,8 +142,6 @@ function SendToPDF()
                 $sid=$_POST["Star$starcnt"];
                 if ($sid != 0) {
                     $s = new Star($sid);
-					
-					//$special_rule_desc = $lng->getTrn(.$s->specialdesc.'desc', 'inducements');
                     $star_list[$starcnt] = $star_list[0];
                     // Update display of selected Star
                     // Ignore if Child Star, will be handled by parent entry

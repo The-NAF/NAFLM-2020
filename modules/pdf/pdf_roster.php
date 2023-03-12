@@ -78,6 +78,7 @@ define('MERC_EXTRA_SKILL_COST', 50000);
 define('COLOR_ROSTER_NORMAL',   COLOR_HTML_NORMAL);
 define('COLOR_ROSTER_READY',    COLOR_HTML_READY);
 define('COLOR_ROSTER_MNG',      COLOR_HTML_MNG);
+define('COLOR_ROSTER_RETIRED',  COLOR_HTML_RETIRED);
 define('COLOR_ROSTER_DEAD',     COLOR_HTML_DEAD);
 define('COLOR_ROSTER_SOLD',     COLOR_HTML_SOLD);
 define('COLOR_ROSTER_STARMERC', COLOR_HTML_STARMERC);
@@ -211,6 +212,7 @@ $i=0;
 foreach ($players as $p) {
   $i++;
   $mng='';
+  $ret='';
   
   // Journeymen
   if ($p->is_journeyman) {
@@ -240,18 +242,29 @@ foreach ($players as $p) {
   // Colorcoding new skills available
   if ($p->mayHaveNewSkill()) $bgc=COLOR_ROSTER_NEWSKILL;
   
-  if (!($p->is_mng)) { 
+  if (!($p->is_mng) && !($p->is_retired)) { 
     $sum_avail_players++;
     $inj="";
   } 
   else {
-    $bgc=COLOR_ROSTER_MNG;
-    $sum_p_missing_value+=$p->value;
-    $inj="MNG"; // For MNG column
-    // Removing MNG from skills and injuries
-    $skills_injuries = str_replace(', MNG', '', $skills_injuries);
-    $skills_injuries = str_replace('MNG', '', $skills_injuries);
-    $skills_injuries = str_replace('  ', ' ', $skills_injuries);    // Maybe not needed after changes to rest of code?
+	  if ($p->is_retired) {
+		$bgc=COLOR_ROSTER_RETIRED;
+		$sum_p_missing_value+=$p->value;
+		$inj="RET"; // For MNG column
+		// Removing RET from skills and injuries
+		$skills_injuries = str_replace(', Retired', '', $skills_injuries);
+		$skills_injuries = str_replace('Retired', '', $skills_injuries);
+		$skills_injuries = str_replace('  ', ' ', $skills_injuries);    // Maybe not needed after changes to rest of code?
+	  }
+	  else {
+		$bgc=COLOR_ROSTER_MNG;
+		$sum_p_missing_value+=$p->value;
+		$inj="MNG"; // For MNG column
+		// Removing MNG from skills and injuries
+		$skills_injuries = str_replace(', MNG', '', $skills_injuries);
+		$skills_injuries = str_replace('MNG', '', $skills_injuries);
+		$skills_injuries = str_replace('  ', ' ', $skills_injuries);    // Maybe not needed after changes to rest of code?
+		}
   }
   
   // Characteristic's colors, copied and modified from teams.php
@@ -318,7 +331,7 @@ $pdf->print_box($currentx, $currenty, 140, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR
 $pdf->print_box($currentx+=140, $currenty, 30, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', $sum_avail_players . '/' . $sum_players);
 
 $pdf->SetX($currentx=MARGINX+6+538);
-$pdf->print_box($currentx, $currenty, 50, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', 'Totals (excl TV for MNG players):');
+$pdf->print_box($currentx, $currenty, 50, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'R', 'Totals (excl TV for MNG or RET players):');
 $pdf->print_box($currentx+=54, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_cp);
 $pdf->print_box($currentx+=19, $currenty, 19, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_td);
 $pdf->print_box($currentx+=19, $currenty, 20, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'C', $sum_def);
@@ -817,8 +830,8 @@ $pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINE
 
 // Team Value, Inducements Value, Match Value
 $h=13;
-$pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Team Value (incl MNGs value):');
-$pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', $pdf->Mf($team->value+$sum_p_missing_value));
+$pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Team Value (incl MNGs/RET value):');
+$pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', $pdf->Mf($team->value + $sum_p_missing_value));
 $pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Induced Value:');
 $pdf->print_box($currentx+=40, ($currenty), 65, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', $pdf->Mf($ind_cost));
 $pdf->print_box($currentx-=40, ($currenty+=$h), 40, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Current Team Value:');
@@ -835,10 +848,21 @@ if ($settings['enable_pdf_logos']) {
     // Not tested with anything except PNG images that comes with OBBLM.
     if ($ind_count < 10) {
     $img = new ImageSubSys(IMGTYPE_TEAMLOGO,$team->team_id);
-    $pdf->Image($img->getPath(),346,436,128,128,'','',false,0);
+    $pdf->Image($img->getPath(),375,462,100,100,'','',false,0);
     }
     // OBBLM text lower left corner as a pic - removed due issues with it appearing multiple places
     // $pdf->Image('modules/pdf/OBBLM_pdf_logo.png', MARGINX+12, 534, 60, 28, '', '', false, 0);
+}
+//display team sponsor and stadium if populated
+$sponsortxt = $team->getSponsor();
+$stadiumtxt = $team->getStadium();
+if (strlen($sponsortxt) >0) {
+$pdf->print_box($currentx=384, 436, 30, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Sponsor:');
+$pdf->print_box($currentx+=29, 436, 100, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'L', $sponsortxt);
+}
+if (strlen($stadiumtxt) >0) {
+$pdf->print_box($currentx=384, 448, 30, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', true, 'R', 'Stadium:');
+$pdf->print_box($currentx+=29, 448, 100, $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 0, 0, 8, 'Tahoma', false, 'L', $stadiumtxt);
 }
 
 // Color legends
@@ -870,6 +894,10 @@ $pdf->SetFillColorBB($pdf->hex2cmyk(COLOR_ROSTER_CHR_LTM1));
 $pdf->Rect($currentx+=50+5, $currenty+=1, 5, 5, 'DF');
 $pdf->SetXY($currentx+=5, $currenty-=1);
 $pdf->Cell(50, 8, 'Stat downgrade', 0, 0, 'L', false);
+$pdf->SetFillColorBB($pdf->hex2cmyk(COLOR_ROSTER_RETIRED));
+$pdf->Rect($currentx+=60+5, $currenty+=1, 5, 5, 'DF');
+$pdf->SetXY($currentx+=5, $currenty-=1);
+$pdf->Cell(50, 8, 'Retired', 0, 0, 'L', false);
 
 $pdf->SetFont('Tahoma', '', 7);
 $pdf->SetFillColorBB($pdf->hex2cmyk(COLOR_ROSTER_NORMAL));

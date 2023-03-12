@@ -17,6 +17,8 @@ define('T_TEXT_MATCH_SUMMARY', 7);
 #define('T_TEXT_MATCH_COMMENT', 11); # Deprecated
 define('T_TEXT_TNEWS',  12); // Team news.
 define('T_TEXT_WELCOME',13); // League welcome message.
+define('T_TEXT_SPONSOR',14); // League welcome message.
+define('T_TEXT_STADIUM',15); // League welcome message.
 
 class TextSubSys
 {

@@ -296,3 +296,10 @@ function getESGroups($appendFields = false, $useAbbrevs = false) {
     }
     return $grps;
 }
+
+function randomskillroll() {
+	$dice1 = rand(1,6);
+	$dice2 = rand(1,6);
+	echo $dice1."/".$dice2;
+}
+

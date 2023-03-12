@@ -31,6 +31,17 @@ class Race
         $this->special_rules = ($makeString) ? specialsTrans($rspecialstr) : (empty($rspecialstr) ? array() : explode(',', $rspecialstr));
     }
 	
+	public function getraceFavruleoptions() {
+		$raceid = $this->race_id;
+		$roptions = "";
+        $query = "SELECT fav_rules FROM races WHERE race_id = $raceid";
+        $result = mysql_query($query);
+        if ($row = mysql_fetch_array($result)){
+            $roptions = $row['fav_rules'];
+        }
+        return $roptions;
+    }
+	
 	public function getGoods($double_RRs = false) {
 		/**
 		 * Returns buyable stuff for this race.

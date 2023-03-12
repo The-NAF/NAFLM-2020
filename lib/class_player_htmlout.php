@@ -8,6 +8,7 @@ define('COLOR_HTML_READY',    '#83b783');
 define('COLOR_HTML_MNG',      '#6495ED');
 define('COLOR_HTML_DEAD',     '#F78771');
 define('COLOR_HTML_SOLD',     '#D2B477');
+define('COLOR_HTML_RETIRED',  '#D29F77');
 define('COLOR_HTML_STARMERC', '#bb99bb');
 define('COLOR_HTML_JOURNEY',  '#99BBBB');
 define('COLOR_HTML_JOURNEY_USED', '#FF99FF');
@@ -165,6 +166,9 @@ class Player_HTMLOUT extends Player
 								}
 								elseif ($p->is_sold) {
 									echo "<b>".$lng->getTrn('common/sold')."</b> ($p->date_sold)";
+								}
+								elseif ($p->is_retired) {
+									echo "<b>".$lng->getTrn('common/retired')."</b>";
 								}
 								else {
 									global $T_INJS;

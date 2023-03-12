@@ -386,6 +386,26 @@ class Team
         $desc = new ObjDescriptions(T_TEXT_TEAM, $this->team_id);
         return $desc->txt;
     }
+	
+    public function saveSponsor($str) {
+        $txt = new ObjDescriptions(T_TEXT_SPONSOR, $this->team_id);
+        return $txt->save($str);
+    }
+
+    public function getSponsor() {
+        $desc = new ObjDescriptions(T_TEXT_SPONSOR, $this->team_id);
+        return $desc->txt;
+    }
+	
+    public function saveStadium($str) {
+        $txt = new ObjDescriptions(T_TEXT_STADIUM, $this->team_id);
+        return $txt->save($str);
+    }
+
+    public function getStadium() {
+        $desc = new ObjDescriptions(T_TEXT_STADIUM, $this->team_id);
+        return $desc->txt;
+    }
 
     public function saveLogo($name) {
         $img = new ImageSubSys(IMGTYPE_TEAMLOGO, $this->team_id);
@@ -440,10 +460,55 @@ class Team
 
 	public function setTeamSpecialRules($makeString = false) {
 		$raceid = $this->f_race_id;
-        $query = "SELECT special_rules FROM races WHERE race_id = $raceid";
+        $query = "SELECT races.special_rules FROM races WHERE races.race_id = $raceid";
         $result = mysql_query($query);
         list($tspecialstr) = mysql_fetch_row($result);
         $raceid->special_rules = ($makeString) ? specialsTrans($tspecialstr) : (empty($tspecialstr) ? array() : explode(',', $tspecialstr));
+    }
+
+    public function selectRule($rule) {
+		$teamid = $this->team_id;
+        $query = "UPDATE teams SET fav_rule = $rule WHERE team_id = $teamid";
+        return mysql_query($query);
+    }
+
+    public function resetRule() {
+		$teamid = $this->team_id;
+        $query = "UPDATE teams SET fav_rule = NULL WHERE team_id = $teamid";
+        return mysql_query($query);
+    }
+	
+	public function getTeamrules() {
+		$raceid = $this->f_race_id;
+		$tsprules = "";
+        $query = "SELECT special_rules FROM races WHERE race_id = $raceid";
+        $result = mysql_query($query);
+        if ($row = mysql_fetch_array($result)){
+            $tsprules = $row['special_rules'];
+        }
+        return $tsprules;
+    }
+	
+	public function getFavruleoptions() {
+		$raceid = $this->f_race_id;
+		$roptions = "";
+        $query = "SELECT fav_rules FROM races WHERE race_id = $raceid";
+        $result = mysql_query($query);
+        if ($row = mysql_fetch_array($result)){
+            $roptions = $row['fav_rules'];
+        }
+        return $roptions;
+    }
+	
+	public function getFavrulechosen() {
+		$teamid = $this->team_id;
+        $rValue = "";
+		$query = "SELECT fav_rule FROM teams WHERE team_id = $teamid";
+        $result = mysql_query($query);
+        if ($row = mysql_fetch_array($result)){
+            $rValue = $row['fav_rule'];
+        }
+        return $rValue;
     }
 	
     /***************

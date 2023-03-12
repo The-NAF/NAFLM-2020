@@ -74,6 +74,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (5),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'amazon.png',
             'race_id' 		=> T_RACE_AMAZON, # (Amazon, teams of legend)
         ),
@@ -156,6 +157,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (17),
+            'fav_rules' 	=> array (11,12,13,14,15),
             'icon' 			=> 'chaos.png',
             'race_id' 		=> T_RACE_CHAOS, # (Chaos)
         ),
@@ -255,6 +257,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (2,6,17),
+            'fav_rules' 	=> array (11,12,13,14,15),
             'icon' 			=> 'chaosdwarf.png',
             'race_id' 		=> T_RACE_CHAOS_DWARF, # (Chaos Dwarf)
         ),
@@ -337,6 +340,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (4),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'darkelf.png',
             'race_id' 		=> T_RACE_DARK_ELF, # (Dark Elf)
         ),
@@ -436,6 +440,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (1,6),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'dwarf.png',
             'race_id' 		=> T_RACE_DWARF, # (Dwarf)
         ),
@@ -535,6 +540,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (4),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'elf.png',
             'race_id' 		=> T_RACE_ELF, # (Elf)
         ),
@@ -618,6 +624,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 3,
             'special_rules' => array (2,3,10),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'goblin.png',
             'race_id' 		=> T_RACE_GOBLIN, # (Goblin)
         ),
@@ -765,6 +772,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 3,
             'special_rules' => array (1,9),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'halfling.png',
             'race_id' 		=> T_RACE_HALFLING, # (Halfling)
         ),
@@ -847,6 +855,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (4),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'highelf.png',
             'race_id' 		=> T_RACE_HIGH_ELF, # (High Elf)
         ),
@@ -930,6 +939,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (1),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'human.png',
             'race_id' 		=> T_RACE_HUMAN, # (Human)
         ),
@@ -1045,6 +1055,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (8),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'khemri.png',
             'race_id' 		=> T_RACE_KHEMRI, # (Khemri)
         ),
@@ -1128,6 +1139,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (5),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'lizardmen.png',
             'race_id' 		=> T_RACE_LIZARDMAN, # (Lizardman)
         ),
@@ -1211,6 +1223,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (2),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'orc.png',
             'race_id' 		=> T_RACE_ORC, # (Orc)
         ),
@@ -1326,6 +1339,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (7,8),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'necromantic.png',
             'race_id' 		=> T_RACE_NECROMANTIC, # (Necromantic)
         ),
@@ -1424,7 +1438,8 @@ $DEA = array (
             'sp_qty' 		=> 0,
 			'format'		=> 'BB',
             'tier' 			=> 1,
-            'special_rules' => array (1,11,13),
+            'special_rules' => array (17),
+            'fav_rules' 	=> array (1,11,13),
             'icon' 			=> 'norse.png',
             'race_id' 		=> T_RACE_NORSE, # (Norse)
         ),
@@ -1540,6 +1555,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (12),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'nurgle.png',
             'race_id' 		=> T_RACE_NURGLE, # (Nurgle)
         ),
@@ -1623,6 +1639,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 3,
             'special_rules' => array (1,2,16),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'ogres.png',
             'race_id' 		=> T_RACE_OGRE, # (Ogre)
         ),
@@ -1690,6 +1707,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (7,8),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'undead.png',
             'race_id' 		=> T_RACE_UNDEAD, # (Undead)
         ),
@@ -1788,6 +1806,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (8),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'vampire.png',
             'race_id'		=> T_RACE_VAMPIRE, # (Vampire)
         ),
@@ -1838,6 +1857,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (10),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'skaven.png',
             'race_id' 		=> T_RACE_SKAVEN, # (Skaven)
         ),
@@ -1937,6 +1957,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (4),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'woodelf.png',
             'race_id' 		=> T_RACE_WOOD_ELF, # (Wood Elf)
         ),
@@ -2036,6 +2057,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (17),
+            'fav_rules' 	=> array (11,12,13,14,15),
             'icon'      	=> 'chaos.png',
             'race_id'   	=> T_RACE_CHAOS_PACT, # (Chaos Pact)
         ),
@@ -2214,6 +2236,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (5),
+            'fav_rules' 	=> array (),
             'icon'      	=> 'slann.png',
             'race_id'   	=> T_RACE_SLANN, # (Slann)
         ),
@@ -2296,6 +2319,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (3,10),
+            'fav_rules' 	=> array (),
             'icon'      	=> 'underworld.png',
             'race_id'   	=> T_RACE_UNDERWORLD, # (Underworld)
         ),
@@ -2442,6 +2466,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (1),
+            'fav_rules' 	=> array (),
             'icon'      	=> 'oldworld.png',
             'race_id'   	=> T_RACE_OLDWORLD, # (Old World Alliance)
         ),
@@ -2637,6 +2662,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 3,
             'special_rules' => array (3,10,16),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'snotling.png',
             'race_id' 		=> T_RACE_SNOTLING, # (Snotlings)
         ),
@@ -2752,6 +2778,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (2,3),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'orc.png',
             'race_id' 		=> T_RACE_BLACK_ORC, # (Black Orc)
         ),
@@ -2819,6 +2846,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (1),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'bretonnian.png',
             'race_id' 		=> T_RACE_IMPERIAL, # (Imperial Nobility)
         ),
@@ -3001,6 +3029,7 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 1,
             'special_rules' => array (5),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'amazon.png',
             'race_id' 		=> T_RACE_AMAZONS, # (Amazon)
         ),
@@ -3084,6 +3113,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_FIRE, # (College of Fire)
         ),
@@ -3231,6 +3261,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_SHADOW, # (College of Shadow)
         ),
@@ -3410,6 +3441,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_METAL, # (College of Metal)
         ),
@@ -3589,6 +3621,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_LIGHT, # (College of Light)
         ),
@@ -3720,6 +3753,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_DEATH, # (College of Death)
         ),
@@ -3851,6 +3885,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_LIFE, # (College of Life)
         ),
@@ -4126,6 +4161,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_BEASTS, # (College of Beasts)
         ),
@@ -4337,6 +4373,7 @@ $DEA = array (
 			'format'		=> 'DB',
             'tier' 			=> 0,
             'special_rules' => array (0),
+            'fav_rules' 	=> array (),
             'icon' 			=> 'unknown.png',
             'race_id' 		=> T_RACE_COLLEGE_HEAVENS, # (College of Heavens)
         ),
@@ -4637,8 +4674,10 @@ $stars = array(
        'cost'   => 225000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(30),
        'specialdesc'  => 'sneakiestotl',
+       'megastar'  => 0,
    ),
    'Deeproot Strongbranch' => array (
        'id'     => -11,
@@ -4651,8 +4690,10 @@ $stars = array(
        'cost'   => 280000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,9),
        'special'  => array(31),
        'specialdesc'  => 'reliable',
+       'megastar'  => 1,
    ),
    'Eldril Sidewinder' => array (
        'id'     => -12,
@@ -4665,8 +4706,10 @@ $stars = array(
        'cost'   => 230000,
        'icon'   => 'star',
        'races'  => array(3, 5, 8, 20),
+       'teamrules'  => array(4),
        'special'  => array(32),
        'specialdesc'  => 'mesmerizingdance',
+       'megastar'  => 0,
    ),
     'Glart Smashrip' => array (
         'id'    => -13,
@@ -4679,8 +4722,10 @@ $stars = array(
         'cost'  => 195000,
         'icon'  => 'star',
         'races' => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
+		'teamrules'  => array(10,11,12,13,14,15),
         'special'  => array(33),
        'specialdesc'  => 'frenziedrush',
+       'megastar'  => 0,
     ),   
     'Gloriel Summerbloom' => array (
         'id'    => -14,
@@ -4693,8 +4738,10 @@ $stars = array(
         'cost'  => 150000,
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
+		'teamrules'  => array(4),
         'special'  => array(34),
-       'specialdesc'  => 'shottonothing',	
+       'specialdesc'  => 'shottonothing',
+       'megastar'  => 0,	
 	),  
 	'Grak (+ Crumbleberry)' => array (
        'id'     => -15,
@@ -4707,8 +4754,10 @@ $stars = array(
        'cost'   => 250000,
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
+       'teamrules'  => array(1,2,3,4,5,6,8,9,10,11,12,13,14,15),
        'special'  => array(35),
        'specialdesc'  => 'twoforone',
+       'megastar'  => 0,
     ),
 	'Crumbleberry (included with Grak)' => array (
        'id'     => -16,
@@ -4721,8 +4770,10 @@ $stars = array(
        'cost'   => 0,
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
+       'teamrules'  => array(1,2,3,4,5,6,8,9,10,11,12,13,14,15),
        'special'  => array(35),
        'specialdesc'  => 'twoforone',
+       'megastar'  => 0,
     ),
     'Gretchen Wachter \'The Blood Bowl Widow\'' => array (
         'id'    => -17,
@@ -4735,8 +4786,10 @@ $stars = array(
         'cost'  => 260000,
         'icon'  => 'star',
         'races' => array(10, 13, 17, 18),	
+		'teamrules'  => array(8),
         'special'  => array(36),
        'specialdesc'  => 'incorporeal',
+       'megastar'  => 0,
 	),
    'Griff Oberwald' => array (
        'id'     => -18,
@@ -4749,8 +4802,10 @@ $stars = array(
        'cost'   => 280000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,9),
        'special'  => array(37),
        'specialdesc'  => 'consummatepro',
+       'megastar'  => 1,
    ),
    'Grim Ironjaw' => array (
        'id'     => -19,
@@ -4763,8 +4818,10 @@ $stars = array(
        'cost'   => 200000,
        'icon'   => 'star',
        'races'  => array(2, 4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,6,9),
        'special'  => array(38),
        'specialdesc'  => 'slayer',
+       'megastar'  => 0,
    ),
    'Hakflem Skuttlespike' => array (
        'id'     => -20,
@@ -4777,8 +4834,10 @@ $stars = array(
        'cost'   => 210000,
        'icon'   => 'star',
        'races'  => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
+       'teamrules'  => array(10,11,12,13,14,15),
        'special'  => array(39),
        'specialdesc'  => 'treacherous',
+       'megastar'  => 1,
    ),
    'Helmut Wulf' => array (
        'id'     => -21,
@@ -4791,8 +4850,10 @@ $stars = array(
        'cost'   => 140000,
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29),
+       'teamrules'  => array(1,2,3,4,5,6,8,9,10,11,12,13,14,15),
        'special'  => array(40),
        'specialdesc'  => 'oldpro',
+       'megastar'  => 0,
    ),
     'Karla von Kill' => array (
         'id'    => -22,
@@ -4805,8 +4866,10 @@ $stars = array(
         'cost'  => 210000,
         'icon'  => 'star',
         'races' => array(0, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
+       'teamrules'  => array(1,5,9),
        'special'  => array(41),
        'specialdesc'  => 'indomitable',
+       'megastar'  => 0,
     ),
    'Lord Borak the Despoiler' => array (
        'id'     => -23,
@@ -4819,8 +4882,10 @@ $stars = array(
        'cost'   => 260000,
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
+       'teamrules'  => array(11,12,13,14,15),
        'special'  => array(42),
        'specialdesc'  => 'lordofchaos',
+       'megastar'  => 0,
    ),
    'Mighty Zug' => array (
        'id'     => -24,
@@ -4833,8 +4898,10 @@ $stars = array(
        'cost'   => 220000,
        'icon'   => 'star',
        'races'  => array(0, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
+       'teamrules'  => array(1,5,9),
        'special'  => array(43),
        'specialdesc'  => 'crushingblow',
+       'megastar'  => 0,
    ),
    'Morg \'n\' Thorg' => array (
        'id'     => -25,
@@ -4847,8 +4914,10 @@ $stars = array(
        'cost'   => 380000,
        'icon'   => 'star',
        'races'  => array (0,1,2,3,4,5,6,7,8,9,11,12,14,15,16,19,20,21,22,23,24,25,26,27,28,29),
+       'teamrules'  => array(1,2,3,4,5,6,9,10,11,12,13,14,15),
        'special'  => array(44),
        'specialdesc'  => 'theballista',
+       'megastar'  => 1,
    ),
     'Roxanna Darknail' => array (
         'id'    => -26,
@@ -4862,7 +4931,9 @@ $stars = array(
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
         'special'  => array(45),
+       'teamrules'  => array(4),
        'specialdesc'  => 'burstofspeed',
+       'megastar'  => 0,
     ),
     'Rumbelow Sheepskin' => array (
         'id'    => -27,
@@ -4875,8 +4946,10 @@ $stars = array(
         'cost'  => 170000,
         'icon'  => 'star',
         'races' => array(2, 4, 7, 9, 14, 16, 24, 27),	
+		'teamrules'  => array(1,6,9),
         'special'  => array(46),
        'specialdesc'  => 'ram',
+       'megastar'  => 0,
 	),	
     'Skrull Halfheight' => array (
         'id'    => -28,
@@ -4889,8 +4962,10 @@ $stars = array(
         'cost'  => 150000,
         'icon'  => 'star',
         'races' => array(2, 4, 10, 13, 17, 18),	
+		'teamrules'  => array(6,8),
         'special'  => array(47),
        'specialdesc'  => 'strongpassinggame',
+       'megastar'  => 0,
 	),	
     'Lucien Swift (+ Valen Swift)' => array (
         'id'    => -29,
@@ -4903,8 +4978,10 @@ $stars = array(
         'cost'  => 340000,
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
+		'teamrules'  => array(4),
         'special'  => array(35),
        'specialdesc'  => 'twoforone',
+       'megastar'  => 0,
     ),
     'Valen Swift (included with Lucien Swift)' => array (
         'id'    => -30,
@@ -4917,8 +4994,10 @@ $stars = array(
         'cost'  => 0,
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
+		'teamrules'  => array(4),
         'special'  => array(35),
        'specialdesc'  => 'twoforone',
+       'megastar'  => 0,
     ),	
    'Varag Ghoul-Chewer' => array (
        'id'     => -31,
@@ -4931,8 +5010,10 @@ $stars = array(
        'cost'   => 280000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(43),
        'specialdesc'  => 'crushingblow',
+       'megastar'  => 0,
    ),
 	'Grombrindal the White Dwarf' => array (
        'id'     => -32,
@@ -4945,8 +5026,10 @@ $stars = array(
        'cost'   => 210000,
        'icon'   => 'star',
        'races'  => array(0, 2, 4, 7, 9, 11, 14, 16, 22, 24, 27, 29),
+       'teamrules'  => array(1,5,6,9),
        'special'  => array(48),
        'specialdesc'  => 'wisdomotwd',
+       'megastar'  => 0,
    ),
     'Willow Rosebark' => array (
         'id'    => -33,
@@ -4959,8 +5042,10 @@ $stars = array(
         'cost'  => 150000,
         'icon'  => 'star',
         'races' => array(3, 5, 8, 20),
+		'teamrules'  => array(4),
         'special'  => array(41),
        'specialdesc'  => 'indomitable',
+       'megastar'  => 0,
     ),
     'Zolcath the Zoat' => array (
         'id'    => -34,
@@ -4973,8 +5058,10 @@ $stars = array(
         'cost'  => 230000,
         'icon'  => 'star',
         'races' => array(0, 3, 5, 8, 11, 20, 22, 29),	
+		'teamrules'  => array(4,5),
         'special'  => array(49),
        'specialdesc'  => 'excuseme',
+       'megastar'  => 0,
 	),
 	//Added BB2016 Spike! #11
     'Bryce \'The Slice\' Cambuel' => array (
@@ -4988,8 +5075,10 @@ $stars = array(
         'cost'  => 130000,
         'icon'  => 'star',
         'races' => array(10, 13, 17, 18),	
+		'teamrules'  => array(8),
         'special'  => array(52),
        'specialdesc'  => 'ghostlyflames',
+       'megastar'  => 0,
 	),	
     'Frank N Stein' => array (
         'id'    => -36,
@@ -5001,9 +5090,11 @@ $stars = array(
         'def'   => array (50, 99, 54, 103, 57, 59),
         'cost'  => 250000,
         'icon'  => 'star',
-        'races' => array(4, 7, 9, 10, 13, 14, 16, 17, 18, 24, 27),
+        'races' => array(4, 7, 9, 10, 13, 14, 16, 17, 18, 24, 27),	
+		'teamrules'  => array(1,8),
         'special'  => array(50),
        'specialdesc'  => 'brutalblock',
+       'megastar'  => 0,
     ),
    'Wilhelm Chaney' => array (
        'id'     => -37,
@@ -5016,8 +5107,10 @@ $stars = array(
        'cost'   => 220000,
        'icon'   => 'star',
        'races'  => array(10, 13, 17, 18),
+       'teamrules'  => array(8),
        'special'  => array(51),
        'specialdesc'  => 'savagemauling',
+       'megastar'  => 0,
    ),
 	//Added in White Dwarf
     'Akhorne the Squirrel' => array (
@@ -5031,8 +5124,10 @@ $stars = array(
        'cost'   => 80000,
        'icon'   => 'star',
        'races'  => array(0,1,2,3,4,5,6,7,8,9,11,12,14,15,16,19,20,21,22,23,24,25,26,27,28,29),
+       'teamrules'  => array(1,2,3,4,5,6,9,10,11,12,13,14,15),
        'special'  => array(53),
        'specialdesc'  => 'blindrage',
+       'megastar'  => 0,
    ), 
     'Kreek Rustgouger' => array (
        'id'     => -39,
@@ -5045,8 +5140,10 @@ $stars = array(
        'cost'   => 170000,
        'icon'   => 'star',
        'races'  => array(1, 2, 6, 14, 15, 19, 21, 23, 25, 28),
+       'teamrules'  => array(10,11,12,13,14,15),
        'special'  => array(54),
        'specialdesc'  => 'illbeback',
+       'megastar'  => 1,
    ),
 	//Added BB2020 Spike! #13   
     'Grashnak Blackhoof' => array (
@@ -5060,8 +5157,10 @@ $stars = array(
        'cost'   => 240000,
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
+       'teamrules'  => array(11,12,13,14,15),
        'special'  => array(55),
        'specialdesc'  => 'goredbythebull',
+       'megastar'  => 0,
    ), 
     'Scyla Anfingrimm' => array (
        'id'     => -41,
@@ -5074,8 +5173,10 @@ $stars = array(
        'cost'   => 200000,
        'icon'   => 'star',
        'races'  => array(14, 28),
+       'teamrules'  => array(13),
        'special'  => array(56),
        'specialdesc'  => 'furyotbg',
+       'megastar'  => 0,
    ),
     'Max Spleenripper' => array (
        'id'     => -42,
@@ -5088,8 +5189,10 @@ $stars = array(
        'cost'   => 130000,
        'icon'   => 'star',
        'races'  => array(14, 28),
+       'teamrules'  => array(13),
        'special'  => array(57),
        'specialdesc'  => 'maximumcarnage',
+       'megastar'  => 0,
    ),
 	//Added 2021 Almanac  
     'Barik Farblast' => array (
@@ -5103,8 +5206,10 @@ $stars = array(
        'cost'   => 80000,
        'icon'   => 'star',
        'races'  => array(2, 4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,6,9),
        'special'  => array(58),
        'specialdesc'  => 'blastit',
+       'megastar'  => 0,
    ),
     'Fungus The Loon' => array (
        'id'     => -44,
@@ -5117,8 +5222,10 @@ $stars = array(
        'cost'   => 80000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(59),
        'specialdesc'  => 'whirlingdervish',
+       'megastar'  => 0,
    ),
     'Bomber Dribblesnot' => array (
        'id'     => -45,
@@ -5131,8 +5238,10 @@ $stars = array(
        'cost'   => 50000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(60),
        'specialdesc'  => 'kaboom',
+       'megastar'  => 1,
    ),
 	//Added BB2020 Spike! #14  
     'Ivar Eriksson' => array (
@@ -5146,8 +5255,10 @@ $stars = array(
        'cost'   => 245000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1),
        'special'  => array(61),
        'specialdesc'  => 'raidingparty',
+       'megastar'  => 0,
    ),
     'Skrorg Snowpelt' => array (
        'id'     => -47,
@@ -5160,8 +5271,10 @@ $stars = array(
        'cost'   => 250000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1),
        'special'  => array(62),
        'specialdesc'  => 'pumpupthecrowd',
+       'megastar'  => 0,
    ),
     'Thorsson Stoutmead' => array (
        'id'     => -48,
@@ -5174,8 +5287,10 @@ $stars = array(
        'cost'   => 170000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1),
        'special'  => array(63),
        'specialdesc'  => 'beerbarrelbash',
+       'megastar'  => 0,
    ),
     'Boa Kon\'ssstriktr' => array (
        'id'     => -49,
@@ -5188,8 +5303,10 @@ $stars = array(
        'cost'   => 200000,
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
+       'teamrules'  => array(5),
        'special'  => array(64),
        'specialdesc'  => 'lookintomyeyes',
+       'megastar'  => 0,
    ),
     'Estelle La Veneaux' => array (
        'id'     => -50,
@@ -5202,8 +5319,10 @@ $stars = array(
        'cost'   => 190000,
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
+       'teamrules'  => array(5),
        'special'  => array(65),
        'specialdesc'  => 'balefulhex',
+       'megastar'  => 0,
    ),
     'Glotl Stop' => array (
        'id'     => -51,
@@ -5216,8 +5335,10 @@ $stars = array(
        'cost'   => 270000,
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
+       'teamrules'  => array(5),
        'special'  => array(66),
        'specialdesc'  => 'primalsavagery',
+       'megastar'  => 0,
    ),
 	//Added 2022 Almanac
     'Puggy Baconbreath' => array (
@@ -5231,8 +5352,10 @@ $stars = array(
        'cost'   => 120000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,9),
        'special'  => array(67),
        'specialdesc'  => 'halflingluck',
+       'megastar'  => 0,
    ),
     'Cindy Piewhistle' => array (
        'id'     => -53,
@@ -5245,8 +5368,10 @@ $stars = array(
        'cost'   => 50000,
        'icon'   => 'star',
        'races'  => array(4, 7, 9, 14, 16, 24, 27),
+       'teamrules'  => array(1,9),
        'special'  => array(68),
        'specialdesc'  => 'allyoucaneat',
+       'megastar'  => 0,
    ),
     'Dribl (+ Drull)' => array (
        'id'     => -54,
@@ -5259,8 +5384,10 @@ $stars = array(
        'cost'   => 190000,
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
+       'teamrules'  => array(5),
        'special'  => array(69),
        'specialdesc'  => 'asneakypair',
+       'megastar'  => 0,
    ),
     'Drull (Included with Dribl)' => array (
        'id'     => -55,
@@ -5273,8 +5400,10 @@ $stars = array(
        'cost'   => 0,
        'icon'   => 'star',
        'races'  => array(0, 11, 22, 29),
+       'teamrules'  => array(5),
        'special'  => array(69),
        'specialdesc'  => 'asneakypair',
+       'megastar'  => 0,
    ),
     'Bilerot Vomitflesh' => array (
        'id'     => -56,
@@ -5287,8 +5416,10 @@ $stars = array(
        'cost'   => 180000,
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
+       'teamrules'  => array(12),
        'special'  => array(70),
        'specialdesc'  => 'putridregurgitation',
+       'megastar'  => 0,
    ),
     'Ripper Bolgrot' => array (
        'id'     => -57,
@@ -5301,8 +5432,10 @@ $stars = array(
        'cost'   => 250000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(71),
        'specialdesc'  => 'thinkingmanstroll',
+       'megastar'  => 0,
    ),
     'Nobbla Blackwart' => array (
        'id'     => -58,
@@ -5315,8 +5448,10 @@ $stars = array(
        'cost'   => 120000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(72),
        'specialdesc'  => 'kickemwtd',
+       'megastar'  => 0,
    ),
     'Scrappa Sorehead' => array (
        'id'     => -59,
@@ -5329,8 +5464,10 @@ $stars = array(
        'cost'   => 130000,
        'icon'   => 'star',
        'races'  => array(2, 6, 12, 16, 19, 23, 25, 26),
+       'teamrules'  => array(2,10),
        'special'  => array(73),
        'specialdesc'  => 'yoink',
+       'megastar'  => 0,
    ),
     'Withergrasp Doubledrool' => array (
        'id'     => -60,
@@ -5343,8 +5480,10 @@ $stars = array(
        'cost'   => 170000,
        'icon'   => 'star',
        'races'  => array(1, 2, 14, 15, 21, 28),
+       'teamrules'  => array(11,12,13,14,15),
        'special'  => array(74),
        'specialdesc'  => 'watchout',
+       'megastar'  => 0,
    ),
 );
 /*  Paired Stars  ***************************************************************************************** */

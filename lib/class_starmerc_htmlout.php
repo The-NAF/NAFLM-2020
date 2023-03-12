@@ -5,6 +5,7 @@ class Star_HTMLOUT extends Star
 		global $lng, $rules;
 		$s = new self($sid);
 		title($s->name);
+		$s->teamrules = specialsTrans($s->teamrules);  
 		$s->races = racesTrans($s->races);  
 			if (preg_match('/, Amazons/',$s->races)) {       
 				if ($rules['amazon'] == 1) {   
@@ -56,11 +57,15 @@ class Star_HTMLOUT extends Star
 				$s->races = preg_replace("/, Slann/", "", $s->races);
 			}
 		
+		if ($s->megastar == 1) {
+			echo '<center><b>*Mega-Star*</b></center><br>';
+		}
 		echo '<center><a href="'.urlcompile(T_URL_STANDINGS,T_OBJ_STAR,false,false,false).'">'.$lng->getTrn('common/back').'</a></center><br><br>';
 		echo "<b>".$lng->getTrn('common/skills').":</b> ".skillsTrans($s->skills)."<br><br>";
 		echo "<b>".$lng->getTrn('common/specialrules').":</b> ".specialsTrans($s->special)."<br><br>";
 		echo "<b>".$lng->getTrn('common/specialruledesc').":</b> ".$lng->getTrn('specialrules/'.$s->specialdesc.'desc')."<br><br>";
-		echo "<b>".$lng->getTrn('common/races').":</b> ".$s->races."<br><br>";
+		//echo "<b>".$lng->getTrn('common/races').":</b> ".$s->races."<br><br>";
+		echo "<b>".$lng->getTrn('common/playsfor').":</b> ".$s->teamrules."<br><br>";
 		self::starHireHistory(false, false, false, false, $s->star_id, array('url' => urlcompile(T_URL_PROFILE,T_OBJ_STAR, $s->star_id,false,false)));
 	}
 

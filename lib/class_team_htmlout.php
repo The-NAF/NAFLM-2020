@@ -163,6 +163,8 @@ class Team_HTMLOUT extends Team
 		}
 		$p = (isset($_POST['player']) && $_POST['type'] != 'hire_player') ? new Player($_POST['player']) : null;
 		switch ($_POST['type']) {
+			case 'select_rule':      status($team->selectRule($_POST['rule'])); break;
+				
 			case 'hire_player':
 				list($exitStatus, $pid) = Player::create(
 					array(
@@ -182,6 +184,9 @@ class Team_HTMLOUT extends Team
 			case 'unbuy_player':    status($p->unbuy()); break;
 			case 'rename_player':   status($p->rename($_POST['name'])); break;
 			case 'renumber_player': status($p->renumber($_POST['number'])); break;
+			case 'retire_player':   status($p->retirePlayer());
+					SQLTriggers::run(T_SQLTRIG_TEAM_DPROPS, array('obj' => T_OBJ_TEAM, 'id' => $team->team_id));
+					break;
 			case 'rename_team':     status($team->rename($_POST['name'])); break;
 			case 'buy_goods':       status($team->buy($_POST['thing'])); break;
 			//case 'drop_goods':      status($team->drop($_POST['thing'])); break;
@@ -198,10 +203,12 @@ class Team_HTMLOUT extends Team
 				else                                                             $type = 'C'; # Assume it's a characteristic.
 				status($p->addSkill($type, ($type == 'C') ? (int) str_replace('ach_','',$_POST['skill']) : (int) $_POST['skill'], $skcost, $skcosttype));
 				break;
-			case 'teamtext': status($team->saveText($_POST['teamtext'])); break;
-			case 'news':     status($team->writeNews($_POST['txt'])); break;
-			case 'newsdel':  status($team->deleteNews($_POST['news_id'])); break;
-			case 'newsedit': status($team->editNews($_POST['news_id'], $_POST['txt'])); break;
+			case 'teamtext': 	status($team->saveText($_POST['teamtext'])); break;
+			case 'teamsponsor': status($team->saveSponsor($_POST['teamsponsor'])); break;
+			case 'teamstadium': status($team->saveStadium($_POST['teamstadium'])); break;
+			case 'news':     	status($team->writeNews($_POST['txt'])); break;
+			case 'newsdel':  	status($team->deleteNews($_POST['news_id'])); break;
+			case 'newsedit': 	status($team->editNews($_POST['news_id'], $_POST['txt'])); break;
 			case 'pic':
 				if ($_POST['add_del'] == 'add') {
 					if ($_POST['pic_obj'] == IMGTYPE_TEAMSTADIUM) {
@@ -257,6 +264,7 @@ class Team_HTMLOUT extends Team
 					SQLTriggers::run(T_SQLTRIG_TEAM_DPROPS, array('obj' => T_OBJ_TEAM, 'id' => $team->team_id));
 					break;
 				case 'removenegastat': status($p->removenegastat($_POST['stat'])); break;
+				case 'resetrule': status($team->resetRule()); break;
 			}
 		}
 		$team->setStats(false,false,false); # Reload fields in case they changed after team actions made.
@@ -310,6 +318,7 @@ class Team_HTMLOUT extends Team
 			if     ($p->is_sold && $DETAILED)   $p->HTMLbcolor = COLOR_HTML_SOLD; # Sold has highest priority.
 			elseif ($p->is_dead && $DETAILED)   $p->HTMLbcolor = COLOR_HTML_DEAD;
 			elseif ($p->is_mng)                 $p->HTMLbcolor = COLOR_HTML_MNG;
+			elseif ($p->is_retired)             $p->HTMLbcolor = COLOR_HTML_RETIRED;
 			elseif ($p->is_journeyman_used)     $p->HTMLbcolor = COLOR_HTML_JOURNEY_USED;
 			elseif ($p->is_journeyman)          $p->HTMLbcolor = COLOR_HTML_JOURNEY;
 			elseif ($p->mayHaveNewSkill())      $p->HTMLbcolor = COLOR_HTML_NEWSKILL;
@@ -594,7 +603,7 @@ class Team_HTMLOUT extends Team
 			urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false).(($DETAILED) ? '&amp;detailed=1' : '&amp;detailed=0'),
 			$players,
 			$fields,
-			($DETAILED) ? array('+is_dead', '+is_sold', '+is_mng', '+is_journeyman', '+nr', '+name') : sort_rule('player'),
+			($DETAILED) ? array('+is_dead', '+is_sold', '+is_mng', '+is_retired', '+is_journeyman', '+nr', '+name') : sort_rule('player'),
 			(isset($_GET['sort'])) ? array((($_GET['dir'] == 'a') ? '+' : '-') . $_GET['sort']) : array(),
 			array('color' => ($DETAILED) ? true : false, 'doNr' => false, 'noHelp' => true)
 		);
@@ -608,6 +617,7 @@ class Team_HTMLOUT extends Team
 					?>
 					<td style="background-color: <?php echo COLOR_HTML_READY;   ?>;"><font color='black'><b>&nbsp;Ready&nbsp;</b></font></td>
 					<td style="background-color: <?php echo COLOR_HTML_MNG;     ?>;"><font color='black'><b>&nbsp;MNG&nbsp;</b></font></td>
+					<td style="background-color: <?php echo COLOR_HTML_RETIRED;     ?>;"><font color='black'><b>&nbsp;Retired&nbsp;</b></font></td>
 					<td style="background-color: <?php echo COLOR_HTML_JOURNEY; ?>;"><font color='black'><b>&nbsp;Journey&nbsp;</b></font></td>
 					<td style="background-color: <?php echo COLOR_HTML_JOURNEY_USED; ?>;"><font color='black'><b>&nbsp;Used&nbsp;journey&nbsp;</b></font></td>
 					<td style="background-color: <?php echo COLOR_HTML_DEAD;    ?>;"><font color='black'><b>&nbsp;Dead&nbsp;</b></font></td>
@@ -751,76 +761,6 @@ class Team_HTMLOUT extends Team
 			<li class="toplast"><a>Roster</a>
 				<ul>
 					<?php if ($pdf)    { ?><li class="subfirst"><a TARGET="_blank" href="<?php echo $pdf;?>">PDF</a></li> <?php } ?>
-					<?php if ($botocs) { ?><li><a TARGET="_blank" href="<?php echo $botocs;?>">BOTOCS-XML</a></li> <?php } ?>
-					<?php if ($cyanide) { ?><li><span class="dir">Cyanide-DB</span>
-						<ul>
-						<div id="cycolors">
-								<li class="blue1"><a href="<?php echo $cyanide."=0";?>">0</a></li>
-								<li class="cyan1"><a href="<?php echo $cyanide."=1";?>">1</a></li>
-								<li class="green1"><a href="<?php echo $cyanide."=2";?>">2</a></li>
-								<li class="yellow1"><a href="<?php echo $cyanide."=3";?>">3</a></li>
-								<li class="red1"><a href="<?php echo $cyanide."=4";?>">4</a></li>
-								<li class="magenta1"><a href="<?php echo $cyanide."=5";?>">5</a></li>
-								<li class="purple1"><a href="<?php echo $cyanide."=6";?>">6</a></li>
-								<li class="grey1"><a href="<?php echo $cyanide."=7";?>">7</a></li>
-
-								<li class="blue2"><a href="<?php echo $cyanide."=8";?>">0</a></li>
-								<li class="cyan2"><a href="<?php echo $cyanide."=9";?>">1</a></li>
-								<li class="green2"><a href="<?php echo $cyanide."=10";?>">2</a></li>
-								<li class="yellow2"><a href="<?php echo $cyanide."=11";?>">3</a></li>
-								<li class="red2"><a href="<?php echo $cyanide."=12";?>">4</a></li>
-								<li class="magenta2"><a href="<?php echo $cyanide."=13";?>">5</a></li>
-								<li class="purple2"><a href="<?php echo $cyanide."=14";?>">6</a></li>
-								<li class="grey2"><a href="<?php echo $cyanide."=15";?>">7</a></li>
-
-								<li class="blue3"><a href="<?php echo $cyanide."=16";?>">16</a></li>
-								<li class="cyan3"><a href="<?php echo $cyanide."=17";?>">17</a></li>
-								<li class="green3"><a href="<?php echo $cyanide."=18";?>">18</a></li>
-								<li class="yellow3"><a href="<?php echo $cyanide."=19";?>">19</a></li>
-								<li class="red3"><a href="<?php echo $cyanide."=20";?>">20</a></li>
-								<li class="magenta3"><a href="<?php echo $cyanide."=21";?>">21</a></li>
-								<li class="purple3"><a href="<?php echo $cyanide."=22";?>">22</a></li>
-								<li class="grey3"><a href="<?php echo $cyanide."=23";?>">23</a></li>
-
-								<li class="blue4"><a href="<?php echo $cyanide."=24";?>">24</a></li>
-								<li class="cyan4"><a href="<?php echo $cyanide."=25";?>">25</a></li>
-								<li class="green4"><a href="<?php echo $cyanide."=26";?>">26</a></li>
-								<li class="yellow4"><a href="<?php echo $cyanide."=27";?>">27</a></li>
-								<li class="red4"><a href="<?php echo $cyanide."=28";?>">28</a></li>
-								<li class="magenta4"><a href="<?php echo $cyanide."=29";?>">29</a></li>
-								<li class="purple4"><a href="<?php echo $cyanide."=30";?>">30</a></li>
-								<li class="grey4"><a href="<?php echo $cyanide."=31";?>">31</a></li>
-
-								<li class="blue5"><a href="<?php echo $cyanide."=32";?>">32</a></li>
-								<li class="cyan5"><a href="<?php echo $cyanide."=33";?>">33</a></li>
-								<li class="green5"><a href="<?php echo $cyanide."=34";?>">34</a></li>
-								<li class="yellow5"><a href="<?php echo $cyanide."=35";?>">35</a></li>
-								<li class="red5"><a href="<?php echo $cyanide."=36";?>">36</a></li>
-								<li class="magenta5"><a href="<?php echo $cyanide."=37";?>">37</a></li>
-								<li class="purple5"><a href="<?php echo $cyanide."=38";?>">38</a></li>
-								<li class="grey5"><a href="<?php echo $cyanide."=39";?>">39</a></li>
-
-								<li class="blue6"><a href="<?php echo $cyanide."=40";?>">40</a></li>
-								<li class="cyan6"><a href="<?php echo $cyanide."=41";?>">41</a></li>
-								<li class="green6"><a href="<?php echo $cyanide."=42";?>">42</a></li>
-								<li class="yellow6"><a href="<?php echo $cyanide."=43";?>">43</a></li>
-								<li class="red6"><a href="<?php echo $cyanide."=44";?>">44</a></li>
-								<li class="magenta6"><a href="<?php echo $cyanide."=45";?>">45</a></li>
-								<li class="purple6"><a href="<?php echo $cyanide."=46";?>">46</a></li>
-								<li class="grey6"><a href="<?php echo $cyanide."=47";?>">47</a></li>
-
-								<li class="blue7"><a href="<?php echo $cyanide."=48";?>">48</a></li>
-								<li class="cyan7"><a href="<?php echo $cyanide."=49";?>">49</a></li>
-								<li class="green7"><a href="<?php echo $cyanide."=50";?>">50</a></li>
-								<li class="yellow7"><a href="<?php echo $cyanide."=51";?>">51</a></li>
-								<li class="red7"><a href="<?php echo $cyanide."=52";?>">52</a></li>
-								<li class="magenta7"><a href="<?php echo $cyanide."=53";?>">53</a></li>
-								<li class="purple7"><a href="<?php echo $cyanide."=54";?>">54</a></li>
-								<li class="grey7"><a href="<?php echo $cyanide."=55";?>">55</a></li>
-						</div>
-						</ul>
-					</li>
-					<?php } ?>
 				</ul>
 			</li>
 		</ul>
@@ -936,6 +876,17 @@ class Team_HTMLOUT extends Team
 					<tr>
 						<td><?php echo $lng->getTrn('common/teamspecialrules');?></td>
 						<td><?php echo specialsTrans($race->special_rules);?></td>
+					</tr>
+					<tr>
+						<td><?php echo $lng->getTrn('common/teamfavspecialrules');?></td>
+						<td><?php 
+						if (strlen($team->getFavrulechosen()) >= 1 ) {
+							$fr_text = 'profile/team/box_tm/favrule/r'.$team->getFavrulechosen();
+							echo $lng->getTrn($fr_text);
+						}
+						else {
+							echo '<i>'.$lng->getTrn('common/notyetselected').'</i>';
+						}?></td>
 					</tr>
 					<tr>
 						<td><?php echo $lng->getTrn('common/league');?></td>
@@ -1096,6 +1047,7 @@ class Team_HTMLOUT extends Team
 							'extra_skills'      => $lng->getTrn($base.'/box_admin/extra_skills'),
 							'ach_skills'        => $lng->getTrn($base.'/box_admin/ach_skills'),
 							'ff'                => $lng->getTrn($base.'/box_admin/ff'),
+							'resetrule'         => $lng->getTrn($base.'/box_admin/resetrule'),
 							'removeNiggle'      => $lng->getTrn($base.'/box_admin/removeNiggle'),
 							'addniggle'      	=> $lng->getTrn($base.'/box_admin/addniggle'),
 							'removeMNG'      	=> $lng->getTrn($base.'/box_admin/removeMNG'),
@@ -1226,6 +1178,15 @@ class Team_HTMLOUT extends Team
 									Bought dedicated fans + Match dedicated fans = Total<br>
 									<input type='text' name="amount" value="<?php echo $team->ff_bought.'" maxlength=2 size=1 style="text-align: right">+'.($team->rg_ff-$team->ff_bought).'='.$team->rg_ff ?>
 									<input type="hidden" name="type" value="ff">
+									<?php
+									break;
+								/***************
+								 * Reset selected team special rule
+								***************/
+								case 'resetrule':
+									echo $lng->getTrn('profile/team/box_admin/desc/resetrule');
+									?>
+									<input type="hidden" name="type" value="resetrule">
 									<?php
 									break;
 								/***************
@@ -1533,12 +1494,14 @@ class Team_HTMLOUT extends Team
 			<?php
 			$base = 'profile/team';
 			$tmanage = array(
+				'select_rule'       => $lng->getTrn($base.'/box_tm/select_rule'),
 				'hire_player'       => $lng->getTrn($base.'/box_tm/hire_player'),
 				'hire_journeyman'   => $lng->getTrn($base.'/box_tm/hire_journeyman'),
 				'fire_player'       => $lng->getTrn($base.'/box_tm/fire_player'),
 				'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
 				'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
 				'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),
+				'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
 				'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
 				'buy_goods'         => $lng->getTrn($base.'/box_tm/buy_goods'),
 				//'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
@@ -1546,9 +1509,12 @@ class Team_HTMLOUT extends Team
 				'retire'            => $lng->getTrn($base.'/box_tm/retire'),
 				'delete'            => $lng->getTrn($base.'/box_tm/delete'),
 			);
+			if (strlen($team->getFavrulechosen()) >= 1 ) {
+			unset($tmanage['select_rule']);
+			}
 			# If one of these are selected from the menu, a JavaScript confirm prompt is displayed before submitting.
 			# Note: Don't add "hire_player" here - players may be un-bought if not having played any games.
-			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods');
+			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods','retire_player','select_rule');
 			// Set default choice.
 			if (!isset($_POST['menu_tmanage'])) {
 				reset($tmanage);
@@ -1574,6 +1540,26 @@ class Team_HTMLOUT extends Team
 			$DISABLE = false;
 			switch ($_POST['menu_tmanage']) {
 				/**************
+				 * Select teams special rule
+				 **************/
+				case 'select_rule':				
+					echo $lng->getTrn('profile/team/box_tm/desc/select_rule');
+					?>
+					<hr><br>
+					<?php echo $lng->getTrn('common/specialrules');?>:<br>
+					<select name="rule">
+					<?php
+                    $optionsArr = explode(",", $team->getFavruleoptions()); 
+					foreach ($optionsArr as $opt) {
+					$opt_text = 'profile/team/box_tm/favrule/r'.$opt;
+						echo "<option value='$opt'>".$lng->getTrn($opt_text)."</option>\n";
+					}
+					?>
+					</select>
+					<input type="hidden" name="type" value="select_rule">
+					<?php
+					break;
+				/**************
 				 * Hire player
 				 **************/
 				case 'hire_player':
@@ -1583,10 +1569,10 @@ class Team_HTMLOUT extends Team
 					<?php echo $lng->getTrn('common/player');?>:<br>
 					<select name='player'>
 					<?php
-					$active_players = array_filter($players, create_function('$p', "return (\$p->is_sold || \$p->is_dead || \$p->is_mng) ? false : true;"));
+					$active_players = array_filter($players, create_function('$p', "return (\$p->is_sold || \$p->is_dead || \$p->is_mng || \$p->is_retired) ? false : true;"));
 					$DISABLE = true;
 					foreach ($DEA[$team->f_rname]['players'] as $pos => $details) {
-						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit. Aslo Checking for big guy limits via isMaxBigGuys and dungeon bowl positional limits via isPlayerBuyable
+						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit. Also Checking for big guy limits via isMaxBigGuys and dungeon bowl positional limits via isPlayerBuyable
 						if ($team->isMaxBigGuys()) {
 							if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
 								(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {
@@ -1761,6 +1747,29 @@ class Team_HTMLOUT extends Team
 					<?php
 					break;
 				/**************
+				 * Temporary retire player
+				 **************/
+				case 'retire_player':
+					echo $lng->getTrn('profile/team/box_tm/desc/retire_player');
+					?>
+					<hr><br>
+					<?php echo $lng->getTrn('common/player');?>:<br>
+					<select name="player">
+					<?php
+					$DISABLE = true;
+					foreach ($players as $p) {
+						if ($p->is_dead || $p->is_sold || $p->is_retired)
+							continue;
+
+						echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+						$DISABLE = false;
+					}
+					?>
+					</select>
+					<input type="hidden" name="type" value="retire_player">
+					<?php
+					break;
+				/**************
 				 * Rename team
 				 **************/
 				case 'rename_team':
@@ -1885,6 +1894,7 @@ class Team_HTMLOUT extends Team
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _about -->
 		<table class='common'>
+
 			<tr class='commonhead'>
 				<td><b><?php echo $lng->getTrn('profile/team/logo');?></b></td>
 				<td><b><?php echo $lng->getTrn('profile/team/stad');?></b></td>
@@ -1901,7 +1911,7 @@ class Team_HTMLOUT extends Team
 					ImageSubSys::makeBox(IMGTYPE_TEAMSTADIUM, $team->team_id, $ALLOW_EDIT, '_stad');
 					?>
 				</td>
-				<td valign='top' style='width: 100%;'>
+				<td valign='top'  rowspan="3" style='width: 100%;'>
 					<?php
 					$txt = $team->getText();
 					if (empty($txt)) {
@@ -1917,6 +1927,56 @@ class Team_HTMLOUT extends Team
 							<center>
 							<input type="submit" name='Save' value='<?php echo $lng->getTrn('common/save');?>'>
 							</center>
+						</form>
+						<?php
+					}
+					else {
+						echo '<p>'.fmtprint($txt)."</p>\n";
+					}
+					?>
+				</td>
+			</tr>
+			<tr class='commonhead'>
+				<td><b><?php echo $lng->getTrn('profile/team/sponsor');?></b></td>
+				<td><b><?php echo $lng->getTrn('profile/team/stadium');?></b></td>			
+			</tr>
+			<tr>
+				<td valign='top'>
+					<?php
+					$txt = $team->getSponsor();
+					if (empty($txt)) {
+						$txt = $lng->getTrn('profile/team/nosponsor');
+					}
+
+					if ($ALLOW_EDIT) {
+						?>
+						<form method='POST'>
+							<input type="text"  name='teamsponsor' value='<?php echo $txt;?>'></text>
+							<br><br>
+							<input type="hidden" name="type" value="teamsponsor">
+							<input type="submit" name='Save' value='<?php echo $lng->getTrn('common/save');?>'>
+						</form>
+						<?php
+					}
+					else {
+						echo '<p>'.fmtprint($txt)."</p>\n";
+					}
+					?>
+				</td>
+				<td valign='top'>
+					<?php
+					$txt = $team->getStadium();
+					if (empty($txt)) {
+						$txt = $lng->getTrn('profile/team/nostadium');
+					}
+
+					if ($ALLOW_EDIT) {
+						?>
+						<form method='POST'>
+							<input type="text" name='teamstadium' value='<?php echo $txt;?>'></text>
+							<br><br>
+							<input type="hidden" name="type" value="teamstadium">
+							<input type="submit" name='Save' value='<?php echo $lng->getTrn('common/save');?>'>
 						</form>
 						<?php
 					}

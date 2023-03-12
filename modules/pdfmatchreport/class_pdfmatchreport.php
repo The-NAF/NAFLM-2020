@@ -72,6 +72,7 @@ class PDFMatchReport implements ModuleInterface
 	define('COLOR_ROSTER_MNG',      COLOR_HTML_MNG);
 	define('COLOR_ROSTER_DEAD',     COLOR_HTML_DEAD);
 	define('COLOR_ROSTER_SOLD',     COLOR_HTML_SOLD);
+	define('COLOR_ROSTER_RETIRED',  COLOR_HTML_RETIRED);
 	define('COLOR_ROSTER_STARMERC', COLOR_HTML_STARMERC);
 	define('COLOR_ROSTER_JOURNEY',  COLOR_HTML_JOURNEY);
 	define('COLOR_ROSTER_JOURNEY_USED',  COLOR_HTML_JOURNEY_USED);
@@ -343,6 +344,10 @@ class PDFMatchReport implements ModuleInterface
                   if ($p->is_mng) {
                        $name = "$p->name [MNG]";
                        $bgc = COLOR_ROSTER_MNG;
+                  }
+                  if ($p->is_retired) {
+                       $name = "$p->name [RET]";
+                       $bgc = COLOR_ROSTER_RETIRED;
                   }
                   if ($p->mayHaveNewSkill()) {
                        $name = "$p->name";

@@ -62,6 +62,8 @@ $rules['khemri'] = 0; 	//Tomb Kings (teams of legend)
 $rules['slann'] = 0; 	//Slann (teams of legend)
 // Allow/disallow dungeon bowl teams: 0 = enabled. 1 = disabled.
 $rules['dungeon'] = 1; 	//Dungeon Bowl Teams
+// Allow/disallow Mega-Stars: 0 = enabled. 1 = disabled.
+$rules['megastars'] = 0; 	//Mega-Stars
 // Remove double backslashes in front of team number to enable team specific starting treasuries.
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen
@@ -157,10 +159,30 @@ $settings['fp_standings'] = array(
 								'GF'	=> 'gf',
 								'GA'	=> 'ga',
 						),
-	),
+	), 
+	# This will display a standings box of the top 6 teams in the Secondary Tournament
+    array(
+		'id'		=> 	$get_second,
+		'box_ID' 	=> 	9,
+		'type' 		=> 	'tournament',
+		'infocus' 	=> 	false,
+		'HRS' 		=> 	get_alt_col('tours','tour_id',$get_second,'rs'), 
+		'title' 	=> 	get_alt_col('tours','tour_id',$get_second,'name'),
+		'length' 	=> 	40, 
+		'fields' 	=> 	array(	'Name'	=> 'name',
+								'PTS'  	=> 'pts',
+								'TV'	=> 'tv',
+								'CAS'	=> 'cas',
+								'W'		=> 'won',
+								'L'		=> 'lost',
+								'D'		=> 'draw',
+								'GF'	=> 'gf',
+								'GA'	=> 'ga',
+						),
+    ),
 	# This will display a standings box of the top WINNING STREAKS with ID = 4
     array(	'id'     	=> $get_prime,
-			'box_ID' 	=> 5,
+			'box_ID' 	=> 4,
 			'type'   	=> 'tournament', 
 			'infocus' 	=> 	false,
 			'HRS' 		=> 	get_alt_col('tours','tour_id',$get_prime,'rs'),
@@ -186,7 +208,7 @@ $settings['fp_leaders'] = array(
 	 */
     # This will display a 'Most CAS' player leaders box for the Divison of the Prime Tournament
     array(	'id'        => get_alt_col('tours','tour_id',$get_prime,'f_did'), # Node ID
-			'box_ID'    => 3,
+			'box_ID'    => 6,
 			'type'      => 'division',
 			'title'     => 'Top 5 Players - Casualties',
 			'field'     => 'cas',
@@ -195,7 +217,7 @@ $settings['fp_leaders'] = array(
     ),
     # This will display a 'Most TD' player leaders box for the Division of the Prime Tournament
     array(	'id'        => get_alt_col('tours','tour_id',$get_prime,'f_did'),
-			'box_ID'    => 4,
+			'box_ID'    => 5,
 			'type'      => 'division',
 			'title'     => 'Top 5 Players - Touchdowns',
 			'field'     => 'td',
@@ -221,7 +243,7 @@ $settings['fp_events'] = array(
 	 */
     # This will display a list of the most recent killed players for the Prime Tournament
     array(	'id'        => $get_lid,
-			'box_ID'    => 6,
+			'box_ID'    => 7,
 			'type'      => 'league',
 			'title'     => 'Recently Deceased Players',
 			'content'   => 'dead',
@@ -229,7 +251,7 @@ $settings['fp_events'] = array(
     ),
 	# This will display a list of the most recent skills gained for the Prime Tournament
 	array(	'id'        => $get_lid,
-			'box_ID'    => 7,
+			'box_ID'    => 8,
 			'type'      => 'league',
 			'title'     => 'Recent Player Development',
 			'content'   => 'skills',
@@ -250,7 +272,7 @@ $settings['fp_latestgames'] = array(
     # This will display a latest games box for the Prime Tournament
     array(
         'id'     => $get_lid,
-        'box_ID' => 8,
+        'box_ID' => 2,
         'type'   => 'league',
         'title'  => 'Recent Games',
         'length' => 5,

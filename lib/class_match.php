@@ -32,10 +32,12 @@ define('AG',    6);
 define('ST',    7);
 define('PA',  	8);
 define('DEAD',  9);
+define('RETIRED',  0);
 
 // These are the values allowed in the $T_PMD_INJ fields (aging fields have restrictions, though).
 $T_INJS = array(
     NONE => 'NONE',
+    RETIRED  => 'RETIRED',
     MNG  => 'MNG',
     NI   => 'NI',
     MA   => 'MA',
