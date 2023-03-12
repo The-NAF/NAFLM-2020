@@ -1509,7 +1509,7 @@ class Team_HTMLOUT extends Team
 				'retire'            => $lng->getTrn($base.'/box_tm/retire'),
 				'delete'            => $lng->getTrn($base.'/box_tm/delete'),
 			);
-			if (strlen($team->getFavrulechosen()) >= 1 ) {
+			if (strlen($team->getFavrulechosen()) >= 1 || strlen($team->getFavruleoptions()) == 0  ) { 
 			unset($tmanage['select_rule']);
 			}
 			# If one of these are selected from the menu, a JavaScript confirm prompt is displayed before submitting.
