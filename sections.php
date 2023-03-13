@@ -794,57 +794,9 @@ function sec_stars() {
 			if ($tmp->megastar == 1) {       
 				$tmp->name = $tmp->name.'*';
 			}
-			/* //following race text filters deprecated once switched using rules to determine who stars play for
-			if (preg_match('/, Amazons/',$tmp->races)) {       
-				if ($rules['amazon'] == 1) {   
-				$tmp->races = preg_replace("/, Amazons/", "", $tmp->races);
-				}
-				else {
-				$tmp->races = preg_replace("/, Amazons/", ", Amazon (teams of legend)", $tmp->races);
-				}
+			if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/',$tmp->teamrules)) {       
+			$tmp->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/", "Favoured of...", $tmp->teamrules);
 			}
-			if (preg_match('/, Chaos Dwarves/',$tmp->races)) {       
-				if ($rules['chorf'] == 1) {   
-				$tmp->races = preg_replace("/, Chaos Dwarves/", "", $tmp->races);
-				}
-				else {
-				$tmp->races = preg_replace("/, Chaos Dwarves/", ", Chaos Dwarves (teams of legend)", $tmp->races);
-				}
-			}
-			if (preg_match('/, High Elves/',$tmp->races)) {       
-				if ($rules['helfs'] == 1) {   
-				$tmp->races = preg_replace("/, High Elves/", "", $tmp->races);
-				}
-				else {
-				$tmp->races = preg_replace("/, High Elves/", ", High Elves (teams of legend)", $tmp->races);
-				}
-			}
-			if (preg_match('/, Vampires/',$tmp->races)) {       
-				if ($rules['vamps'] == 1) {   
-				$tmp->races = preg_replace("/, Vampires/", "", $tmp->races);
-				}
-				else {
-				$tmp->races = preg_replace("/, Vampires/", ", Vampires (teams of legend)", $tmp->races);
-				}
-			}
-			if (preg_match('/, Khemri Tomb Kings/',$tmp->races)) {       
-				if ($rules['khemri'] == 1) {   
-				$tmp->races = preg_replace("/, Tomb Kings/", "", $tmp->races);
-				}
-				else {
-				$tmp->races = preg_replace("/, Tomb Kings/", ", Tomb Kings (teams of legend)", $tmp->races);
-				}
-			}	
-			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Lizardman, Orc, Norse, Nurgle, Ogre, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$tmp->races)) {       
-				$tmp->races = 'ALL RACES EXCEPT UNDEAD ONES';
-			}
-			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Tomb Kings, Lizardman, Orc, Necromantic Horror, Norse, Nurgle, Ogre, Shambling Undead, Vampire, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$tmp->races)) {       
-				$tmp->races = 'ALL RACES';
-			}	
-			if (preg_match('/, Slann/',$tmp->races) && $rules['slann'] == 1) {   
-				$tmp->races = preg_replace("/, Slann/", "", $tmp->races);
-			}
-			*/
 		}
 		$fields = array(
 			'name'   => array('desc' => $lng->getTrn('common/star'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'star_id')),

@@ -3,7 +3,7 @@
 class Race_HTMLOUT extends Race
 {
 	public static function profile($rid) {
-		global $lng, $DEA, $stars, $specialruleididx;
+		global $lng, $DEA, $stars, $specialruleididx, $rules;
 		$race = new Race($rid);
 		$roster = $DEA[$race->name];
 		title($lng->getTrn('race/'.strtolower(str_replace(' ','', $race->name))));
@@ -11,6 +11,7 @@ class Race_HTMLOUT extends Race
 		<!-- Following HTML from class_race_htmlout.php profile -->
 		<center><img src="<?php echo RACE_ICONS.'/'.$roster['other']['icon'];?>" alt="Race icon"></center>
 		<ul>
+			<?php if ($rules['dungeon'] == 0)  : ?>
 			<li><b><?php echo $lng->getTrn('common/format')?>:</b> 
 			<?php 
 			if ($roster['other']['format'] == 'BB') {
@@ -21,6 +22,7 @@ class Race_HTMLOUT extends Race
 			}
 			;?>
 			</li>
+			<?php endif; ?>
 			<?php if ($roster['other']['format'] == 'BB')  : ?>
 			<li><b><?php echo $lng->getTrn('common/tier')?>:</b> <?php echo $roster['other']['tier'];?></li>
 			<?php endif; ?>
@@ -87,11 +89,20 @@ class Race_HTMLOUT extends Race
 		//List available star players for race
 		$racestars = array(); 
 		foreach ($stars as $s => $d) {  
-			if (in_array($race->race_id, $d['races'])) {
+			$starplaysfor = $d['teamrules']; //defining team rules the star plays for
+			$teamdefrules = $roster['other']['special_rules']; //defining team standard rules
+			$teamdfavrule = $roster['other']['fav_rules'];//defining team chosen rule
+			$allteamrules = array_merge($teamdefrules, $teamdfavrule); //combining standard and chosen
+			$starcanplay = array_intersect($starplaysfor, $allteamrules); //checking for rules in common with star
+			if (!empty($starcanplay))  { //hide stars where rules do not match
+			//if (in_array($race->race_id, $d['races'])) {
 				$tmp = new Star($d['id']);
 				$tmp->skills = skillsTrans($tmp->skills);    
 				$tmp->special = specialsTrans($tmp->special);            
 				$racestars[] = $tmp;
+				if ($tmp->megastar == 1) {       
+					$tmp->name = $tmp->name.'*';
+				}
 			}
 			if ($tmp->pa == 0) {       
 				$tmp->pa = '-';

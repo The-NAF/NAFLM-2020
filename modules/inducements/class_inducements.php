@@ -67,6 +67,9 @@ class IndcPage implements ModuleInterface
 		
         $star_list[0] = '      <option value="0">-No Induced Stars-</option>' . "\n";
         foreach ($stars as $s => $d) {
+			if ($d['megastar'] == 1) { //Checking if megastar, if so appending * to name
+				$s = $s.'*';
+			}
 			//Checking for megastar use rule
             if ($rules['megastars'] == 0 || ($d['megastar'] == 0 && $rules['megastars'] == 1)) {
 				//Deprecatd below use of race to determine if star can be induced, switched to team rules

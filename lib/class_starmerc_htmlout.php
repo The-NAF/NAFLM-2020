@@ -6,57 +6,10 @@ class Star_HTMLOUT extends Star
 		$s = new self($sid);
 		title($s->name);
 		$s->teamrules = specialsTrans($s->teamrules);  
-		$s->races = racesTrans($s->races);  
-			if (preg_match('/, Amazons/',$s->races)) {       
-				if ($rules['amazon'] == 1) {   
-				$s->races = preg_replace("/, Amazons/", "", $s->races);
-				}
-				else {
-				$s->races = preg_replace("/, Amazons/", ", Amazon (teams of legend)", $s->races);
-				}
-			}
-			if (preg_match('/, Chaos Dwarves/',$s->races)) {       
-				if ($rules['chorf'] == 1) {   
-				$s->races = preg_replace("/, Chaos Dwarves/", "", $s->races);
-				}
-				else {
-				$s->races = preg_replace("/, Chaos Dwarves/", ", Chaos Dwarves (teams of legend)", $s->races);
-				}
-			}
-			if (preg_match('/, High Elves/',$s->races)) {       
-				if ($rules['helfs'] == 1) {   
-				$s->races = preg_replace("/, High Elves/", "", $s->races);
-				}
-				else {
-				$s->races = preg_replace("/, High Elves/", ", High Elves (teams of legend)", $s->races);
-				}
-			}
-			if (preg_match('/, Vampires/',$s->races)) {       
-				if ($rules['vamps'] == 1) {   
-				$s->races = preg_replace("/, Vampires/", "", $s->races);
-				}
-				else {
-				$s->races = preg_replace("/, Vampires/", ", Vampires (teams of legend)", $s->races);
-				}
-			}
-			if (preg_match('/, Khemri Tomb Kings/',$s->races)) {       
-				if ($rules['khemri'] == 1) {   
-				$s->races = preg_replace("/, Tomb Kings/", "", $s->races);
-				}
-				else {
-				$s->races = preg_replace("/, Tomb Kings/", ", Tomb Kings (teams of legend)", $s->races);
-				}
-			}	
-			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Lizardman, Orc, Norse, Nurgle, Ogre, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$s->races)) {       
-				$s->races = 'ALL RACES EXCEPT UNDEAD ONES';
-			}
-			if (preg_match('/Amazon, Chaos Chosen, Chaos Dwarf, Dark Elf, Dwarf, Elven Union, Goblin, Halfling, High Elf, Human, Tomb Kings, Lizardman, Orc, Necromantic Horror, Norse, Nurgle, Ogre, Shambling Undead, Vampire, Skaven, Wood Elf, Chaos Renegades, Slann, Underworld Denizens, Old World Alliance, Snotling, Black Orc, Imperial Nobility, Khorne/',$s->races)) {       
-				$s->races = 'ALL RACES';
-			}	
-			if (preg_match('/, Slann/',$s->races) && $rules['slann'] == 1) {   
-				$s->races = preg_replace("/, Slann/", "", $s->races);
-			}
-		
+		$s->races = racesTrans($s->races);
+		if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/',$s->teamrules)) {       
+		$s->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/", "Favoured of...", $s->teamrules);
+		}
 		if ($s->megastar == 1) {
 			echo '<center><b>*Mega-Star*</b></center><br>';
 		}
