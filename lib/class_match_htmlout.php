@@ -358,7 +358,27 @@ class Match_HTMLOUT extends Match
 						continue;
 					// We create zero entries for MNG player(s). This is required!
 					$pid = $p->player_id; # Shortcut
-					if (($p->getStatus($m->match_id) == MNG) || ($p->getStatus($m->match_id) == RETIRED)) {
+					if ($p->getStatus($m->match_id) == MNG) {
+						$_POST["mvp_$pid"]      = 0;
+						$_POST["cp_$pid"]       = 0;
+						$_POST["td_$pid"]       = 0;
+						$_POST["deflct_$pid"]   = 0;
+						$_POST["intcpt_$pid"]   = 0;
+						$_POST["bh_$pid"]       = 0;
+						$_POST["si_$pid"]       = 0;
+						$_POST["ki_$pid"]       = 0;
+						$_POST["misc_$pid"]     = 0;
+						$_POST["ir1_d1_$pid"]   = 0;
+						$_POST["ir1_d2_$pid"]   = 0;
+						$_POST["ir2_d1_$pid"]   = 0;
+						$_POST["ir2_d2_$pid"]   = 0;
+						$_POST["ir3_d1_$pid"]   = 0;
+						$_POST["ir3_d2_$pid"]   = 0;
+						$_POST["inj_$pid"]      = NONE;
+						$_POST["agn1_$pid"]     = NONE;
+						$_POST["agn2_$pid"]     = NONE;
+					}
+					elseif ($p->getStatus($m->match_id) == RETIRED && !$m->is_played) {
 						$_POST["mvp_$pid"]      = 0;
 						$_POST["cp_$pid"]       = 0;
 						$_POST["td_$pid"]       = 0;
@@ -500,8 +520,12 @@ class Match_HTMLOUT extends Match
 		$tourUrl = Tour::getTourUrl(get_parent_id(T_NODE_MATCH, $m->match_id, T_NODE_TOURNAMENT));
 
 		title($teamUrl1 . " - " . $teamUrl2);
-		$CP = 8; // Colspan.
-
+		
+		if ($rules['major_win_pts'] > 0 || $rules['major_beat_pts'] > 0 || $rules['clean_sheet_pts'] > 0) {
+			$CP = 9; // Colspan.
+		} else {
+			$CP = 8; // Colspan
+		}
 		?>
 		<!-- Following HTML from ./lib/class_match_htmlout.php report -->
 		<table>
@@ -595,6 +619,9 @@ class Match_HTMLOUT extends Match
 					<td><b>&Delta; <?php echo $lng->getTrn('matches/report/treas');?></b></td>
 					<td><b><?php echo $lng->getTrn('matches/report/ff');?></b></td>
 					<td><b><?php echo $lng->getTrn('matches/report/smp');?></b></td>
+					<?php if ($rules['major_win_pts'] > 0 || $rules['major_beat_pts'] > 0 || $rules['clean_sheet_pts'] > 0)  : ?>
+					<td><b><?php echo $lng->getTrn('matches/report/bonus');?></b></td>
+					<?php endif; ?>
 					<td><b><?php echo $lng->getTrn('matches/report/tcas');?></b></td>
 					<td><b><?php echo $lng->getTrn('matches/report/fame');?></b></td>
 					<td><b><?php echo $lng->getTrn('matches/report/tv');?></b></td>
@@ -613,6 +640,9 @@ class Match_HTMLOUT extends Match
 					}
 					echo "</td>\n";
 					echo "<td><input type='text' onChange='numError(this);' name='smp$N' value='".($m->{"smp$N"})."' size='1' maxlength='2' $DIS>".$lng->getTrn('matches/report/pts')."</td>\n";
+					if ($rules['major_win_pts'] > 0 || $rules['major_beat_pts'] > 0 || $rules['clean_sheet_pts'] > 0) {
+						echo "<td>".$m->{"bonus$N"}." bonus points</td>\n";
+					}
 					echo "<td><input type='text' onChange='numError(this);' name='tcas$N' value='".($m->{"tcas$N"})."' size='1' maxlength='2' $DIS></td>\n";
 					echo "<td><input type='text' onChange='numError(this);' name='fame$N' value='".($m->{"fame$N"})."' size='1' maxlength='2' $DIS></td>\n";
 					echo "<td><input type='text' onChange='numError(this);' name='tv$N' value='".($m->is_played ? $m->{"tv$N"}/1000 : ${"team$N"}->value/1000)."' size='4' maxlength='10' $DIS>k</td>\n";
@@ -677,7 +707,7 @@ class Match_HTMLOUT extends Match
 					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || ($status == RETIRED));
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired));
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -815,8 +845,12 @@ class Match_HTMLOUT extends Match
 		$T_INJS_AGN = array_diff_key($T_INJS, array(MNG => null, DEAD => null));
 		foreach (array_combine(array_keys($T_MOUT_INJ), array($T_INJS, $T_INJS_AGN, $T_INJS_AGN)) as $f => $opts) {
 			echo "<td><select name='${f}_$FS' $DIS>";
+			$DISABLE = true;
 			foreach ($opts as $status => $name) {
+				if ($status == 'RETIRE')
+					continue;
 				echo "<option value='$status' ".((isset($mdat[$f]) && $mdat[$f] == $status) ? 'SELECTED' : '').">$name</option>";
+				$DISABLE = false;
 			}
 			echo "</select></td>\n";
 		}

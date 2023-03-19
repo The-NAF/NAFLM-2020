@@ -1390,10 +1390,15 @@ class Team_HTMLOUT extends Team
 									<?php
 									$DISABLE = true;
 									foreach ($players as $p) {
-										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->status == 1)
+										if ($p->is_sold || $p->is_dead || $p->is_journeyman || $p->getStatus('-1') == 1)
 											continue;
-
-										echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";
+										echo "<option value='$p->player_id'>$p->nr $p->name"?>
+										<?php 
+										if ($p->getStatus('-1') == 2) {
+											echo " (MNG)</option>\n";
+										} elseif ($p->getStatus('-1') == 0) {
+											echo " (RET)</option>\n";
+										} 
 										$DISABLE = false;
 									}
 									?>
@@ -1511,6 +1516,7 @@ class Team_HTMLOUT extends Team
 				'retire'            => $lng->getTrn($base.'/box_tm/retire'),
 				'delete'            => $lng->getTrn($base.'/box_tm/delete'),
 			);
+			# If a favoured of ... rule has already been selected OR if it does not apply, hide option
 			if (strlen($team->getFavrulechosen()) >= 1 || strlen($team->getFavruleoptions()) == 0  ) { 
 			unset($tmanage['select_rule']);
 			}
@@ -1760,7 +1766,7 @@ class Team_HTMLOUT extends Team
 					<?php
 					$DISABLE = true;
 					foreach ($players as $p) {
-						if ($p->is_dead || $p->is_sold || $p->is_retired)
+						if ($p->is_dead || $p->is_sold || $p->is_retired || !$p->can_retire)
 							continue;
 
 						echo "<option value='$p->player_id'>$p->nr $p->name</option>\n";

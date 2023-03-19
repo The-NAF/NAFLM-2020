@@ -42,6 +42,12 @@ $rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
 $rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
 $rules['megastars'] 			= 0; 	//Mega-Stars
 
+$rules['major_win_tds'] 		= 0; 	//Major Win for scoring how many TDs
+$rules['major_win_pts'] 		= 0; 	//Bonus points for a Major Win
+$rules['clean_sheet_pts'] 		= 0; 	//Bonus points for conceding 0 TDs (clean sheet)
+$rules['major_beat_cas'] 		= 0; 	//Major Beating for scoring how many Casualties
+$rules['major_beat_pts'] 		= 0; 	//Bonus points for a Major Beating
+
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen
 											//	2			=>	1000000,	// Chaos Dwarf

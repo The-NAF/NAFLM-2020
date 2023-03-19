@@ -17,8 +17,7 @@ session_start();
  *   General
  *********************/
 define('OBBLM_VERSION', '1.1 SVN');
-$credits = array(	'Val Catella',
-					'Pierluigi Masia',
+$credits = array(	'Pierluigi Masia',
 					'Mag Merli',
 					'Lars Scharrenberg',
 					'Tim Haini',
@@ -30,10 +29,10 @@ $credits = array(	'Val Catella',
 					'Goiz Ruiz de Gopegui',
 					'Ryan Williams',
 					'Ian Williams');
-define('NAFLM_VERSION', '4.0');
-define('NAFLM_BUILD_DATE', '12th March 2023');
+define('NAFLM_VERSION', '4.1');
+define('NAFLM_BUILD_DATE', '19th March 2023');
 define('CONTENT_VERSION', 'Spike 15/2022 Almanac');
-define('CONTENT_DETAIL', 'Blood Bowl 2020, including Dungeon Bowl, Death Zone and Spike 11-15');
+define('CONTENT_DETAIL', 'Blood Bowl 2020, including Dungeon Bowl, Death Zone and 2021-22 Almanacs');
 define('CONTENT_DATE', 'March 2023');
 $naflmcredits = array(	
 						'Val Catella',

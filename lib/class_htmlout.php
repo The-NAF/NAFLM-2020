@@ -520,7 +520,7 @@ class HTMLOUT
 	const T_NS__ffilter_ineq_gt = 1; # Greater than.
 	const T_NS__ffilter_ineq_lt = 2; # Less than.
 	public static function nodeSelector(array $opts) {
-		global $lng, $settings, $raceididx, $coach;
+		global $lng, $settings, $raceididx, $coach, $rules;
 		// Set defaults
 		$s_node     = self::T_NSStr__node;
 		$s_node_id  = self::T_NSStr__node_id;
@@ -609,7 +609,18 @@ class HTMLOUT
 				<?php
 				echo "<option style='font-weight: bold;' value='".T_RACE_ALL."'>-".$lng->getTrn('common/all')."-</option>\n";
 				foreach ($raceididx as $rid => $rname) {
-					echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
+					if ( substr($rname, 0, 7) != 'College' ) {
+						echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
+					}
+				}
+				if ($rules['dungeon'] == 0) {
+					echo  "<optgroup label='Dungeon Bowl Teams'>";
+					foreach ($raceididx as $rid => $rname) {
+						if ( substr($rname, 0, 7) == 'College' ) {
+							echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
+						}
+					}
+					echo "</optgroup>";
 				}
 				?>
 			</select>

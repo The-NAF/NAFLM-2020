@@ -83,6 +83,7 @@ class Player
     public $is_dead             = false;
     public $is_mng              = false;
     public $is_retired          = false;
+    public $can_retire          = false;
     public $is_journeyman       = false;
     public $is_used_journeyman  = false;
 
@@ -121,6 +122,7 @@ class Player
         $this->is_dead              = ($this->status == DEAD);
         $this->is_retired           = ($this->status == RETIRED);
         $this->is_mng               = !in_array($this->status, array(NONE, DEAD, RETIRED));
+        $this->can_retire           = !in_array($this->status, array(NONE, DEAD, RETIRED)) && ($this->inj_ma > 0 || $this->inj_ag > 0 || $this->inj_st > 0 || $this->inj_pa > 0 || $this->inj_av > 0);
         $this->is_sold              = (bool) $this->date_sold;
         $this->is_journeyman        = ($this->type == PLAYER_TYPE_JOURNEY);
         $this->is_journeyman_used   = ($this->type == PLAYER_TYPE_JOURNEY) && ($this->mv_played > 0);
@@ -409,7 +411,7 @@ class Player
 	 public function removeMNG() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
-        $query = "UPDATE players SET status = 1 WHERE player_id = $this->player_id";
+        $query = "UPDATE players SET status = 1, date_retired = NULL WHERE player_id = $this->player_id";
         return mysql_query($query);
     }
 
@@ -425,7 +427,7 @@ class Player
     public function retirePlayer() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead || $this->is_retired)
             return false;
-        $query = "UPDATE players SET status = 0 WHERE player_id = $this->player_id";
+        $query = "UPDATE players SET status = 0, date_retired = now() WHERE player_id = $this->player_id";
         return mysql_query($query);
     }
 

@@ -148,6 +148,7 @@ class Match
             tcas1 = 0, tcas2 = 0, 
             fame1 = 0, fame2 = 0, 
             tv1 = 0, tv2 = 0, 
+            bonus1 = 0, bonus2 = 0, 
             income1 = NULL, income2 = NULL,
             ffactor1 = NULL, ffactor2 = NULL, 
             fans = 0, gate = NULL, stadium = NULL, submitter_id = NULL, locked = NULL
@@ -176,12 +177,12 @@ class Match
         // Determine if team fan-factors are within the "> 0" limit. If not, don't save the negative fan-factor.
         if(isset($input['ffactor1'])) {
             $team1 = new Team($this->team1_id);
-            if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 0) 
+            if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
                 $input['ffactor1'] = $this->ffactor1;
         }
         if(isset($input['ffactor2'])) {
             $team2 = new Team($this->team2_id);
-            if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 0) 
+            if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
                 $input['ffactor2'] = $this->ffactor2;
         }
         // Entry corrections
@@ -205,8 +206,8 @@ class Match
             $input must contain the keys defined in $core_tables, with the exception of the $filter contents below.
         */
         // Verify input
-        global $core_tables;
-        $filter = array('match_id','round','f_tour_id','locked','date_played','date_modified','date_created','team1_id','team2_id',);
+        global $core_tables, $rules;
+        $filter = array('match_id','round','f_tour_id','locked','date_played','date_modified','date_created','team1_id','team2_id','bonus1','bonus2',);
         $EXPECTED = array_diff(array_keys($core_tables['matches']), $filter); sort($EXPECTED);
         $PASSED = array_keys($input); sort($PASSED);
         if ($PASSED !== $EXPECTED)
@@ -217,8 +218,8 @@ class Match
         // Determine if team fan-factors are within the "> 0" limit. If not, don't save the negative fan-factor.
         $team1 = new Team($this->team1_id);
         $team2 = new Team($this->team2_id);
-        if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 0) $input['ffactor1'] = $this->ffactor1;
-        if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 0) $input['ffactor2'] = $this->ffactor2;
+        if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) $input['ffactor1'] = $this->ffactor1;
+        if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) $input['ffactor2'] = $this->ffactor2;
         // Entry corrections
         $input['date_played'] = ($this->is_played) ? 'date_played' : 'NOW()';
         $input['date_modified'] = 'NOW()';
@@ -229,6 +230,18 @@ class Match
         // Update team treasury
         $team1->dtreasury($input['income1'] - $this->income1);
         $team2->dtreasury($input['income2'] - $this->income2);
+		// Bonus points calculation
+		$bonustd1 = ($input['team1_score'] >= $rules['major_win_tds']) ? $rules['major_win_pts'] : 0;
+		$bonustd2 = ($input['team2_score'] >= $rules['major_win_tds']) ? $rules['major_win_pts'] : 0;
+		$bonusclean1 = ($input['team2_score'] == 0) ? $rules['clean_sheet_pts'] : 0;
+		$bonusclean2 = ($input['team1_score'] == 0) ? $rules['clean_sheet_pts'] : 0;
+		$bonuscas1 = ($input['tcas1'] >= $rules['major_beat_cas']) ? $rules['major_beat_pts'] : 0;
+		$bonuscas2 = ($input['tcas2'] >= $rules['major_beat_cas']) ? $rules['major_beat_pts'] : 0;
+        $totalbonus1 = $bonustd1 + $bonusclean1 + $bonuscas1;
+        $totalbonus2 = $bonustd2 + $bonusclean2 + $bonuscas2;
+		$query = "UPDATE matches SET Bonus1 = $totalbonus1, Bonus2 = $totalbonus2 WHERE match_id = $this->match_id";
+        if (!mysql_query($query))
+            return false;
         return true;
     }
 

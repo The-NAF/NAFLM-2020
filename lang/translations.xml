@@ -351,7 +351,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>
-                <retire_player> <![CDATA[ Temporarily retire a player.<br> No refund wil apply.<br> Player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
+                <retire_player> <![CDATA[ Temporarily retire a player. No refund will apply.<br> Only players who suffered a lasting injury in the last game can be retired.<br> A retired player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
                 <rename_team> <![CDATA[ Rename your team. ]]> </rename_team>
                 <buy_goods> <![CDATA[ Buy team goods. ]]> </buy_goods>
                 <buy_goods_warn> <![CDATA[ <br><br>Please note that re-roll prices are currently <font color='red'><b>doubled</b></font>.<br>If your intention is to buy a non-doubled RR, then buy it anyway and reclaim the lost gold by asking an admin to reinsert the overcharged amount. ]]> </buy_goods_warn>
@@ -457,7 +457,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <results>Game results</results>
         <treas>Treasury</treas>
         <ff>Dedicated Fans</ff>
-        <smp>Sportsmanship &amp; Bonus points</smp>
+        <smp>Sportsmanship &amp; Manual Bonus points</smp>
+        <bonus>Additional League Points</bonus>
         <pts>points</pts>
         <tcas>Total team CAS</tcas>
         <fame>Fan Factor</fame>

@@ -51,7 +51,7 @@ if($action == "update") {
 
         // We create zero entries for MNG player(s). This is required!
         $pid = $player->player_id;
-        if ($player->getStatus($match->match_id) == MNG) {
+        if ($player->getStatus($match->match_id) == MNG || ($player->getStatus($match->match_id) == RETIRED && !$m->is_played)) {
             $_POST["mvp_$pid"]      = 0;
             $_POST["cp_$pid"]       = 0;
             $_POST["td_$pid"]       = 0;
@@ -70,8 +70,7 @@ if($action == "update") {
             $_POST["inj_$pid"]      = NONE;
             $_POST["agn1_$pid"]     = NONE;
             $_POST["agn2_$pid"]     = NONE;
-        } 
-        
+        }
         $match->entry($player->player_id, array(
             'mvp'     => $_POST["mvp_$pid"],
             'cp'      => $_POST["cp_$pid"],

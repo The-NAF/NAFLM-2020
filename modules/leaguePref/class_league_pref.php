@@ -165,8 +165,13 @@ public $khemri = 0;
 public $slann = 0;
 public $dungeon = 0;
 public $megastars = 0;
+public $major_win_tds = 0;
+public $major_win_pts = 0;
+public $clean_sheet_pts = 0;
+public $major_beat_cas = 0;
+public $major_beat_pts = 0;
 
-function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon, $megastars) {
+function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon, $megastars, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -189,6 +194,11 @@ function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welco
     $this->slann = $slann;
     $this->dungeon = $dungeon;
     $this->megastars = $megastars;
+    $this->major_win_tds = $major_win_tds;
+    $this->major_win_pts = $major_win_pts;
+    $this->clean_sheet_pts = $clean_sheet_pts;
+    $this->major_beat_cas = $major_beat_cas;
+    $this->major_beat_pts = $major_beat_pts;
 }
 
 /* Gets the preferences for the current league */
@@ -209,13 +219,17 @@ public static function getLeaguePreferences() {
                 $row['welcome'], $row['rules'], true, $theme_css, 
                 $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars'],
+				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
+				$rules['major_beat_cas'],$rules['major_beat_pts']);
         }
     } else {
 		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
             $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars']);
+				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars'],
+				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
+				$rules['major_beat_cas'],$rules['major_beat_pts']);
 	}
 }
 
@@ -232,8 +246,9 @@ function save() {
     } else {
         $query = "INSERT INTO league_prefs (f_lid, prime_tid, second_tid, league_name, forum_url, welcome, rules) VALUE ($this->lid, $this->p_tour, $this->s_tour, '".mysql_real_escape_string($this->league_name)."', '".mysql_real_escape_string($this->forum_url)."', '".mysql_real_escape_string($this->welcome)."', '".mysql_real_escape_string($this->rules)."')";
     }
-           
-    FileManager::writeFile(FileManager::getCssDirectoryName() . "/league_override_$this->lid.css", $this->theme_css);
+    $savedcss = preg_replace('/<p>/', '', $this->theme_css);
+    $savedcssfinal = preg_replace('/<\/p>/', '', $savedcss);
+    FileManager::writeFile(FileManager::getCssDirectoryName() . "/league_override_$this->lid.css", $savedcssfinal);
     
     $settingsFileContents = FileManager::readFile(FileManager::getSettingsDirectoryName() . "/settings_$this->lid.php");
     $settingsFileContents = preg_replace("/settings\['stylesheet'\]\s*=\s['A-Za-z0-9_]+/", "settings['stylesheet'] = $this->core_theme_id", $settingsFileContents);
@@ -278,6 +293,31 @@ function save() {
 		$settingsFileContents = preg_replace("/rules\['megastars'\]\s*=\s['A-Za-z0-9_]+/", "rules['megastars'] = $this->megastars", $settingsFileContents);
 	} else {
         $settingsFileContents = preg_replace("/rules\['megastars'\]\s*=\s['A-Za-z0-9_]+/", "rules['megastars'] = 0", $settingsFileContents);
+    }
+	if ($this->major_win_tds > 0) {
+		$settingsFileContents = preg_replace("/rules\['major_win_tds'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_win_tds'] = $this->major_win_tds", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['major_win_tds'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_win_tds'] = 0", $settingsFileContents);
+    }
+	if ($this->major_win_pts > 0) {
+		$settingsFileContents = preg_replace("/rules\['major_win_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_win_pts'] = $this->major_win_pts", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['major_win_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_win_pts'] = 0", $settingsFileContents);
+    }
+	if ($this->clean_sheet_pts > 0) {
+		$settingsFileContents = preg_replace("/rules\['clean_sheet_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['clean_sheet_pts'] = $this->clean_sheet_pts", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['clean_sheet_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['clean_sheet_pts'] = 0", $settingsFileContents);
+    }
+	if ($this->major_beat_cas > 0) {
+		$settingsFileContents = preg_replace("/rules\['major_beat_cas'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_beat_cas'] = $this->major_beat_cas", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['major_beat_cas'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_beat_cas'] = 0", $settingsFileContents);
+    }
+	if ($this->major_beat_pts > 0) {
+		$settingsFileContents = preg_replace("/rules\['major_beat_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_beat_pts'] = $this->major_beat_pts", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['major_beat_pts'\]\s*=\s['A-Za-z0-9_]+/", "rules['major_beat_pts'] = 0", $settingsFileContents);
     }
     FileManager::writeFile(FileManager::getSettingsDirectoryName() . "/settings_$this->lid.php", $settingsFileContents);
     
@@ -489,6 +529,23 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('megastars', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('bonuspoints_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('bonuspoints_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type="number" min="0" max="10" name="major_win_tds" <?php echo $canEdit; ?> value="<?php echo $rules['major_win_tds'] ?>" />
+							<b><?php echo $lng->getTrn('major_win_tds', 'LeaguePref'); ?></b><br>
+							<input type="number" min="0" max="10" name="major_win_pts" <?php echo $canEdit; ?> value="<?php echo $rules['major_win_pts'] ?>" />
+							<b><?php echo $lng->getTrn('major_win_pts', 'LeaguePref'); ?></b><br>
+							<input type="number" min="0" max="10" name="clean_sheet_pts" <?php echo $canEdit; ?> value="<?php echo $rules['clean_sheet_pts'] ?>" />
+							<b><?php echo $lng->getTrn('clean_sheet_pts', 'LeaguePref'); ?></b><br>
+							<input type="number" min="0" max="10" name="major_beat_cas" <?php echo $canEdit; ?> value="<?php echo $rules['major_beat_cas'] ?>" />
+							<b><?php echo $lng->getTrn('major_beat_cas', 'LeaguePref'); ?></b><br>
+							<input type="number" min="0" max="10" name="major_beat_pts" <?php echo $canEdit; ?> value="<?php echo $rules['major_beat_pts'] ?>" />
+							<b><?php echo $lng->getTrn('major_beat_pts', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $submit_title; ?>">
                         <td colspan="2">
                             <input type="submit" name="action" <?php echo $canEdit; ?> value="<?php echo $submit_text; ?>" style="position:relative; right:-200px;">
@@ -515,7 +572,9 @@ public static function handleActions() {
                 $_POST['core_theme_id'], $_POST['tv'], $_POST['language'],
 				$_POST['amazon'],$_POST['chorf'],$_POST['helf'],
 				$_POST['vamps'],$_POST['khemri'],$_POST['slann'],
-				$_POST['dungeon'],$_POST['megastars']);
+				$_POST['dungeon'],$_POST['megastars'],
+				$_POST['major_win_tds'],$_POST['major_win_pts'],$_POST['clean_sheet_pts'],
+				$_POST['major_beat_cas'],$_POST['major_beat_pts']);
 			if($l_pref->validate()) {
 				if($l_pref->save()) {
 					echo "<div class='boxWide'>";

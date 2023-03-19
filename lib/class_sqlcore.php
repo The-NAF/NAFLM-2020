@@ -66,8 +66,7 @@ class SQLCore
 	public static function mkHRS(array $HRSs) {
 		global $CT_cols, $core_tables;
 		$allowed_fields = array(
-			'mvp', 'cp', 'td', 'deflct', 'intcpt', 'bh', 'si', 'ki', 'misc', 'cas', 'tdcas', 'smp', 'elo',
-			'gf', 'ga', 'sdiff', 'tcasf', 'tcasa', 'tcdiff', 'won', 'lost', 'draw', 'swon', 'slost', 'sdraw', 'played', 'win_pct',
+			'mvp', 'cp', 'td', 'deflct', 'intcpt', 'bh', 'si', 'ki', 'misc', 'cas', 'tdcas', 'smp', 'bonus', 'elo',	'gf', 'ga', 'sdiff', 'tcasf', 'tcasa', 'tcdiff', 'won', 'lost', 'draw', 'swon', 'slost', 'sdraw', 'played', 'win_pct',
 		);
 		$query = 'CREATE FUNCTION getPTS(tid '.$CT_cols[T_OBJ_TEAM].', trid '.$CT_cols[T_NODE_TOURNAMENT].')
 			RETURNS '.$CT_cols['pts'].'
@@ -126,7 +125,8 @@ class SQLCore
 				tcasf  = IFNULL((SELECT SUM(IF(team1_id = tid, tcas1, IF(team2_id = tid, tcas2, 0))) REGEX_REPLACE_HERE), 0),
 				tcasa  = IFNULL((SELECT SUM(IF(team1_id = tid, tcas2, IF(team2_id = tid, tcas1, 0))) REGEX_REPLACE_HERE), 0),
 				smp    = IFNULL((SELECT SUM(IF(team1_id = tid, smp1, IF(team2_id = tid, smp2, 0))) REGEX_REPLACE_HERE), 0),
-				ff     = IFNULL((SELECT SUM(IF(team1_id = tid, ffactor1, IF(team2_id = tid, ffactor2, 0))) REGEX_REPLACE_HERE), 0)
+				ff     = IFNULL((SELECT SUM(IF(team1_id = tid, ffactor1, IF(team2_id = tid, ffactor2, 0))) REGEX_REPLACE_HERE), 0),
+				bonus     = IFNULL((SELECT SUM(IF(team1_id = tid, bonus1, IF(team2_id = tid, bonus2, 0))) REGEX_REPLACE_HERE), 0)
 		';
 		$mstat_fields_player = preg_replace('/REGEX_REPLACE_HERE/', $mstat_fields_suffix_player, $mstat_fields);
 		$mstat_fields_team   = preg_replace('/REGEX_REPLACE_HERE/', $mstat_fields_suffix_team,   $mstat_fields);

@@ -64,4 +64,8 @@ $hrs[4]['points'] = '5*[won] + 3*[draw] + 1*[lost] + 1*[smp]'; // The definition
 $hrs[5]['rule']   = array('-pts', '-sdiff', '-tcdiff');    // Sort teams against: most points, then net TDs, and then net CASs.
 $hrs[5]['points'] = '3*[won] + 1*[draw] + 0*[lost]'; // The definition of points.
 
+// Rule #6
+$hrs[6]['rule']   = array('-pts', '-sdiff', '-tcdiff');    // Sort teams against: most points, then net TDs, and then net CASs.
+$hrs[6]['points'] = '3*[won] + 1*[draw] + 0*[lost] + 1*[bonus]'; // The definition of points.
+
 // Add you own rules here...

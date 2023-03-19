@@ -8,3 +8,24 @@ NAFLM 2020 updated by Val Catella (2020-2023) for the NAF
 Please visit https://thenaf.obblm.com/ to register for a NAF hosted league
 
 If installing NAFLM on your own server please copy all files then run install.php from a browser
+
+If database is already installed from v3 and updating to v4.1 (latest as of March 2019) then please run the following scipt in your database to add new fields:
+
+ALTER TABLE teams
+ADD COLUMN fav_rule SMALLINT(5) UNSIGNED DEFAULT NULL AFTER win_pct;
+ALTER TABLE players
+ADD COLUMN date_retired DATETIME NULL DEFAULT NULL AFTER date_died;
+ALTER TABLE mv_coaches
+ADD COLUMN bonus SMALLINT(6) NULL DEFAULT NULL AFTER smp;
+ALTER TABLE mv_players
+ADD COLUMN bonus SMALLINT(6) NULL DEFAULT NULL AFTER smp;
+ALTER TABLE mv_races
+ADD COLUMN bonus SMALLINT(6) NULL DEFAULT NULL AFTER smp;
+ALTER TABLE mv_teams
+ADD COLUMN bonus SMALLINT(6) NULL DEFAULT NULL AFTER smp;
+ALTER TABLE matches
+ADD COLUMN bonus1 TINYINT(4) NOT NULL DEFAULT 0 AFTER tv2;
+ALTER TABLE matches
+ADD COLUMN bonus2 TINYINT(4) NOT NULL DEFAULT 0 AFTER bonus1;
+
+THEN replace files, after which in NAFLM core panel, please run Re-install database first, then synchronise

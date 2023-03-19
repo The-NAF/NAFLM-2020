@@ -27,7 +27,7 @@ $CT_cols = array(
     'win_pct'  => 'FLOAT UNSIGNED',
     'streak'   => 'SMALLINT UNSIGNED',
     'skills'   => 'VARCHAR('.(19+20*3).')', # Set limit to 20 skills, ie. chars = 19 commas + 20*3 (max 20 integers of 3 decimals (assumed upper limit)).
-    'special'   => 'VARCHAR('.(19+20*3).')', # Set limit to 20 skills, ie. chars = 19 commas + 20*3 (max 20 integers of 3 decimals (assumed upper limit)).
+    'special'   => 'VARCHAR('.(19+20*3).')', # Set limit to 20 rules, ie. chars = 19 commas + 20*3 (max 20 integers of 3 decimals (assumed upper limit)).
     'pts'      => 'FLOAT SIGNED',
 );
 
@@ -116,6 +116,7 @@ $core_tables = array(
         'value'     => $CT_cols['pv'],
         'status'    => 'TINYINT UNSIGNED',
         'date_died' => 'DATETIME',
+        'date_retired' => 'DATETIME',
         'ma'        => $CT_cols['chr'].' DEFAULT 0',
         'st'        => $CT_cols['chr'].' DEFAULT 0',
         'ag'        => $CT_cols['chr'].' DEFAULT 0',
@@ -220,6 +221,8 @@ $core_tables = array(
         'fame2'         => 'TINYINT UNSIGNED NOT NULL DEFAULT 0',
         'tv1'           => $CT_cols['tv'].' NOT NULL DEFAULT 0',
         'tv2'           => $CT_cols['tv'].' NOT NULL DEFAULT 0',
+        'bonus1'        => 'TINYINT SIGNED NOT NULL DEFAULT 0',
+        'bonus2'        => 'TINYINT SIGNED NOT NULL DEFAULT 0',
     ),
     'match_data' => array(
         'f_coach_id'    => $CT_cols[T_OBJ_COACH],
@@ -339,6 +342,7 @@ $mv_commoncols = array(
     'tdcas'     => 'SMALLINT UNSIGNED',
     'misc'      => 'SMALLINT UNSIGNED',
     'smp'       => 'SMALLINT SIGNED',
+    'bonus' 	=> 'SMALLINT SIGNED',
     'spp'       => 'SMALLINT UNSIGNED',
     'ff'        => 'SMALLINT SIGNED',
     'won'       => 'SMALLINT UNSIGNED',
