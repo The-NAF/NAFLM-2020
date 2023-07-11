@@ -10,6 +10,9 @@ class Star_HTMLOUT extends Star
 		if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/',$s->teamrules)) {       
 		$s->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/", "Favoured of...", $s->teamrules);
 		}
+		if (preg_match('/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../',$s->teamrules)) {       
+		$s->teamrules = preg_replace("/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../", "Any Team", $s->teamrules);
+		}
 		if ($s->megastar == 1) {
 			echo '<center><b>*Mega-Star*</b></center><br>';
 		}

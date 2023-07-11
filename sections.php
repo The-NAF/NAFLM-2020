@@ -797,6 +797,9 @@ function sec_stars() {
 			if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/',$tmp->teamrules)) {       
 			$tmp->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/", "Favoured of...", $tmp->teamrules);
 			}
+			if (preg_match('/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../',$tmp->teamrules)) {       
+			$tmp->teamrules = preg_replace("/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../", "Any Team", $tmp->teamrules);
+			}
 		}
 		$fields = array(
 			'name'   => array('desc' => $lng->getTrn('common/star'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'star_id')),
