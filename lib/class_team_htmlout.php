@@ -189,7 +189,7 @@ class Team_HTMLOUT extends Team
 					break;
 			case 'rename_team':     status($team->rename($_POST['name'])); break;
 			case 'buy_goods':       status($team->buy($_POST['thing'])); break;
-			//case 'drop_goods':      status($team->drop($_POST['thing'])); break;
+			case 'drop_goods':      status($team->drop($_POST['thing'])); break;
 			case 'ready_state':     status($team->setReady(isset($_POST['bool']))); break;
 			case 'retire':          status(isset($_POST['bool']) && $team->setRetired(true)); break;
 			case 'delete':          status(isset($_POST['bool']) && $team->delete()); break;
@@ -1511,7 +1511,7 @@ class Team_HTMLOUT extends Team
 				'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
 				'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
 				'buy_goods'         => $lng->getTrn($base.'/box_tm/buy_goods'),
-				//'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
+				'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
 				'ready_state'       => $lng->getTrn($base.'/box_tm/ready_state'),
 				'retire'            => $lng->getTrn($base.'/box_tm/retire'),
 				'delete'            => $lng->getTrn($base.'/box_tm/delete'),
