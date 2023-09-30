@@ -554,7 +554,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <ogre>Ogre</ogre>
     <orc>Orc</orc>
     <shamblingundead>Shambling Undead</shamblingundead>
-    <vampire>Vampire</vampire>
+    <vampire>Vampire (Teams of Legend)</vampire>
     <skaven>Skaven</skaven>
     <woodelf>Wood Elf</woodelf>
     <chaosrenegades>Chaos Renegades</chaosrenegades>
@@ -566,6 +566,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<blackorc>Black Orc</blackorc>
 	<imperialnobility>Imperial Nobility</imperialnobility>
 	<amazons>Amazon</amazons>
+    <vampires>Vampire</vampires>
 	<!-- Dungeon Bowl Teams -->
 	<collegeoffire>College of Fire</collegeoffire>
 	<collegeofshadow>College of Shadow</collegeofshadow>
@@ -681,6 +682,9 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <!-- Vampire -->
     <thralllineman>Thrall Lineman</thralllineman>
     <vampireblitzer>Vampire Blitzer</vampireblitzer>
+    <vampirethrower>Vampire Thrower</vampirethrower>
+    <vampirerunner>Vampire Runner</vampirerunner>
+    <vargheist>Vargheist</vargheist>
     <!-- Wood Elf -->
     <woodelflineman>Wood Elf Lineman</woodelflineman>
     <wardancer>Wardancer</wardancer>
@@ -870,7 +874,9 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <lowcostlinemen>(Low Cost Linemen Special Rule)</lowcostlinemen>
     <drunkard>Drunkard</drunkard>
     <pickmeup>Pick-me-up</pickmeup> 
-    <hitandrun>Hit and Run</hitandrun>    
+    <hitandrun>Hit and Run</hitandrun>   
+    <bloodlust2plus>Bloodlust (2+)</bloodlust2plus>   
+    <bloodlust3plus>Bloodlust (3+)</bloodlust3plus>
 </skill>
 
 <starplayer>
@@ -1071,6 +1077,12 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<asneakypairdesc>Dribl &amp; Drull must be hired as a pair and count as two Star Players. Additionally, whenever Dribl or Drull perform either a Stab or Foul action against an opposition player marked by both Dribl &amp; Drull, they may apply a +1 modifier to the injury roll.</asneakypairdesc>
 	<halflingluck>Halfling Luck</halflingluck>
 	<halflingluckdesc>Once per game, Puggy may re-roll one dice that was rolled either as a single dice, or as part of a dice pool (this cannot be a dice that was rolled part of an Armour, Injury, or Casualty roll).</halflingluckdesc>
+	<tastymorsel>Tasty Morsel</tastymorsel>
+	<tastymorseldesc>Once per game, when Karina fails a Bloodlust roll, she may choose to bite an opposition player with a ST 3 or lower as if they were a Thrall Lineman team-mate. Karina may not bite Star Players with this special rule.</tastymorseldesc>
+	<dwarfenscourge>Dwarfen Scourge</dwarfenscourge>
+	<dwarfenscourgedesc>Once per game, when an opposition player is Knocked Down as a result of a Block action performed by Ivan, you may apply an additional +1 modifier to the Armour roll or Injury roll. If this is against a Dwarfen player from any team, this may instead be a +2 modifier.</dwarfenscourgedesc>
+	<staroftheshow>Star of the Show</staroftheshow>
+	<staroftheshowdesc>Once per game, when Count Luthor scores a touchdown, his controlling coach may gain one team re-roll. If this re-roll has not been used by the end of the next drive, it is lost.</staroftheshowdesc>
 </specialrules>
 
 <experience>

@@ -231,7 +231,7 @@ class Match_HTMLOUT extends Match
 		$match_id = (int) $_GET['mid'];
 		if (!get_alt_col('matches', 'match_id', $match_id, 'match_id'))
 			fatal("Invalid match ID.");
-		global $lng, $stars, $rules, $settings, $coach, $racesHasNecromancer, $racesMayRaiseRotters, $DEA, $T_PMD__ENTRY_EXPECTED;
+		global $lng, $stars, $rules, $settings, $coach, $racesHasNecromancer, $racesMayRaiseRotters, $racesMayRaiseThrall, $DEA, $T_PMD__ENTRY_EXPECTED;
 		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ;
 		global $leagues,$divisions,$tours;
 		$T_ROUNDS = Match::getRounds();
@@ -300,7 +300,7 @@ class Match_HTMLOUT extends Match
 					}
 				}
 			}
-			// SECONDLY, look for raised rotters too, do same as above with zombies...
+			// SECOND, look for raised rotters too, do same as above with zombies (except they are a journeyman that must be bought, not free)...
 			foreach (array(1 => $team1, 2 => $team2) as $id => $t) {
 				if (in_array($t->f_race_id, $racesMayRaiseRotters) && isset($_POST["t${id}rotter"]))  {
 						$pos_id = $DEA[$t->f_rname]['players']['Rotter Lineman']['pos_id'];
@@ -319,6 +319,31 @@ class Match_HTMLOUT extends Match
 						*/
 						foreach ($T_PMD__ENTRY_EXPECTED as $f) {
 							$postName = "${f}_t${id}rotter";
+							$_POST["${f}_$pid"] = isset($_POST[$postName]) ? $_POST[$postName] : 0;
+							unset($_POST[$postName]);
+						}
+					
+				}
+			}
+			// THIRD, look for summoned thralls too, do same as above with zombies...
+			foreach (array(1 => $team1, 2 => $team2) as $id => $t) {
+				if (in_array($t->f_race_id, $racesMayRaiseThrall) && isset($_POST["t${id}thrall"]))  {
+						$pos_id = $DEA[$t->f_rname]['players']['Thrall Lineman']['pos_id'];
+						list($exitStatus,$pid) = Player::create(
+							array(
+								'nr' => $t->getFreePlayerNr(),
+								'f_pos_id' => $pos_id,
+								'team_id' => $t->team_id,
+								'name' => "SUMMONED THRALL"
+							),
+							array(
+								'free' => true,	
+							));
+						/*
+							Knowing the new thrall's PID we relocate the thrall match data to regular player data - this allows us to use the same loop for submitting the thrall's match data.
+						*/
+						foreach ($T_PMD__ENTRY_EXPECTED as $f) {
+							$postName = "${f}_t${id}thrall";
 							$_POST["${f}_$pid"] = isset($_POST[$postName]) ? $_POST[$postName] : 0;
 							unset($_POST[$postName]);
 						}
@@ -729,7 +754,7 @@ class Match_HTMLOUT extends Match
 				global $racesHasNecromancer;
 				if (in_array($t->f_race_id, $racesHasNecromancer)) {
 					echo "<hr style='width:200px;float:left;'><br>
-					<b>Raised zombie?:</b> <input type='checkbox' name='t${id}zombie' value='1' onclick='slideToggleFast(\"t${id}zombie\");'><br>\n";
+					<b>Raised Zombie?:</b> <input type='checkbox' name='t${id}zombie' value='1' onclick='slideToggleFast(\"t${id}zombie\");'><br>\n";
 					echo "<div id='t${id}zombie' style='display:none;'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}zombie", 'Raised Zombie', '&mdash;', 'Zombie Lineman', false, array(), $DIS);
@@ -741,12 +766,21 @@ class Match_HTMLOUT extends Match
 				if (in_array($t->f_race_id, $racesMayRaiseRotters)) {
 					//$maxRotters = 6; # Note there is no real limit for raised rotters.
 					echo "<hr style='width:200px;float:left;'><br>
-					<b>Raised rotter?:</b>  <input type='checkbox' name='t${id}rotter' value='1' onclick='slideToggleFast(\"t${id}rotter\");'><br>\n";
+					<b>Raised Rotter?:</b>  <input type='checkbox' name='t${id}rotter' value='1' onclick='slideToggleFast(\"t${id}rotter\");'><br>\n";
 					echo "<div id='t${id}rotter' style='display:none;'>\n";
 					echo "<table class='common'>\n";
 					self::_print_player_row("t${id}rotter", "Raised Rotter Journeyman", '&mdash;', 'Rotter Lineman', false, array(), $DIS);
-					echo "</table></div>\n";
-					
+					echo "</table></div>\n";	
+				}
+				// Add summoned thrall
+				global $racesMayRaiseThrall;
+				if (in_array($t->f_race_id, $racesMayRaiseThrall)) {
+					echo "<hr style='width:200px;float:left;'><br>
+					<b>Summoned Thrall?:</b>  <input type='checkbox' name='t${id}thrall' value='1' onclick='slideToggleFast(\"t${id}thrall\");'><br>\n";
+					echo "<div id='t${id}thrall' style='display:none;'>\n";
+					echo "<table class='common'>\n";
+					self::_print_player_row("t${id}thrall", "Summoned Thrall", '&mdash;', 'Thrall Lineman', false, array(), $DIS);
+					echo "</table></div>\n";	
 				}
 				?>
 

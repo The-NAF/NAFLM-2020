@@ -1116,6 +1116,7 @@ class HTMLOUT
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=17" style="height:10px;line-height:10px;">Shambling Undead</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=25" style="height:10px;line-height:10px;">Snotling</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=23" style="height:10px;line-height:10px;">Underworld Denizens</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=30" style="height:10px;line-height:10px;">Vampire</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=20" style="height:10px;line-height:10px;">Wood Elf</a></li>
 			</ul></li>
 			
@@ -1162,7 +1163,7 @@ class HTMLOUT
 			<?php endif; ?>
 			
 			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
-			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2023/01/d4EGmrdz0lylahgt.pdf">BB2020 Latest FAQ & Errata</a></li> 
+			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/EJpqDmz2zbI8hzCN.pdf">BB2020 Latest FAQ & Errata</a></li> 
 		</ul>
 	</li>  
 
