@@ -938,6 +938,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<nobblablackwart>Nobbla Blackwart</nobblablackwart>
 	<scrappsorehead>Scrapp Sorehead</scrappsorehead>
 	<withergraspdoubledrool>Withergrasp Doubledrool</withergraspdoubledrool>
+	 <!-- Added BB2020 Spike! #16 -->	
+	<captainkarinavonriesz>'Captain' Karina von Riesz</captainkarinavonriesz>
+	<countluthorvondrakenborg>Count Luthor von Drakenborg</countluthorvondrakenborg>
+	<ivantheanimaldeathshroud>Ivan 'The Animal' Deathshroud</ivantheanimaldeathshroud>
 
 </starplayer>
 	
