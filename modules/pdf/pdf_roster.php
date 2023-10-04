@@ -436,6 +436,7 @@ if ($_POST) {
     elseif ($key == 'Wandering Apothecaries') { $ind_apo = (int) $val; continue; }
     elseif ($key == 'Hireling Sports-Wizard') { $ind_wiz = (int) $val; continue; }
     elseif ($key == 'Horatio X Schottenheim') { $ind_hxs = (int) $val; continue; }
+    elseif ($key == 'Wandering Haemomancer') { $ind_haem = (int) $val; continue; }
     elseif ($key == 'Fink Da Fixer') { $ind_fdf = (int) $val; continue; }
     elseif ($key == 'Papa Skullbones') { $ind_psb = (int) $val; continue; }
     elseif ($key == 'Galandril Silverwater') { $ind_gsw = (int) $val; continue; }
@@ -607,6 +608,7 @@ if (isset($ind_cvn)) { $ind_cost += $ind_cvn*$inducements['Cavorting Nurglings']
 if (isset($ind_wdrum)) { $ind_cost += $ind_wdrum*$inducements['Waaagh! Drummer']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_wiz)) { $ind_cost += $ind_wiz*$inducements['Hireling Sports-Wizard']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_hxs)) { $ind_cost += $ind_hxs*$inducements['Horatio X Schottenheim']['cost']; $ind_count += 1; }
+if (isset($ind_haem)) { $ind_cost += $ind_haem*$inducements['Wandering Haemomancer']['cost']; $ind_count += 1; }
 if (isset($ind_fdf)) { $ind_cost += $ind_fdf*$inducements['Fink Da Fixer']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_psb)) { $ind_cost += $ind_psb*$inducements['Papa Skullbones']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_gsw)) { $ind_cost += $ind_gsw*$inducements['Galandril Silverwater']['reduced_cost']; $ind_count += 1; }
@@ -712,6 +714,9 @@ $ind_display_counter = 0;
   if (isset($ind_wiz)) { $ind_display_counter += 1;}
   if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_hxs)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Horatio X. Schottenheim (0-1):', $ind_hxs, $pdf->Mf($inducements['Horatio X Schottenheim']['cost']));}
+  if (isset($ind_hxs)) { $ind_display_counter += 1;}
+  if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
+  if (isset($ind_haem)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Wandering Haemomancer (0-1):', $ind_haem, $pdf->Mf($inducements['Wandering Haemomancer']['cost']));}
   if (isset($ind_hxs)) { $ind_display_counter += 1;}
   if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_fdf)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Fink Da Fixer (0-1):', $ind_fdf, $pdf->Mf($inducements['Fink Da Fixer']['reduced_cost']));}

@@ -6155,6 +6155,13 @@ $inducements = array (
         'reduced_cost' => 80000,
         'reduced_cost_races' => array(),
     ),
+	// Available to any team
+    'Wandering Haemomancer' => array (    
+        'cost' => 150000,
+        'max'  => 1,
+        'reduced_cost' => 150000,
+        'reduced_cost_races' => array(),
+    ),
 	////// (In)Famous Coaching Staff //////
 	// Available to any team
     'Joseph Bugman, Dwarf Master Brewer' => array (
