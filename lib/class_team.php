@@ -74,11 +74,10 @@ class Team
         return true;
     }
 
-	/* No longer supported ! See http://code.google.com/p/obblm/issues/detail?id=463#c5
 	public function setOwnership($cid) {
-        $query = "UPDATE teams SET owned_by_coach_id = $cid WHERE team_id = $this->team_id";
+        $query = "UPDATE teams t JOIN coaches c ON c.coach_id = $cid SET t.owned_by_coach_id = $cid, t.f_cname = c.name WHERE t.team_id = $this->team_id";
         return mysql_query($query) && ($this->owned_by_coach_id = $cid) && SQLTriggers::run(T_SQLTRIG_TEAM_UPDATE_CHILD_RELS, array('id' => $this->team_id, 'obj' => $this));
-    } */
+    } 
     
     public function getPlayers() {
         $this->_players = array();
@@ -156,7 +155,7 @@ class Team
     public function setRetired($bool) {
         return mysql_query("UPDATE teams SET retired = ".(($bool) ? 1 : 0)." WHERE team_id = $this->team_id");
     }
-
+	
     public function buy($thing) {
         /**
          * Buy team stuff (coaching staff/re-rolls/fan factor).

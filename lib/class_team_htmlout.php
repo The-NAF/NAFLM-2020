@@ -265,6 +265,7 @@ class Team_HTMLOUT extends Team
 					break;
 				case 'removenegastat': status($p->removenegastat($_POST['stat'])); break;
 				case 'resetrule': status($team->resetRule()); break;
+				case 'transferteam': status($team->setOwnership($_POST['coachname'])); break;
 			}
 		}
 		$team->setStats(false,false,false); # Reload fields in case they changed after team actions made.
@@ -856,7 +857,15 @@ class Team_HTMLOUT extends Team
 		global $T_ALLOWED_PLAYER_NR;	
 		$team = $this; // Copy. Used instead of $this for readability.	
 		$raceid = $team->f_race_id;	
-		$race = new Race($raceid);		
+		$race = new Race($raceid);	
+		// Set list of coaches that a team can be transfered to	(excludes current team coach)	
+		$teamcoach = $team->owned_by_coach_id;	
+		$queryGet = 'SELECT coaches.coach_id AS "coach_id", coaches.name AS "cname" FROM coaches WHERE coaches.retired IS FALSE and coaches.coach_id != '.$teamcoach.' ORDER BY cname ASC';
+		$coaches = array();
+		$result = mysql_query($queryGet);
+		while ($c = mysql_fetch_object($result)) {
+			$coaches[] = $c;
+		}
 		$JMP_ANC = (isset($_POST['menu_tmanage']) || isset($_POST['menu_admintools'])); # Jump condition MUST be set here due to _POST variables being changed later.
 		?>
 		<!-- Following HTML is from class_team_htmlout.php _actionBoxes -->
@@ -1050,6 +1059,7 @@ class Team_HTMLOUT extends Team
 							'ach_skills'        => $lng->getTrn($base.'/box_admin/ach_skills'),
 							'ff'                => $lng->getTrn($base.'/box_admin/ff'),
 							'resetrule'         => $lng->getTrn($base.'/box_admin/resetrule'),
+							'transferteam'      => $lng->getTrn($base.'/box_admin/transferteam'),
 							'removeNiggle'      => $lng->getTrn($base.'/box_admin/removeNiggle'),
 							'addniggle'      	=> $lng->getTrn($base.'/box_admin/addniggle'),
 							'removeMNG'      	=> $lng->getTrn($base.'/box_admin/removeMNG'),
@@ -1189,6 +1199,26 @@ class Team_HTMLOUT extends Team
 									echo $lng->getTrn('profile/team/box_admin/desc/resetrule');
 									?>
 									<input type="hidden" name="type" value="resetrule">
+									<?php
+									break;
+								/***************
+								 * Transfer team to another coach
+								***************/
+								case 'transferteam':
+									echo $lng->getTrn('profile/team/box_admin/desc/transferteam');
+									?>
+									<hr><br>
+									<?php echo $lng->getTrn('common/coach');?>:<br>
+									<select name="coachname">
+									<?php
+									$DISABLE = true;
+									foreach ($coaches as $c) {
+										echo "<option value='$c->coach_id'>$c->cname</option>\n";
+										$DISABLE = false;
+									}
+									?>
+									</select>
+									<input type="hidden" name="type" value="transferteam">
 									<?php
 									break;
 								/***************

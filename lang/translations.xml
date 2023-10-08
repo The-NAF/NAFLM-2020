@@ -375,6 +375,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <ach_skills>Remove ach. player skills</ach_skills>
             <ff>Manage team Dedicated Fans</ff>
             <resetrule>Reset selected team special rule</resetrule>
+            <transferteam>Transfer team</transferteam>
             <removeNiggle>Remove player niggle</removeNiggle>
             <addniggle>Add player niggle</addniggle>
             <removeMNG>Remove player MNG/Unretire</removeMNG>
@@ -390,12 +391,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <dval> <![CDATA[ Change a player's value by a certain amount. ]]> </dval>
                 <extra_skills> <![CDATA[ Manage a player's extra skills. ]]> </extra_skills>
                 <ach_skills> <![CDATA[ Remove a player's achieved skills. This makes the player able to rechoose a skill. ]]> </ach_skills>
-                <ff> <![CDATA[ Make changes to team's Dedicated Fans .]]> </ff>
-                <resetrule> <![CDATA[ Reset the currently selected team special rule .]]> </resetrule>
-                <removeNiggle> <![CDATA[ Remove a niggling injury from a player.]]> </removeNiggle>
-                <addniggle> <![CDATA[ Add a niggling injury to a player.]]> </addniggle>
-                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone!]]> </removeMNG>
-                <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone!]]> </removenegastat>
+                <ff> <![CDATA[ Make changes to team's Dedicated Fans. ]]> </ff>
+                <resetrule> <![CDATA[ Reset the currently selected team special rule. ]]> </resetrule>
+                <transferteam> <![CDATA[ Transfer this team to another coach. ]]> </transferteam>
+                <removeNiggle> <![CDATA[ Remove a niggling injury from a player. ]]> </removeNiggle>
+                <addniggle> <![CDATA[ Add a niggling injury to a player. ]]> </addniggle>
+                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone! ]]> </removeMNG>
+                <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone! ]]> </removenegastat>
             </desc>
         </box_admin>
     </team>
