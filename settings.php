@@ -6,8 +6,8 @@
 
 $db_name   = 'naflm20_db';
 $db_user   = 'root';
-$db_passwd = 'P@$$w0rd';
-$db_host   = 'localhost';
+$db_passwd = 'password';
+$db_host   = 'db';
 $db_version = 2020;
 
 
