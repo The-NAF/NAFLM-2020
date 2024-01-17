@@ -44,58 +44,63 @@ $rules['journeymen_limit']      = 11;       // Until a team can field this numbe
 $rules['post_game_ff']          = false;    // Default is false. Allows teams to buy and drop fan factor even though their first game has been played.
 $rules['initial_treasury']      = 1000000;  // Default is 1000000.
 $rules['initial_rerolls']       = 0;        // Default is 0.
-$rules['initial_fan_factor']    = 0;        // Default is 0.
+$rules['initial_fan_factor']    = 1;        // Default is 1.
 $rules['initial_ass_coaches']   = 0;        // Default is 0.
 $rules['initial_cheerleaders']  = 0;        // Default is 0.
 // For the below limits, the following applies: -1 = unlimited. 0 = disabled.
-$rules['max_rerolls']           = -1;       // Default is -1.
+$rules['max_rerolls']           = 8;       // Default is 8.
 $rules['max_fan_factor']        = 9;        // Default is 9.
-$rules['max_ass_coaches']       = -1;       // Default is -1.
-$rules['max_cheerleaders']      = -1;       // Default is -1.
-
-$rules['amazon'] = 1; 	//Amazon (teams of legend)
-$rules['chorf'] = 0; 	//Chaos Dwarf (teams of legend)
-$rules['helf'] = 0; 	//High Elf (teams of legend)
-$rules['vamps'] = 1; 	//Vampires (teams of legend)
-$rules['khemri'] = 0; 	//Tomb Kings (teams of legend)
-
-$rules['dungeon'] = 1; 	//Dungeon Bowl Teams
-$rules['megastars'] = 0; 	//Mega-Stars
-
-$rules['major_win_tds'] = 3; 	//Major Win for scoring how many TDs
-$rules['major_win_pts'] = 1; 	//Bonus points for a Major Win
-$rules['clean_sheet_pts'] = 1; 	//Bonus points for conceding 0 TDs (clean sheet)
-$rules['major_beat_cas'] = 3; 	//Major Beating for scoring how many Casualties
-$rules['major_beat_pts'] = 1; 	//Bonus points for a Major Beating
-
+$rules['max_ini_fan_factor']      = 6;        // Default is 6.
+$rules['max_ass_coaches']       = 6;       // Default is 6.
+$rules['max_cheerleaders']       = 12;       // Default is 12.
+// Allow/disallow teams of legend: 0 = enabled. 1 = disabled.
+$rules['amazon'] 				= 1; 	//Amazon (teams of legend)
+$rules['chorf'] 				= 0; 	//Chaos Dwarf (teams of legend)
+$rules['helf'] 				= 0; 	//High Elf (teams of legend)
+$rules['vamps'] 				= 1; 	//Vampires (teams of legend)
+$rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
+$rules['slann'] 				= 0; 	//Slann (teams of legend)
+// Allow/disallow dungeon bowl teams: 0 = enabled. 1 = disabled.
+$rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
+// Allow/disallow Mega-Stars: 0 = enabled. 1 = disabled.
+$rules['megastars'] 				= 0; 	//Mega-Stars
+// Additional League Points.
+$rules['major_win_tds'] 		= 3; 	//Major Win for scoring how many TDs
+$rules['major_win_pts'] 		= 1; 	//Bonus points for a Major Win
+$rules['clean_sheet_pts'] 		= 1; 	//Bonus points for conceding 0 TDs (clean sheet)
+$rules['major_beat_cas'] 		= 3; 	//Major Beating for scoring how many Casualties
+$rules['major_beat_pts'] 		= 1; 	//Bonus points for a Major Beating
 // Remove double backslashes in front of team number to enable team specific starting treasuries.
-$rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon
-											//	1			=>	1000000,	// Chaos
+$rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
+											//	1			=>	1000000,	// Chaos Chosen
 											//	2			=>	1000000,	// Chaos Dwarf
 											//	3			=>	1000000,	// Dark Elf
 											//	4			=>	1000000,	// Dwarf
-											//	5			=>	1000000,	// Elf
+											//	5			=>	1000000,	// Elf Union
 											//	6			=>	1000000,	// Goblin
 											//	7			=>	1000000,	// Halfling
 											//	8			=>	1000000,	// High Elf
 											//	9			=>	1000000,	// Human
-											//	10			=>	1000000,	// Khemri
+											//	10			=>	1000000,	// Tomb Kings
 											//	11			=>	1000000,	// Lizardman
 											//	12			=>	1000000,	// Orc
-											//	13			=>	1000000,	// Necromantic
+											//	13			=>	1000000,	// Necromantic Horror
 											//	14			=>	1000000,	// Norse
 											//	15			=>	1000000,	// Nurgle
 											//	16			=>	1000000,	// Ogre
-											//	17			=>	1000000,	// undead
+											//	17			=>	1000000,	// Shambling Undead
 											//	18			=>	1000000,	// Vampire
 											//	19			=>	1000000,	// Skaven
 											//	20			=>	1000000,	// Wood Elf
-											//	21			=>	1000000,	// Chaos Pact
+											//	21			=>	1000000,	// Chaos Renegades
 											//	22			=>	1000000,	// Slann
-											//	23			=>	1000000,	// Underworld
-											//	24			=>	1000000,	// Bretonnia
-											//	25			=>	1000000,	// Daemons of Khorne
-											//	26			=>	1000000,	// Apes of Wrath
+											//	23			=>	1000000,	// Underworld Denizens
+											//	24			=>	1000000,	// Old World Alliance
+											//	25			=>	1000000,	// Snotling
+											//	26			=>	1000000,	// Black Orc
+											//	27			=>	1000000,	// Imperial Nobility
+											//	28			=>	1000000,	// Khorne
+											//	29			=>	1000000,	// Amazon
 										);	
 
 /*********************
@@ -160,7 +165,37 @@ $settings['fp_standings'] = array(
 								'GF'	=> 'gf',
 								'GA'	=> 'ga',
 						),
-	),
+	), 
+	# This will display a standings box of the top 6 teams in the Secondary Tournament
+    array(
+		'id'		=> 	$get_second,
+		'box_ID' 	=> 	9,
+		'type' 		=> 	'tournament',
+		'infocus' 	=> 	false,
+		'HRS' 		=> 	get_alt_col('tours','tour_id',$get_second,'rs'), 
+		'title' 	=> 	get_alt_col('tours','tour_id',$get_second,'name'),
+		'length' 	=> 	40, 
+		'fields' 	=> 	array(	'Name'	=> 'name',
+								'PTS'  	=> 'pts',
+								'TV'	=> 'tv',
+								'CAS'	=> 'cas',
+								'W'		=> 'won',
+								'L'		=> 'lost',
+								'D'		=> 'draw',
+								'GF'	=> 'gf',
+								'GA'	=> 'ga',
+						),
+    ),
+	# This will display a standings box of the top WINNING STREAKS with ID = 4
+    array(	'id'     	=> $get_prime,
+			'box_ID' 	=> 4,
+			'type'   	=> 'tournament', 
+			'infocus' 	=> 	false,
+			'HRS' 		=> 	get_alt_col('tours','tour_id',$get_prime,'rs'),
+			'title'  	=> 'Top 3 - Longest Winning Streaks', 
+			'length' 	=> 3, 	
+			'fields' 	=> array('Team' => 'name', 'Won' => 'swon',),
+    ),
 );
 
 /*********************
@@ -179,18 +214,18 @@ $settings['fp_leaders'] = array(
 	 */
     # This will display a 'Most CAS' player leaders box for the Divison of the Prime Tournament
     array(	'id'        => get_alt_col('tours','tour_id',$get_prime,'f_did'), # Node ID
-			'box_ID'    => 3,
+			'box_ID'    => 6,
 			'type'      => 'division',
-			'title'     => 'Most Individual Casualties (Division)',
+			'title'     => 'Top 5 Players - Casualties',
 			'field'     => 'cas',
 			'length'    => 5,
 			'show_team' => true,
     ),
     # This will display a 'Most TD' player leaders box for the Division of the Prime Tournament
     array(	'id'        => get_alt_col('tours','tour_id',$get_prime,'f_did'),
-			'box_ID'    => 4,
+			'box_ID'    => 5,
 			'type'      => 'division',
-			'title'     => 'Most Individual Touchdowns (Division)',
+			'title'     => 'Top 5 Players - Touchdowns',
 			'field'     => 'td',
 			'length'    => 5,
 			'show_team' => true,
@@ -214,17 +249,17 @@ $settings['fp_events'] = array(
 	 */
     # This will display a list of the most recent killed players for the Prime Tournament
     array(	'id'        => $get_lid,
-			'box_ID'    => 5,
+			'box_ID'    => 7,
 			'type'      => 'league',
-			'title'     => 'Latest Dead Players (League)',
+			'title'     => 'Recently Deceased Players',
 			'content'   => 'dead',
 			'length'    => 5,
     ),
 	# This will display a list of the most recent skills gained for the Prime Tournament
 	array(	'id'        => $get_lid,
-			'box_ID'    => 6,
+			'box_ID'    => 8,
 			'type'      => 'league',
-			'title'     => 'Latest Skills (League)',
+			'title'     => 'Recent Player Development',
 			'content'   => 'skills',
 			'length'    => 5,
     ),
@@ -243,9 +278,9 @@ $settings['fp_latestgames'] = array(
     # This will display a latest games box for the Prime Tournament
     array(
         'id'     => $get_lid,
-        'box_ID' => 7,
+        'box_ID' => 2,
         'type'   => 'league',
-        'title'  => 'Recent Games (League)',
+        'title'  => 'Recent Games',
         'length' => 5,
     ),
 );

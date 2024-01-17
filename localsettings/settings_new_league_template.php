@@ -44,32 +44,32 @@ $rules['journeymen_limit']      = 11;       // Until a team can field this numbe
 $rules['post_game_ff']          = false;    // Default is false. Allows teams to buy and drop fan factor even though their first game has been played.
 $rules['initial_treasury']      = 1000000;  // Default is 1000000.
 $rules['initial_rerolls']       = 0;        // Default is 0.
-$rules['initial_fan_factor']    = 1;        // Default is 0.
+$rules['initial_fan_factor']    = 1;        // Default is 1.
 $rules['initial_ass_coaches']   = 0;        // Default is 0.
 $rules['initial_cheerleaders']  = 0;        // Default is 0.
 // For the below limits, the following applies: -1 = unlimited. 0 = disabled.
-$rules['max_rerolls']           = 8;       // Default is -1.
-$rules['max_fan_factor']        = 7;        // Default is 9.
-$rules['max_ini_fan_factor']    = 5;        // Default is 5.
-$rules['max_ass_coaches']       = 6;       // Default is -1.
-$rules['max_cheerleaders']      = 12;       // Default is -1.
+$rules['max_rerolls']           = 8;       // Default is 8.
+$rules['max_fan_factor']        = 9;        // Default is 9.
+$rules['max_ini_fan_factor']      = 6;        // Default is 6.
+$rules['max_ass_coaches']       = 6;       // Default is 6.
+$rules['max_cheerleaders']       = 12;       // Default is 12.
 // Allow/disallow teams of legend: 0 = enabled. 1 = disabled.
 $rules['amazon'] 				= 1; 	//Amazon (teams of legend)
 $rules['chorf'] 				= 0; 	//Chaos Dwarf (teams of legend)
-$rules['helf'] 					= 0; 	//High Elf (teams of legend)
-$rules['vamps'] 				= 0; 	//Vampires (teams of legend)
+$rules['helf'] 				= 0; 	//High Elf (teams of legend)
+$rules['vamps'] 				= 1; 	//Vampires (teams of legend)
 $rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
 $rules['slann'] 				= 0; 	//Slann (teams of legend)
 // Allow/disallow dungeon bowl teams: 0 = enabled. 1 = disabled.
 $rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
 // Allow/disallow Mega-Stars: 0 = enabled. 1 = disabled.
-$rules['megastars'] 			= 0; 	//Mega-Stars
+$rules['megastars'] 				= 0; 	//Mega-Stars
 // Additional League Points.
-$rules['major_win_tds'] 		= 0; 	//Major Win for scoring how many TDs
-$rules['major_win_pts'] 		= 0; 	//Bonus points for a Major Win
-$rules['clean_sheet_pts'] 		= 0; 	//Bonus points for conceding 0 TDs (clean sheet)
-$rules['major_beat_cas'] 		= 0; 	//Major Beating for scoring how many Casualties
-$rules['major_beat_pts'] 		= 0; 	//Bonus points for a Major Beating
+$rules['major_win_tds'] 		= 3; 	//Major Win for scoring how many TDs
+$rules['major_win_pts'] 		= 1; 	//Bonus points for a Major Win
+$rules['clean_sheet_pts'] 		= 1; 	//Bonus points for conceding 0 TDs (clean sheet)
+$rules['major_beat_cas'] 		= 3; 	//Major Beating for scoring how many Casualties
+$rules['major_beat_pts'] 		= 1; 	//Bonus points for a Major Beating
 // Remove double backslashes in front of team number to enable team specific starting treasuries.
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen
