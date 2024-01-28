@@ -3008,8 +3008,19 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <retire>Mettre l'équipe en retraite ?</retire>
                 <suredeleteteam>Êtes-vous certain de vouloir effacer l\'équipe ?</suredeleteteam>
             </fdescs>
-            
+
+            <!-- Favoured of rule selector-->
+            <favrule>
+                <r1>Classique du Vieux Monde</r1>
+                <r11>Favori du Chaos Universel</r11>
+                <r12>Favori de Nurgle</r12>
+                <r13>Favori de Khorne</r13>
+                <r14>Favori de Slaanesh</r14>
+                <r15>Favori de  Tzeentch</r15>
+            </favrule>
+
             <desc>
+                <select_rule> <![CDATA[ Sélectionnez une règle spéciale d'équipe.<br> Les équipes qui ont un choix à faire parmi plusieurs règles spéciales doivent faire un choix ici, pour déterminer quels starplayers sont accessibles.<br> Sélectionnez prudemment, car ce choix ne peut pas être changé par la suite.<br> <b>Note:</b> Certains starplayers ne seront pas accessibles en Coups de Pouce tant qu'une règle spéciale n'a pas été choisie. ]]> </select_rule>
                 <hire_player> Embaucher un nouveau joueur.&lt;br&gt; Engager un journalier est gratuit, mais seule la position 0-16 est éligible. </hire_player>
                 <hire_journeyman> Engager un des journaliers en tant que joueur définitif de l'équipe. </hire_journeyman>
                 <fire_player> Renvoyer un joueur. Remboursement de : </fire_player>
