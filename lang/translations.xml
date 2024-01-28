@@ -3556,6 +3556,28 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <december>Décembre</december>
 </months>
 
+<specialrules>
+    <oldworldclassic>Classique du Vieux Monde</oldworldclassic>
+    <badlandsbrawl>Bagarre des Terres Arides</badlandsbrawl>
+    <briberyandcorruption>Chantage et Corruption</briberyandcorruption>
+    <elvenkingdomsleague>Ligue des Royaumes Elfiques</elvenkingdomsleague>
+    <lustriansuperleague>Super-ligue de Lustrie</lustriansuperleague>
+    <worldsedgesuperleague>Super-ligue du Bord du Monde</worldsedgesuperleague>
+    <mastersofundeath>Maîtres de la Non-vie</mastersofundeath>
+    <sylvanianspotlight>Spot de Sylvanie</sylvanianspotlight>
+    <halflingthimblecup>Coupe Dé à Coudre Halfling</halflingthimblecup>
+    <underworldchallenge>Défi des Bas-fonds</underworldchallenge>
+    <favouredof>Favori de...</favouredof>
+    <favouredofchaosundivided>Favori du Chaos Universel</favouredofchaosundivided>
+    <favouredofnurgle>Favori de Nurgle</favouredofnurgle>
+    <favouredofkhorne>Favori de Khorne</favouredofkhorne>
+    <favouredofslaanesh>Favori de Slaanesh</favouredofslaanesh>
+    <favouredoftzeentch>Favori de Tzeentch</favouredoftzeentch>
+    <lowcostlinemen>Linemen à Vil Prix</lowcostlinemen>
+    <twoforone>Deux pour Un</twoforone>
+</specialrules>
+
+
 </fr-FR>
 
 <!-- Italian -->
