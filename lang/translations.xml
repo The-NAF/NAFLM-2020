@@ -3329,7 +3329,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <!-- General -->
     <block>Blocage</block>
     <dauntless>Intrépidité</dauntless>
-    <dirtyplayer>Joueur Vicieux</dirtyplayer>
+    <dirtyplayerplus1>Joueur Déloyal (+1)</dirtyplayerplus1>
     <fend>Parade</fend>
     <frenzy>Frénésie</frenzy>
     <kick>Frappe Précise</kick>
@@ -3338,42 +3338,52 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <pro>Pro</pro>
     <shadowing>Poursuite</shadowing>
     <stripball>Arracher le ballon</stripball>
-    <surehands>Dextérité</surehands>
+    <surehands>Prise Sûre</surehands>
     <tackle>Tacle</tackle>
     <wrestle>Lutte</wrestle>
     <!-- Agility -->
     <catch>Réception</catch>
-    <divingcatch>Plongeon</divingcatch>
+    <divingcatch>Réception Plongeante</divingcatch>
     <divingtackle>Tacle Pongeant</divingtackle>
     <dodge>Esquive</dodge>
-    <jumpup>Bond</jumpup>
+    <jumpup>Rétablissement</jumpup>
     <leap>Saut</leap>
     <sidestep>Glissade contrôlée</sidestep>
     <sneakygit>Sournois</sneakygit>
     <sprint>Sprint</sprint>
     <surefeet>Équilibre</surefeet>
+    <defensive>Défenseur</defensive>
+    <safepairofhands>Libération contrôlée</safepairofhands>
     <!-- Passing -->
     <accurate>Précision</accurate>
-    <dumpoff>Passe Rapide</dumpoff>
-    <hailmarypass>Main de Dieu</hailmarypass>
+    <dumpoff>Délestage</dumpoff>
+    <hailmarypass>Passe Désespérée</hailmarypass>
     <leader>Chef</leader>
     <nervesofsteel>Nerfs d'Acier</nervesofsteel>
     <pass>Passe</pass>
-    <safethrow>Lancer Précis</safethrow>
+    <safepass>Passe Assurée</safepass>
+    <cannoneer>Canonnier</cannoneer>
+    <cloudburster>Perce-nuages</cloudburster>
+    <fumblerooskie>Fumblerooskie</fumblerooskie>
+    <runningpass>Passe dans la Course</runningpass>
+    <ontheball>Sur le Ballon</ontheball>
     <!-- Strength -->
     <breaktackle>Esquive en Force</breaktackle>
     <grab>Projection</grab>
     <guard>Garde</guard>
     <juggernaut>Juggernaut</juggernaut>
-    <mightyblow>Châtaigne</mightyblow>
+    <mightyblowplus1>Châtaigne (+1)</mightyblowplus1>
+    <mightyblowplus2>Châtaigne (+2)</mightyblowplus2>
     <multipleblock>Blocage Multiple</multipleblock>
-    <pilingon>Écrasement</pilingon>
+    <piledriver>Marteau-pilon</piledriver>
     <standfirm>Stabilité</standfirm>
-    <strongarm>Costaud</strongarm>
+    <strongarm>Bras Musclé</strongarm>
     <thickskull>Crâne Épais</thickskull>
+    <armbar>Clé de Bras</armbar>
+    <brawler>Bagarreur</brawler>
     <!-- Mutation -->
     <bighand>Main Démesurée</bighand>
-    <clawclaws>Griffes</clawclaws>
+    <claws>Griffes</claws>
     <disturbingpresence>Présence Perturbante</disturbingpresence>
     <extraarms>Bras Supplémentaires</extraarms>
     <foulappearance>Répulsion</foulappearance>
@@ -3382,35 +3392,51 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <tentacles>Tentacules</tentacles>
     <twoheads>Deux Têtes</twoheads>
     <verylonglegs>Très Longues Jambes</verylonglegs>
+    <ironhardskin>Peau de Fer</ironhardskin>
+    <monstrousmouth>Grande Gueule</monstrousmouth>
     <!-- Extraordinary -->
-    <alwayshungry>Toujours faim</alwayshungry>
-    <animosity>Animosité</animosity>
+    <alwayshungry>Toujours affamé</alwayshungry>
+    <animosityall>Animosité (tout coéquipier)</animosityall>
+	<animosityuwgoblin>Animosité (Underworld Goblin Linemen)</animosityuwgoblin>
+    <animosityorclinemen>Animosité (Orc Linemen)</animosityorclinemen>
+    <animositybigun>Animosité (Big Un Blockers)</animositybigun>
+    <animositydwarfhalfling>Animosité (tout coéquipier Nain ou Halfling)</animositydwarfhalfling>
+    <animositydwarfhuman>Animosité (tout coéquipier Nain ou Humain)</animositydwarfhuman>
     <ballchain>Chaîne et Boulet</ballchain>
-    <bloodlust>Soif de Sang</bloodlust>
+    <bloodlust2plus>Soif de Sang (2+)</bloodlust2plus>
+    <bloodlust3plus>Soif de Sang (3+)</bloodlust3plus>
     <bombardier>Bombardier</bombardier>
     <bonehead>Cerveau Lent</bonehead>
     <chainsaw>Tronçonneuse</chainsaw>
     <decay>Décomposition</decay>
+    <dirtyplayerplus2>Joueur Déloyal (+2)</dirtyplayerplus2>
     <fanfavourite>Idole des Foules</fanfavourite>
+    <projectilevomit>Gerbe de Vomi</projectilevomit>
     <hypnoticgaze>Regard Hypnotique</hypnoticgaze>
-    <loner>Solitaire</loner>
-    <monstrousmouth>Grande Gueule</monstrousmouth>
+    <loner3plus>Solitaire (3+)</loner3plus>
+    <loner4plus>Solitaire (4+)</loner4plus>
+    <loner5plus>Solitaire (5+)</loner5plus>
     <nohands>Manchot</nohands>
     <nurglesrot>Pourriture de Nurgle</nurglesrot>
     <reallystupid>Gros Débile</reallystupid>
     <regeneration>Régénération</regeneration>
     <rightstuff>Poids Plume</rightstuff>
     <secretweapon>Arme Secrète</secretweapon>
+    <swarming>Déferlement</swarming>
     <stab>Poignard</stab>
     <stakes>Pieux</stakes>
     <stunty>Minus</stunty>
-    <swoop>Swoop</swoop>
+    <swoop>Piqué</swoop>
     <takeroot>Prendre Racine</takeroot>
     <throwteammate>Lancer un Coéquipier</throwteammate>
     <timmmber>Timmm-ber!</timmmber>
     <titchy>Microbe</titchy>
     <wildanimal>Animal Sauvage</wildanimal>
     <weepingblades>Dague suintante</weepingblades>
+    <animalsavagery>Sauvagerie Animale</animalsavagery>
+    <unchannelledfury>Fureur Débridée</unchannelledfury>
+    <pogostick>Echasse à Ressort</pogostick>
+    <lowcostlinemen>(Linemen à Vil Prix)</lowcostlinemen>
 </skill>
 
 <starplayer>
