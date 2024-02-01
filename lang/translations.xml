@@ -2757,12 +2757,20 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <retired>Retraite</retired>
     <skills>Compétences</skills>
     <skill>Compétence</skill>
+    <normal>Primaire</normal>
+    <double>Secondaire</double>
     <injs>Blessures</injs>
     <pos>Position</pos>
+    <exp>Experience</exp>
+    <maxqty>Qté Max.</maxqty>
     <price>Prix</price>
     <number>Numéro</number>
     <opponent>Adversaire</opponent>
+    <tier>Tiers</tier>
+    <format>Format</format>
     <reroll>Relance</reroll>
+    <maxbigguys>Nombre maximum de Gros Bras autorisé</maxbigguys>
+    <specialrules>Règles Spéciales</specialrules>
     <apothecary>Apothicaire</apothecary>
     <ass_coach>Coach Assistant</ass_coach>
     <cheerleader>Pom Pom Girl</cheerleader>
@@ -2797,8 +2805,18 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <coaches>Coachs</coaches>
     <race>Race</race>
     <races>Races</races>
-    <star>Champion</star>
+    <star>Champion/Méga-Champion</star>
+    <starlist>Liste des Champions</starlist>
+    <specialrule>Règle Spéciale</specialrule>
+    <specialruledesc>Description de la Règle Spéciale</specialruledesc>
+    <teamspecialrules>Règle Spéciale d'Equipe</teamspecialrules>
+    <teamfavspecialrules>Règle Spéciale de l'Equipe choisie</teamfavspecialrules>
+    <notyetselected>Pas encore choisi</notyetselected>
+    <chooseone>Choisissez un parmi: </chooseone>
+    <playsfor>Joue Pour</playsfor>
     <stars>Champions</stars>
+    <roster>Roster</roster>
+    <availablestars>Champions disponibles</availablestars>
     <won>Victoires</won>
     <lost>Défaites</lost>
     <draw>Nuls</draw>
@@ -2813,6 +2831,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <ma>Mv</ma>
     <st>F</st>
     <ag>Ag</ag>
+    <pa>Pa</pa>
     <av>Ar</av>
     <english>Anglais</english>
     <spanish>Espagnol</spanish>
@@ -2821,6 +2840,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <italian>Italien</italian>
     <td>Touchdowns</td>
     <intcpt>Interceptions</intcpt>
+    <deflct>Interférences</deflct>
     <cp>Réussites</cp>
     <ki>Tués</ki>
     <bh>Commotionnés</bh>
@@ -2892,6 +2912,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <plugins>Modules</plugins>
     <rules>Règles</rules>
     <forum>Forum</forum>
+    <facebook>Facebook</facebook>
+    <twitter>Twitter</twitter>
+    <whatsapp>Whatsapp</whatsapp>
+    <instagram>Instagram</instagram>
 </menu>
 
 <!-- Section translations -->
@@ -2971,7 +2995,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <tmanage>Gestion d'équipe + info</tmanage>
         <!-- About sec. -->
         <logo>Logo d'équipe</logo>
-        <stad>Stade de l'équipe</stad>
+        <stad>Image du stade de l'équipe</stad>
+        <sponsor>Sponsor de l'équipe</sponsor>
+        <stadium>Stade de l'équipe</stadium>
+        <nosponsor>--Entrez un nom de sponsor--</nosponsor>
+        <nostadium>--Entrez un nom de stade--</nostadium>
         <!-- News sec. -->            
         <news>Articles</news>
         <tnews>Articles sur l'équipe</tnews>
@@ -2988,12 +3016,14 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         
         <box_tm>
             <title>Gestion de l'équipe</title>
+            <select_rule>Sélectionnez une règle spéciale d'équipe</select_rule>
             <hire_player>Engager un joueur</hire_player>
             <hire_journeyman>Engager un journalier</hire_journeyman>
             <fire_player>Renvoyer un joueur</fire_player>
             <unbuy_player>Annuler l'achat d'un joueur</unbuy_player>
             <rename_player>Renommer un joueur</rename_player>
             <renumber_player>Re-numéroter un joueur</renumber_player>
+            <retire_player>Mettre un joueur en retraite temporaire</retire_player>
             <rename_team>Renommer une équipe</rename_team>
             <buy_goods>Acheter des avantages d'équipe</buy_goods>
             <drop_goods>Se séparer d'avantages d'équipe</drop_goods>
@@ -3048,8 +3078,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <dval>Gérer la valeur bonus des joueurs</dval>
             <extra_skills>Gérer les compétences suppl. des joueurs</extra_skills>
             <ach_skills>Retirer des compétences de joueurs</ach_skills>
-            <!-- <ff> -->
-            <!-- <removeNiggle> -->
+            <ff>Gérer les Fans dédiés</ff>
+            <resetrule>Réinitialiser la règle spéciale d'équipe choisie</resetrule>
+            <transferteam>Transférer l'équipe</transferteam>
+            <removeNiggle>Retirer une Blessure Persistante</removeNiggle>
+            <addniggle>Ajouter une Blessure Persistante</addniggle>
+            <removeMNG>Retirer un RPM</removeMNG>
+            <removenegastat>Retirer des séquelles</removenegastat>
             
             <desc>
                 <unhire_journeyman> Revenir sur le recrutement permanent d'un journalier en tant que joueur.&lt;br&gt; Ne fonctionne que sur les positions 0-16 de la fiche d'équipe.</unhire_journeyman>
@@ -3061,8 +3096,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <dval> Changer la valeur d'un joueur d'un certain montant. </dval>
                 <extra_skills> Gérer les compétences supplémentaires d'un joueur. </extra_skills>
                 <ach_skills> Retirer une compétence selectionnée. Cela permet de choisir une compétence en remplacement. </ach_skills>
-                <!-- <ff> -->
-                <!-- <removeNiggle> -->
+                <ff> <![CDATA[ Changer les Fans Dédiés de l'équipe. ]]> </ff>
+                <resetrule> <![CDATA[ Réinitialiser la règle spéciale d'équipe actuellement choisie. ]]> </resetrule>
+                <transferteam> <![CDATA[ Transférer l'équipe à un autre coach. ]]> </transferteam>
+                <removeNiggle> <![CDATA[ Retirer une Blessure Persistante à un joueur. ]]> </removeNiggle>
+                <addniggle> <![CDATA[ Ajouter une Blessure Persistante à un joueur. ]]> </addniggle>
+                <removeMNG> <![CDATA[ Retirer un RPM OU annulez la retraite temporaire d'un joueur.<br><b>ATTENTION</b>: Ne peut pas être annulé! ]]> </removeMNG>
+                <removenegastat> <![CDATA[ Retirer un séquelle d'un joueur.<br><b>ATTENTION</b>: Ne peut pas être annulé! ]]> </removenegastat>
             </desc>
         </box_admin>
     </team>
@@ -3125,6 +3165,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <treas>Trésorerie</treas>
         <ff>Popularité</ff>
         <smp>Points de fair-play</smp>
+        <bonus>Points additionnels de ligue</bonus>
         <pts>points</pts>
         <tcas>Pertes totales de l'équipe</tcas>
         <fame>FAME</fame>
@@ -3150,11 +3191,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 
 <mobile>
     <team>
-        <!-- <miss_next_game> -->
-        <!-- <may_buy_new_skill> -->
-        <!-- <management> -->
-        <!-- <desktop_site> -->
-        <!-- <noteams> -->
+        <miss_next_game>Rate le prochain match</miss_next_game>
+        <may_buy_new_skill>peut prendre de nouvelles compétences</may_buy_new_skill>
+        <management>Management</management>
+        <desktop_site>Site version bureau</desktop_site>
+        <noteams>Vous n'avez pas d'équipe! Ce site mobile n'est pas assez évolué pour vous aider -- vous devez utiliser la &lt;a href="index.php"&gt;version bureau du site&lt;/a&gt;.</noteams>
     </team>
     <matches>
         <match>
@@ -3195,8 +3236,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     
     <nodes>
         <errors>
-            <!-- <league_already_exists> -->
-            <!-- <settings_file_copy_failed> -->
+            <league_already_exists>Il y a déjà une ligue avec ce nom.</league_already_exists>
+            <settings_file_copy_failed>La ligue a été créée, mais le fichier de paramètres n'a pas été copié correctement.</settings_file_copy_failed>
         </errors>
     </nodes>
 </admin>
@@ -3226,6 +3267,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chaosrenegades>Pacte du Chaos</chaosrenegades>
     <underworlddenizens>Bas fond</underworlddenizens>
     <slann>Slann</slann>
+    <khorne>Khorne</khorne>
+	<oldworldalliance>Alliance du Vieux Monde</oldworldalliance>
+	<snotling>Snotling</snotling>
+	<blackorc>Orques Noirs</blackorc>
+	<imperialnobility>Noblesse Impériale</imperialnobility>
+	<amazons>Amazones</amazons>
+    <vampires>Vampires</vampires>
     <bretonnia>Bretonnien</bretonnia>
     <daemonsofkhorne>Démons de Khorne</daemonsofkhorne>
     <simyin>Simyin</simyin>
@@ -3245,12 +3293,15 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <beastmanrunner>Homme-bête</beastmanrunner>
     <chosenblocker>Guerrier du Chaos</chosenblocker>
     <minotaur>Minotaure</minotaur>
+    <chaostroll>Troll du Chaos</chaostroll>
+    <chaosogre>Ogre du Chaos</chaosogre>
     <!-- Chaos Dwarf -->
     <hobgoblinrunner>Hobgobelin</hobgoblinrunner>
     <chaosdwarfblocker>Bloqueur nain du Chaos</chaosdwarfblocker>
     <bullcentaurblitzer>Centaure Taureau</bullcentaurblitzer>
     <!-- <enslavedminotaur> -->
     <!-- Dark Elf -->
+    <darkelflineman>Trois-quart Elfe Noir</darkelflineman>
     <assassin>Assassin</assassin>
     <witchelf>Furie</witchelf>
     <!-- Dwarf -->
@@ -3311,17 +3362,23 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <mummy>Momie</mummy>
     <!-- Vampire -->
     <thralllineman>Serviteur</thralllineman>
-    <vampireblitzer>Vampire Blitzer</vampireblitzer>
+    <vampireblitzer>Blitzeur Vampire</vampireblitzer>
+    <vampirethrower>Lanceur Vampire</vampirethrower>
+    <vampirerunner>Coureur Vampire</vampirerunner>
+    <vargheist>Vargheist</vargheist>
     <!-- Wood Elf -->
     <wardancer>Danseur de guerre</wardancer>
     <!-- Chaos Renegades -->
     <renegadehumanlineman>Maraudeur</renegadehumanlineman>
+    <renegadehumanthrower>Renégat Lanceur</renegadehumanthrower>
     <renegadegoblin>Renégat Gobelin</renegadegoblin>
     <renegadeskavenlineman>Renégat Skaven</renegadeskavenlineman>
     <renegadedarkelflineman>Renégat Elfe Noir</renegadedarkelflineman>
     <renegadeorclineman>Renégat Orc</renegadeorclineman>
     <chaostroll>Troll du Chaos</chaostroll>
     <chaosogre>Ogre du Chaos</chaosogre>
+    <renegademinotaur>Renégat Minotaure</renegademinotaur>
+    <renegaderatogre>Renégat Rat Ogre</renegaderatogre>
     <!-- Underworld Denizens -->
     <!-- Khorne -->
     <!-- <pitfighter> -->
@@ -3341,6 +3398,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <block>Blocage</block>
     <dauntless>Intrépidité</dauntless>
     <dirtyplayerplus1>Joueur Déloyal (+1)</dirtyplayerplus1>
+    <dirtyplayerplus2>Joueur Déloyal (+2)</dirtyplayerplus2>
     <fend>Parade</fend>
     <frenzy>Frénésie</frenzy>
     <kick>Frappe Précise</kick>
@@ -3414,13 +3472,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <animositydwarfhalfling>Animosité (tout coéquipier Nain ou Halfling)</animositydwarfhalfling>
     <animositydwarfhuman>Animosité (tout coéquipier Nain ou Humain)</animositydwarfhuman>
     <ballchain>Chaîne et Boulet</ballchain>
-    <bloodlust2plus>Soif de Sang (2+)</bloodlust2plus>
-    <bloodlust3plus>Soif de Sang (3+)</bloodlust3plus>
+    <kickteammate>Botter de Coéquipier</kickteammate>
     <bombardier>Bombardier</bombardier>
     <bonehead>Cerveau Lent</bonehead>
     <chainsaw>Tronçonneuse</chainsaw>
     <decay>Décomposition</decay>
-    <dirtyplayerplus2>Joueur Déloyal (+2)</dirtyplayerplus2>
     <fanfavourite>Idole des Foules</fanfavourite>
     <projectilevomit>Gerbe de Vomi</projectilevomit>
     <hypnoticgaze>Regard Hypnotique</hypnoticgaze>
@@ -3448,6 +3504,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <unchannelledfury>Fureur Débridée</unchannelledfury>
     <pogostick>Echasse à Ressort</pogostick>
     <lowcostlinemen>(Linemen à Vil Prix)</lowcostlinemen>
+    <bloodlust2plus>Soif de Sang (2+)</bloodlust2plus>
+    <bloodlust3plus>Soif de Sang (3+)</bloodlust3plus>
 </skill>
 
 <starplayer>
