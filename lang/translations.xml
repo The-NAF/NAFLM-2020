@@ -3050,7 +3050,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             </favrule>
 
             <desc>
-                <select_rule> <![CDATA[ Sélectionnez une règle spéciale d'équipe.<br> Les équipes qui ont un choix à faire parmi plusieurs règles spéciales doivent faire un choix ici, pour déterminer quels starplayers sont accessibles.<br> Sélectionnez prudemment, car ce choix ne peut pas être changé par la suite.<br> <b>Note:</b> Certains starplayers ne seront pas accessibles en Coups de Pouce tant qu'une règle spéciale n'a pas été choisie. ]]> </select_rule>
+                <select_rule> <![CDATA[ Sélectionnez une règle spéciale d'équipe.<br> Les équipes qui ont un choix à faire parmi plusieurs règles spéciales doivent faire un choix ici, pour déterminer quels champions sont accessibles.<br> Sélectionnez prudemment, car ce choix ne peut pas être changé par la suite.<br> <b>Note:</b> Certains champions ne seront pas accessibles en Coups de Pouce tant qu'une règle spéciale n'a pas été choisie. ]]> </select_rule>
                 <hire_player> Embaucher un nouveau joueur.&lt;br&gt; Engager un journalier est gratuit, mais seule la position 0-16 est éligible. </hire_player>
                 <hire_journeyman> Engager un des journaliers en tant que joueur définitif de l'équipe. </hire_journeyman>
                 <fire_player> Renvoyer un joueur. Remboursement de : </fire_player>
@@ -3698,7 +3698,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<treacherous>Traître</treacherous>
 	<treacherousdesc>Une fois par match, si un équipier sur une case adjacente à Hakflem est en possession du ballon quand Hakflem est activé, ce joueur peut être immédiatement Plaqué et Hakflem peut prendre possession du ballon. L'utilisation de cette règle spéciale n'entraîne pas de Turnover.</treacherousdesc>
 	<twoforone>Deux pour Un</twoforone>
-	<twoforonedesc>Grak et Crumbleberry/Les Jumeaux Swift doivent être recrutés ensemble et comptent comme deux Star Players. Cependant, si l'un des deux eest retiré du jeu à cause d'un résultat KO ou Eliiminé! sur le tableau de blessures, l'autre remplace le trait Solitaire(4+) par Solitaire(2+) .</twoforonedesc>
+	<twoforonedesc>Grak et Crumbleberry/Les Jumeaux Swift doivent être recrutés ensemble et comptent comme deux champions. Cependant, si l'un des deux eest retiré du jeu à cause d'un résultat KO ou Eliiminé! sur le tableau de blessures, l'autre remplace le trait Solitaire(4+) par Solitaire(2+) .</twoforonedesc>
 	<whirlingdervish>Derviche Tourneur</whirlingdervish>
 	<whirlingdervishdesc>Une fois par activation, Fungus peut relancer le D6 qui détermine la direction dans laquelle il se déplace.</whirlingdervishdesc>
 	<wisdomotwd>Sagesse du Nain Blanc</wisdomotwd>
@@ -3722,11 +3722,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<allyoucaneat>Plus que vous ne pourrez en avaler</allyoucaneat>
 	<allyoucaneatdesc>Une fois par match, Cindy peut effectuer deux actions spéciales de Lancer de Bombe au lieu d'une, même si elle doit annoncer qu'elle va le faire avant d'effectuer la première action. Si elle le fait, immédiatement après avoir effectué la seconde action spéciale de Lancer de Bombe, lancez un D6. Sur un résultat de 1-3 Cindy est immédiatement Expulsée.</allyoucaneatdesc>
 	<asneakypair>Les Deux font la Paire</asneakypair>
-	<asneakypairdesc>Dribl &amp; Drull doivent être engagés en même temps, et comptent pour deux Star Players. De plus, lorsque Dribl ou Drull effectue une action de Poignard ou d'Agression sur un joueur adverse marqué simultanément par Dribl &amp; Drull, ils peuvent ajouter un modificateur de +1 au jet de Blessure.</asneakypairdesc>
+	<asneakypairdesc>Dribl &amp; Drull doivent être engagés en même temps, et comptent pour deux champions. De plus, lorsque Dribl ou Drull effectue une action de Poignard ou d'Agression sur un joueur adverse marqué simultanément par Dribl &amp; Drull, ils peuvent ajouter un modificateur de +1 au jet de Blessure.</asneakypairdesc>
 	<halflingluck>Chance du Halfling</halflingluck>
 	<halflingluckdesc>Une fois par match, Puggy  peut relancer un dé déjà jeté, que ce soit un dé unique, un dé faisant partie d'un jet de dés multiple ou un pool de dés (mais ce ne peut pas être un dé lancé lors d'un jet d'Armure, de Blessure ou d'Elimination).</halflingluckdesc>
 	<tastymorsel>Bouchée Savoureuse</tastymorsel>
-	<tastymorseldesc>Une fois par match, lorsque Karina rate un jet de Soif de Sang, elle peut choisir de mordre un joueur adverse qui a une FO de 3 ou moins, comme si c'était un Serviteur de son équipe. Karina ne peut pas mordre un Star Player avec cette règle spéciale.</tastymorseldesc>
+	<tastymorseldesc>Une fois par match, lorsque Karina rate un jet de Soif de Sang, elle peut choisir de mordre un joueur adverse qui a une FO de 3 ou moins, comme si c'était un Serviteur de son équipe. Karina ne peut pas mordre un champion avec cette règle spéciale.</tastymorseldesc>
 	<dwarfenscourge>Fléau des Nains</dwarfenscourge>
 	<dwarfenscourgedesc>Une fois par match, quand un joueur adverse est Mis à Terre en résultat d'une action de Blocage effectuée par Ivan, vous pouvez ajouter un modificateur additionnel de +1 sur le jet d'Armure ou sur le jet de Blessure. Si c'est contre un joueur Nain de n'importe quelle équipe, le modificateur est de +2.</dwarfenscourgedesc>
 	<staroftheshow>La Star du Spectacle</staroftheshow>
