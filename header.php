@@ -29,11 +29,11 @@ $credits = array(	'Pierluigi Masia',
 					'Goiz Ruiz de Gopegui',
 					'Ryan Williams',
 					'Ian Williams');
-define('NAFLM_VERSION', '4.2');
-define('NAFLM_BUILD_DATE', '30th September 2023');
-define('CONTENT_VERSION', 'Spike! #16');
-define('CONTENT_DETAIL', 'Blood Bowl 2020, Dungeon Bowl, Death Zone, Death Match, 2021-22 Almanacs and up to and including Spike! #16');
-define('CONTENT_DATE', 'September 2023');
+define('NAFLM_VERSION', '4.3');
+define('NAFLM_BUILD_DATE', '27th April 2024');
+define('CONTENT_VERSION', 'Spike! #17');
+define('CONTENT_DETAIL', 'Blood Bowl 2020, Dungeon Bowl, Death Zone, Death Match, 2021-22 Almanacs and up to and including Spike! #17');
+define('CONTENT_DATE', 'April 2024');
 $naflmcredits = array(	
 						'Val Catella',
 						'Anthony Baez',
