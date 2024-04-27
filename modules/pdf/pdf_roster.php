@@ -430,6 +430,7 @@ if ($_POST) {
     elseif ($key == 'Dwarfen Runesmith') { $ind_dwrs = (int) $val; continue; }
     elseif ($key == 'Norscan Seer') { $ind_seer = (int) $val; continue; }
     elseif ($key == 'Ancient Artefact') { $ind_artef = (int) $val; continue; }
+    elseif ($key == 'Healing Spite') { $ind_spite = (int) $val; continue; }
     elseif ($key == 'Cavorting Nurglings') { $ind_cvn = (int) $val; continue; }
     elseif ($key == 'Waaagh! Drummer') { $ind_wdrum = (int) $val; continue; }
     elseif ($key == 'Mortuary Assistant') { $ind_igor = (int) $val; continue; }
@@ -604,6 +605,7 @@ if (isset($ind_masballb)) { $ind_cost += $ind_masballb*$inducements['Master of B
 if (isset($ind_dwrs)) { $ind_cost += $ind_dwrs*$inducements['Dwarfen Runesmith']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_seer)) { $ind_cost += $ind_seer*$inducements['Norscan Seer']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_artef)) { $ind_cost += $ind_artef*$inducements['Ancient Artefact']['reduced_cost']; $ind_count += 1; }
+if (isset($ind_artef)) { $ind_cost += $ind_spitef*$inducements['Healing Spite']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_cvn)) { $ind_cost += $ind_cvn*$inducements['Cavorting Nurglings']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_wdrum)) { $ind_cost += $ind_wdrum*$inducements['Waaagh! Drummer']['reduced_cost']; $ind_count += 1; }
 if (isset($ind_wiz)) { $ind_cost += $ind_wiz*$inducements['Hireling Sports-Wizard']['reduced_cost']; $ind_count += 1; }
@@ -698,11 +700,15 @@ $ind_display_counter = 0;
   if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_dwrs)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Dwarfen Runesmith (0-1):', $ind_dwrs, $pdf->Mf($inducements['Dwarfen Runesmith']['reduced_cost']));}
   if (isset($ind_dwrs)) { $ind_display_counter += 1;}
+  if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_seer)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Norscan Seer (0-1):', $ind_seer, $pdf->Mf($inducements['Norscan Seer']['cost']));}
   if (isset($ind_seer)) { $ind_display_counter += 1;}
   if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_artef)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Ancient Artefact (0-1):', $ind_artef, $pdf->Mf($inducements['Ancient Artefact']['cost']));}
   if (isset($ind_artef)) { $ind_display_counter += 1;}
+  if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
+  if (isset($ind_spite)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Healing Spite (0-1):', $ind_artef, $pdf->Mf($inducements['Healing Spite']['cost']));}
+  if (isset($ind_spite)) { $ind_display_counter += 1;}
   if ($ind_display_counter == 9 ) {$currentx += 250; $currenty = 435;}
   if (isset($ind_cvn)) { $pdf->print_inducements($currentx, ($currenty+=$h), $h, COLOR_ROSTER_NORMAL, DEFLINECOLOR, 8, 'Cavorting Nurglings (0-3):', $ind_cvn, $pdf->Mf($inducements['Cavorting Nurglings']['reduced_cost']));}
   if (isset($ind_cvn)) { $ind_display_counter += 1;}

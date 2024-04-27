@@ -218,6 +218,7 @@ class SQLCore
 			DECLARE value '.$CT_cols['pv'].';
 			DECLARE status '.$core_tables['players']['status'].';
 			DECLARE date_died '.$core_tables['players']['date_died'].';
+			DECLARE date_retired '.$core_tables['players']['date_retired'].';
 			DECLARE pid '.$CT_cols[T_OBJ_PLAYER].';
 			DECLARE cur_p CURSOR FOR SELECT player_id FROM players WHERE owned_by_team_id = tid1 OR owned_by_team_id = tid2;
 			DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = 1;
@@ -313,7 +314,8 @@ class SQLCore
 						SET players.inj_ma = inj_ma, players.inj_av = inj_av, players.inj_ag = inj_ag, players.inj_pa = inj_pa, players.inj_st = inj_st, players.inj_ni = inj_ni,
 							players.ma = ma, players.av = av, players.ag = ag, players.pa = pa, players.st = st,
 							players.ma_ua = ma_ua, players.av_ua = av_ua, players.ag_ua = ag_ua, players.pa_ua = pa_ua, players.st_ua = st_ua,
-							players.value = value, players.status = status, players.date_died = date_died
+							players.value = value, players.status = status, 
+							players.date_died = date_died
 						WHERE players.player_id = pid;
 
 					/* All-time win percentage */
@@ -343,7 +345,7 @@ class SQLCore
 			BEGIN
 				DECLARE status '.$core_tables['players']['status'].' DEFAULT NULL;
 				
-				IF EXISTS(SELECT players.player_id FROM players WHERE players.player_id = pid AND players.status = '.RETIRED.') THEN
+				IF EXISTS(SELECT player_id FROM players WHERE player_id = pid AND date_retired is not null) THEN
 					RETURN '.RETIRED.';
 				ELSE 
 					IF !EXISTS(SELECT f_match_id FROM match_data WHERE f_player_id = pid LIMIT 1) THEN
@@ -365,6 +367,42 @@ class SQLCore
 							ORDER BY date_played DESC LIMIT 1;
 					END IF;
 				END IF;
+                IF status = '.NI.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.NI.') 
+                    + (SELECT ni_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
+                IF status = '.MA.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.MA.') 
+                    + (SELECT ma_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
+                IF status = '.AV.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.AV.') 
+                    + (SELECT av_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
+                IF status = '.AG.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.AG.') 
+                    + (SELECT ag_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
+                IF status = '.ST.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.ST.') 
+                    + (SELECT st_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
+                IF status = '.PA.' AND
+					(SELECT count(inj) FROM match_data, matches WHERE f_player_id = pid 
+					AND match_id = f_match_id AND date_played IS NOT NULL AND Inj = '.PA.') 
+                    + (SELECT pa_mod FROM players WHERE player_id = pid) =0
+                    THEN SET status = '.NONE.';
+                END IF;
 				RETURN IF(status IS NULL, '.NONE.', status);
 			END',
 
@@ -1099,6 +1137,13 @@ class SQLCore
 				INTO
 					inj_ni,inj_ma,inj_av,inj_ag,inj_pa,inj_st
 				FROM match_data WHERE f_player_id = pid;
+				
+				SET inj_ni = inj_ni + (SELECT ni_mod FROM players WHERE player_id = pid);
+				SET inj_ma = inj_ma + (SELECT ma_mod FROM players WHERE player_id = pid);
+				SET inj_av = inj_av + (SELECT av_mod FROM players WHERE player_id = pid);
+				SET inj_ag = inj_ag + (SELECT ag_mod FROM players WHERE player_id = pid);
+				SET inj_pa = inj_pa + (SELECT pa_mod FROM players WHERE player_id = pid);
+				SET inj_st = inj_st + (SELECT st_mod FROM players WHERE player_id = pid);
 
 				SET value = (SELECT cost FROM game_data_players WHERE game_data_players.pos_id = f_pos_id)
 					+ ach_av            * 10000
@@ -1251,6 +1296,121 @@ class SQLCore
 				CALL syncAllELOs();     #SELECT "ELO done";
 				/* Must be last since the PTS field definition may else depend on other not yet calcualted fields. */
 				CALL syncAllPTS();      #SELECT "PTS done";
+			END',
+
+			/*
+				Random Skill generator
+			*/
+			'CREATE PROCEDURE random_skill(IN skilltype VARCHAR(1), OUT skill_type VARCHAR(20), OUT first_roll SMALLINT UNSIGNED,
+			OUT second_roll SMALLINT UNSIGNED, OUT random_skill INT, OUT skill_text VARCHAR(20))
+				NOT DETERMINISTIC
+				CONTAINS SQL
+			BEGIN
+			SELECT skilltype INTO skill_type;
+			SELECT FLOOR( RAND() * 6) +1 INTO first_roll;
+			SELECT FLOOR( RAND() * 6) +1 INTO second_roll;
+			IF skilltype = "A" THEN
+				IF first_roll < 4 THEN
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 20
+				 WHEN second_roll = 2 THEN 21
+				 WHEN second_roll = 3 THEN 22 
+				 WHEN second_roll = 4 THEN 23
+				 WHEN second_roll = 5 THEN 30 
+				 WHEN second_roll = 6 THEN 24
+				 END INTO random_skill;
+				ELSE
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 25
+				 WHEN second_roll = 2 THEN 31
+				 WHEN second_roll = 3 THEN 26
+				 WHEN second_roll = 4 THEN 27
+				 WHEN second_roll = 5 THEN 28
+				 WHEN second_roll = 6 THEN 29
+				 END INTO random_skill;
+				END IF;
+			ELSEIF skilltype = "G" THEN
+				IF first_roll < 4 THEN
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 1
+				 WHEN second_roll = 2 THEN 2
+				 WHEN second_roll = 3 THEN 3
+				 WHEN second_roll = 4 THEN 4
+				 WHEN second_roll = 5 THEN 5 
+				 WHEN second_roll = 6 THEN 6
+				 END INTO random_skill;
+				ELSE
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 9
+				 WHEN second_roll = 2 THEN 10
+				 WHEN second_roll = 3 THEN 11 
+				 WHEN second_roll = 4 THEN 12
+				 WHEN second_roll = 5 THEN 13
+				 WHEN second_roll = 6 THEN 14 
+				 END INTO random_skill;
+				END IF;
+			ELSEIF skilltype = "M" THEN
+				IF first_roll < 4 THEN
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 70
+				 WHEN second_roll = 2 THEN 71
+				 WHEN second_roll = 3 THEN 72
+				 WHEN second_roll = 4 THEN 73
+				 WHEN second_roll = 5 THEN 74
+				 WHEN second_roll = 6 THEN 75 
+				 END INTO random_skill;
+				ELSE
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 80
+				 WHEN second_roll = 2 THEN 81
+				 WHEN second_roll = 3 THEN 76
+				 WHEN second_roll = 4 THEN 77 
+				 WHEN second_roll = 5 THEN 78
+				 WHEN second_roll = 6 THEN 79
+				 END INTO random_skill;
+				END IF;
+			ELSEIF skilltype = "P" THEN
+				IF first_roll < 4 THEN
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 40
+				 WHEN second_roll = 2 THEN 47
+				 WHEN second_roll = 3 THEN 48
+				 WHEN second_roll = 4 THEN 41
+				 WHEN second_roll = 5 THEN 49 
+				 WHEN second_roll = 6 THEN 42
+				 END INTO random_skill;
+				ELSE
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 43 
+				 WHEN second_roll = 2 THEN 44
+				 WHEN second_roll = 3 THEN 8 
+				 WHEN second_roll = 4 THEN 45
+				 WHEN second_roll = 5 THEN 7
+				 WHEN second_roll = 6 THEN 46
+				 END INTO random_skill;
+				END IF;
+			ELSEIF skilltype = "S" THEN
+				IF first_roll < 4 THEN
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 60 
+				 WHEN second_roll = 2 THEN 61
+				 WHEN second_roll = 3 THEN 50
+				 WHEN second_roll = 4 THEN 51 
+				 WHEN second_roll = 5 THEN 52
+				 WHEN second_roll = 6 THEN 53
+				 END INTO random_skill;
+				ELSE
+				 SELECT CASE 
+				 WHEN second_roll = 1 THEN 54
+				 WHEN second_roll = 2 THEN 55
+				 WHEN second_roll = 3 THEN 56 
+				 WHEN second_roll = 4 THEN 57
+				 WHEN second_roll = 5 THEN 58
+				 WHEN second_roll = 6 THEN 59
+				 END INTO random_skill;
+				END IF;
+			END IF; 
+			SELECT Name INTO skill_text	FROM game_data_skills WHERE Skill_id = random_skill;
 			END',
 		);
 		global $hrs;

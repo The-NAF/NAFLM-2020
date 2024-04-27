@@ -882,20 +882,7 @@ class HTMLOUT
 			<script type="text/javascript" src="js/lib/knockout-3.3.0.min.js"></script>
 			<script type="text/javascript" src="lib/jquery.autocomplete-min.js"></script>
 			<script type="text/javascript" src="lib/jquery.expander.js"></script>
-			<script src="https://cdn.tiny.cloud/1/5qwlj1jhb3952k8iqpw4hst5k5153fjirc33f8lluc304yg7/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-			<script>
-			tinymce.init({
-			  selector: 'textarea',
-			  plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
-			  toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
-			  tinycomments_mode: 'embedded',
-			  tinycomments_author: 'Author name',
-			  mergetags_list: [
-				{ value: 'First.Name', title: 'First Name' },
-				{ value: 'Email', title: 'Email' },
-			  ]
-			});
-			</script> 		
+		
 			<script type="text/javascript" src="js/app/ViewModel/Common/RegistrationViewModel.js"></script>
 			<script type="text/javascript" src="js/app/ViewModel/Common/PageViewModel.js"></script>
 			<script type="text/javascript" src="js/app/CustomBinders/EditableCustomBinder.js"></script>
@@ -1100,6 +1087,7 @@ class HTMLOUT
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=3" style="height:10px;line-height:10px;">Dark Elf</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=4" style="height:10px;line-height:10px;">Dwarf</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=5" style="height:10px;line-height:10px;">Elven Union</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=34" style="height:10px;line-height:10px;">Gnome</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=6" style="height:10px;line-height:10px;">Goblin</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=7" style="height:10px;line-height:10px;">Halfling</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=9" style="height:10px;line-height:10px;">Human</a></li>
@@ -1163,7 +1151,7 @@ class HTMLOUT
 			<?php endif; ?>
 			
 			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
-			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/EJpqDmz2zbI8hzCN.pdf">BB2020 Latest FAQ & Errata</a></li> 
+			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/P9GJXUTdGyGDeZkk.pdf">BB2020 Latest FAQ & Errata</a></li> 
 		</ul>
 	</li>  
 
