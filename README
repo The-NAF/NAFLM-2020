@@ -31,7 +31,7 @@ ADD COLUMN bonus2 TINYINT(4) NOT NULL DEFAULT 0 AFTER bonus1;
 THEN replace files, after which in NAFLM core panel, please run Re-install database first, then synchronise
 
 NOV 2023 
-in order to fix a bug with returning niggles/injuries after admin removed them, please make sure you have all the latest files and run the following script to add new columns to yur DB:
+in order to fix a bug with returning niggles/injuries after admin removed them, please make sure you have all the latest files (v4.3) and run the following script to add new columns to your DB:
 
 ALTER TABLE `players` 
 ADD COLUMN `ma_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `inj_ni`,
