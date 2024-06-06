@@ -9,7 +9,7 @@ Please visit https://thenaf.obblm.com/ to register for a NAF hosted league
 
 If installing NAFLM on your own server please copy all files then run install.php from a browser
 
-If database is already installed from v3 and updating to v4.1 (latest as of March 2019) then please run the following scipt in your database to add new fields:
+If database is already installed from v3 and updating to v4.1 (latest as of March 2019) then please run the following script in your database to add new fields:
 
 ALTER TABLE teams
 ADD COLUMN fav_rule SMALLINT(5) UNSIGNED DEFAULT NULL AFTER win_pct;
@@ -29,3 +29,14 @@ ALTER TABLE matches
 ADD COLUMN bonus2 TINYINT(4) NOT NULL DEFAULT 0 AFTER bonus1;
 
 THEN replace files, after which in NAFLM core panel, please run Re-install database first, then synchronise
+
+NOV 2023 
+in order to fix a bug with returning niggles/injuries after admin removed them, please make sure you have all the latest files (v4.3) and run the following script to add new columns to your DB:
+
+ALTER TABLE `players` 
+ADD COLUMN `ma_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `inj_ni`,
+ADD COLUMN `st_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `ma_mod`,
+ADD COLUMN `ag_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `st_mod`,
+ADD COLUMN `pa_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `ag_mod`,
+ADD COLUMN `av_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `pa_mod`,
+ADD COLUMN `ni_mod` TINYINT(3) SIGNED DEFAULT '0' AFTER `av_mod`;

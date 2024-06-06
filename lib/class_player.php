@@ -47,6 +47,7 @@ class Player
     public $may_buy_new_skill = 0;
     public $value = 0;
     public $date_died = '';
+    public $date_retired = '';
 
     // Characteristics
     public $ma = 0;
@@ -122,7 +123,7 @@ class Player
         $this->is_dead              = ($this->status == DEAD);
         $this->is_retired           = ($this->status == RETIRED);
         $this->is_mng               = !in_array($this->status, array(NONE, DEAD, RETIRED));
-        $this->can_retire           = !in_array($this->status, array(NONE, DEAD, RETIRED)) && ($this->inj_ma > 0 || $this->inj_ag > 0 || $this->inj_st > 0 || $this->inj_pa > 0 || $this->inj_av > 0);
+        $this->can_retire           = !in_array($this->status, array(NONE, DEAD, RETIRED)) && ($this->inj_ma > 0 || $this->inj_ag > 0 || $this->inj_st > 0 || $this->inj_pa > 0 || $this->inj_av > 0 || $this->inj_ni > 0);
         $this->is_sold              = (bool) $this->date_sold;
         $this->is_journeyman        = ($this->type == PLAYER_TYPE_JOURNEY);
         $this->is_journeyman_used   = ($this->type == PLAYER_TYPE_JOURNEY) && ($this->mv_played > 0);
@@ -385,14 +386,14 @@ class Player
     public function removeNiggle() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
-        $query = "UPDATE players SET inj_ni = GREATEST(inj_ni - 1, 0) WHERE player_id = $this->player_id";
+        $query = "UPDATE players SET inj_ni = GREATEST(inj_ni -1 ,0), ni_mod = ni_mod -1 WHERE player_id = $this->player_id";
         return mysql_query($query);
     }
     
     public function addNiggle() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
-        $query = "UPDATE players SET inj_ni = inj_ni + 1 WHERE player_id = $this->player_id";
+        $query = "UPDATE players SET inj_ni = inj_ni +1, ni_mod = ni_mod +1 WHERE player_id = $this->player_id";
         return mysql_query($query);
     }
     
@@ -400,10 +401,10 @@ class Player
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
 		if ($stat == 'ma' || $stat == 'st' || $stat == 'av') {
-			$query = "UPDATE players SET inj_".$stat." = inj_".$stat." -1, ".$stat." = ".$stat." +1, ".$stat."_ua = ".$stat."_ua +1  WHERE player_id = $this->player_id";
+			$query = "UPDATE players SET ".$stat."_mod = ".$stat."_mod -1 , inj_".$stat." = inj_".$stat." -1, ".$stat." = ".$stat." +1, ".$stat."_ua = ".$stat."_ua +1  WHERE player_id = $this->player_id";
 		}
 		else {
-			$query = "UPDATE players SET inj_".$stat." = inj_".$stat." -1, ".$stat." = ".$stat." -1, ".$stat."_ua = ".$stat."_ua -1  WHERE player_id = $this->player_id";
+			$query = "UPDATE players SET ".$stat."_mod = ".$stat."_mod -1 , inj_".$stat." = inj_".$stat." -1, ".$stat." = ".$stat." -1, ".$stat."_ua = ".$stat."_ua -1  WHERE player_id = $this->player_id";
 		}
         return mysql_query($query);
     }
@@ -412,7 +413,7 @@ class Player
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
         $query = "UPDATE players SET status = 1, date_retired = NULL WHERE player_id = $this->player_id";
-        return mysql_query($query);
+        return mysql_query($query); 
     }
 
     public function rename($new_name) {
@@ -438,6 +439,11 @@ class Player
 
     public function dval($val = 0) {
         $query = "UPDATE players SET extra_val = $val WHERE player_id = $this->player_id";
+        return mysql_query($query) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.
+    }
+
+    public function randomSkill($skill_type, $skill_cat) {
+        $query = "CALL `random_player_skill`('$skill_cat','$skill_type',$this->player_id,@skill_type,@first_roll,@second_roll,@random_skill,@skill_text,@comments)";
         return mysql_query($query) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.
     }
 

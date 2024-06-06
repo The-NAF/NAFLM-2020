@@ -51,8 +51,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <ach>Achievements</ach>
     <page>Page</page>
     <retired>Retired</retired>
-    <skills>Skills &amp; Traits</skills>
     <skill>Skill</skill>
+    <skills>Skills &amp; Traits</skills>
+    <skill_type>Skill Type</skill_type>
+    <skill_cat>Skill Category</skill_cat>
     <normal>Primary</normal>
     <double>Secondary</double>
     <injs>Injuries</injs>
@@ -317,6 +319,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <unbuy_player>Un-hire player</unbuy_player>
             <rename_player>Rename player</rename_player>
             <renumber_player>Renumber player</renumber_player>
+            <random_skill>New Random Skill</random_skill>
             <retire_player>Temp Retire player</retire_player>
             <rename_team>Rename team</rename_team>
             <buy_goods>Buy team goods</buy_goods>
@@ -351,6 +354,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>
+                <random_skill> <![CDATA[ Randomize a new skill for a player.<br> Please select carefully as once randomised and assigned it cannot be changed. ]]> </random_skill>
                 <retire_player> <![CDATA[ Temporarily retire a player. No refund will apply.<br> Only players who suffered a lasting injury in the last game can be retired.<br> A retired player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
                 <rename_team> <![CDATA[ Rename your team. ]]> </rename_team>
                 <buy_goods> <![CDATA[ Buy team goods. ]]> </buy_goods>
@@ -569,6 +573,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<imperialnobility>Imperial Nobility</imperialnobility>
 	<amazons>Amazon</amazons>
     <vampires>Vampire</vampires>
+    <gnome>Gnome</gnome>
 	<!-- Dungeon Bowl Teams -->
 	<collegeoffire>College of Fire</collegeoffire>
 	<collegeofshadow>College of Shadow</collegeofshadow>
@@ -739,6 +744,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <imperialthrower>Imperial Thrower</imperialthrower>
     <nobleblitzer>Noble Blitzer</nobleblitzer>
     <bodyguard>Bodyguard</bodyguard>
+	<!-- Gnome -->
+    <gnomelineman>Gnome Lineman</gnomelineman>
+    <gnomebeastmaster>Gnome Beastmaster</gnomebeastmaster>
+    <gnomeillusionist>Gnome Illusionist</gnomeillusionist>
+    <woodlandfox>Woodland Fox</woodlandfox>
 	<!-- Dungeon Bowl Teams -->
 	<!-- College of Fire -->
     <dwarfrunner>Dwarf Runner</dwarfrunner>
@@ -879,6 +889,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <hitandrun>Hit and Run</hitandrun>   
     <bloodlust2plus>Bloodlust (2+)</bloodlust2plus>   
     <bloodlust3plus>Bloodlust (3+)</bloodlust3plus>
+    <trickster>Trickster</trickster>   
+    <myball>My Ball</myball>
 </skill>
 
 <starplayer>
@@ -938,12 +950,16 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<bilerotvomitflesh>Bilerot Vomitflesh</bilerotvomitflesh>
 	<ripperbolgrot>Ripper Bolgrot</ripperbolgrot>
 	<nobblablackwart>Nobbla Blackwart</nobblablackwart>
-	<scrappsorehead>Scrapp Sorehead</scrappsorehead>
+	<scrappasorehead>Scrappa Sorehead</scrappasorehead>
 	<withergraspdoubledrool>Withergrasp Doubledrool</withergraspdoubledrool>
 	 <!-- Added BB2020 Spike! #16 -->	
 	<captainkarinavonriesz>'Captain' Karina von Riesz</captainkarinavonriesz>
 	<countluthorvondrakenborg>Count Luthor von Drakenborg</countluthorvondrakenborg>
 	<ivantheanimaldeathshroud>Ivan 'The Animal' Deathshroud</ivantheanimaldeathshroud>
+	<skitterstabstab>Skitter Stab-Stab</skitterstabstab>
+	 <!-- Added BB2020 Spike! #17 -->	
+	<rowanaforestfoot>Rowana Forestfoot</rowanaforestfoot>
+	<rodneyroachbait>Rodney Roachbait</rodneyroachbait>
 
 </starplayer>
 	
@@ -1032,7 +1048,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<mesmerizingdance>Mesmerizing Gaze</mesmerizingdance>
 	<mesmerizingdancedesc>Once per game, Eldril may re-roll a failed Agility test when attempting to use the Hypnotic Gaze trait.</mesmerizingdancedesc>
 	<oldpro>Old Pro</oldpro>
-	<oldprodesc>One per game, Helmut may use his Pro skill to re-roll a single dice rolled as part of an Armour roll.</oldprodesc>
+	<oldprodesc>Once per game, Helmut may use his Pro skill to re-roll a single dice rolled as part of an Armour roll.</oldprodesc>
 	<pumpupthecrowd>Pump Up the Crowd</pumpupthecrowd>
 	<pumpupthecrowddesc>Once per game, when Skrorg causes an opposition player to be removed as a Casualty as the result of a Block action, Skrorg’s controlling coach gains one team re-roll. If this re-roll has not been used by the end of the drive, it is lost.</pumpupthecrowddesc>
 	<raidingparty>Raiding Party</raidingparty>
@@ -1089,6 +1105,12 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<dwarfenscourgedesc>Once per game, when an opposition player is Knocked Down as a result of a Block action performed by Ivan, you may apply an additional +1 modifier to the Armour roll or Injury roll. If this is against a Dwarfen player from any team, this may instead be a +2 modifier.</dwarfenscourgedesc>
 	<staroftheshow>Star of the Show</staroftheshow>
 	<staroftheshowdesc>Once per game, when Count Luthor scores a touchdown, his controlling coach may gain one team re-roll. If this re-roll has not been used by the end of the next drive, it is lost.</staroftheshowdesc>
+	<masterassassin>Master Assassin</masterassassin>
+	<masterassassindesc>Once per game, when Skitter successfully breaks an opposition player's armour as a result of a Stab Special Action, he may choose to re-roll the Injury roll.</masterassassindesc>
+	<boundingleap>Bounding Leap</boundingleap>
+	<boundingleapdesc>Once per game, after declaring that she will Leap but before rolling any dice, Rowana may choose to use this special rule. If she does, Rowana suffers no negative modifiers for the Agility test to Leap and may choose to re-roll the result.</boundingleapdesc>
+	<catchoftheday>Catch of the Day</catchoftheday>
+	<catchofthedaydesc>Once per half, if Rodney is Standing and begins his activation within 3 squares of a ball which is on the ground he may roll a D6. On a 1-2, nothing happens. On a 3+, Rodney immediately gains possession of the ball.</catchofthedaydesc>
 </specialrules>
 
 <experience>

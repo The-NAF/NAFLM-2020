@@ -403,7 +403,7 @@ class Match_HTMLOUT extends Match
 						$_POST["agn1_$pid"]     = NONE;
 						$_POST["agn2_$pid"]     = NONE;
 					}
-					elseif ($p->getStatus($m->match_id) == RETIRED && !$m->is_played) {
+					elseif ($p->getStatus($m->match_id) == RETIRED) {
 						$_POST["mvp_$pid"]      = 0;
 						$_POST["cp_$pid"]       = 0;
 						$_POST["td_$pid"]       = 0;
@@ -419,7 +419,7 @@ class Match_HTMLOUT extends Match
 						$_POST["ir2_d2_$pid"]   = 0;
 						$_POST["ir3_d1_$pid"]   = 0;
 						$_POST["ir3_d2_$pid"]   = 0;
-						$_POST["inj_$pid"]      = NONE;
+						$_POST["inj_$pid"]      = MNG;
 						$_POST["agn1_$pid"]     = NONE;
 						$_POST["agn2_$pid"]     = NONE;
 					}

@@ -51,7 +51,7 @@ if($action == "update") {
 
         // We create zero entries for MNG player(s). This is required!
         $pid = $player->player_id;
-        if ($player->getStatus($match->match_id) == MNG || ($player->getStatus($match->match_id) == RETIRED && !$m->is_played)) {
+        if ($player->getStatus($match->match_id) == MNG) {
             $_POST["mvp_$pid"]      = 0;
             $_POST["cp_$pid"]       = 0;
             $_POST["td_$pid"]       = 0;
@@ -68,6 +68,26 @@ if($action == "update") {
             $_POST["ir3_d1_$pid"]   = 0;
             $_POST["ir3_d2_$pid"]   = 0;
             $_POST["inj_$pid"]      = NONE;
+            $_POST["agn1_$pid"]     = NONE;
+            $_POST["agn2_$pid"]     = NONE;
+        }
+		elseif ($player->getStatus($match->match_id) == RETIRED) {
+            $_POST["mvp_$pid"]      = 0;
+            $_POST["cp_$pid"]       = 0;
+            $_POST["td_$pid"]       = 0;
+            $_POST["deflct_$pid"]   = 0;
+            $_POST["intcpt_$pid"]   = 0;
+            $_POST["bh_$pid"]       = 0;
+            $_POST["si_$pid"]       = 0;
+            $_POST["ki_$pid"]       = 0;
+            $_POST["misc_$pid"]     = 0;
+            $_POST["ir1_d1_$pid"]   = 0;
+            $_POST["ir1_d2_$pid"]   = 0;
+            $_POST["ir2_d1_$pid"]   = 0;
+            $_POST["ir2_d2_$pid"]   = 0;
+            $_POST["ir3_d1_$pid"]   = 0;
+            $_POST["ir3_d2_$pid"]   = 0;
+            $_POST["inj_$pid"]      = MNG;
             $_POST["agn1_$pid"]     = NONE;
             $_POST["agn2_$pid"]     = NONE;
         }
