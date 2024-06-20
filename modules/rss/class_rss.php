@@ -191,7 +191,7 @@ class RSSfeed implements ModuleInterface
     public static function main($argv) {
     
         global $settings;
-        $s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : ""; 
+        $s = empty($_SERVER["HTTPS"]) ? '' : (($_SERVER["HTTPS"] == "on") ? "s" : ""); 
         $matches = array();
         preg_match('/(\w*)/', strtolower($_SERVER["SERVER_PROTOCOL"]), $matches); 
         $protocol = $matches[0].$s;
