@@ -41,7 +41,7 @@
 <mesmerizingdance>Mesmerizing Gaze</mesmerizingdance>
 <mesmerizingdancedesc>Once per game, Eldril may re-roll a failed Agility test when attempting to use the Hypnotic Gaze trait.</mesmerizingdancedesc>
 <oldpro>Old Pro</oldpro>
-<oldprodesc>One per game, Helmut may use his Pro skill to re-roll a single dice rolled as part of an Armour roll.</oldprodesc>
+<oldprodesc>Once per game, Helmut may use his Pro skill to re-roll a single dice rolled as part of an Armour roll.</oldprodesc>
 <pumpupthecrowd>Pump Up the Crowd</pumpupthecrowd>
 <pumpupthecrowddesc>Once per game, when Skrorg causes an opposition player to be removed as a Casualty as the result of a Block action, Skrorg’s controlling coach gains one team re-roll. If this re-roll has not been used by the end of the drive, it is lost.</pumpupthecrowddesc>
 <raidingparty>Raiding Party</raidingparty>
@@ -98,5 +98,11 @@
 <dwarfenscourgedesc>Once per game, when an opposition player is Knocked Down as a result of a Block action performed by Ivan, you may apply an additional +1 modifier to the Armour roll or Injury roll. If this is against a Dwarfen player from any team, this may instead be a +2 modifier.</dwarfenscourgedesc>
 <staroftheshow>Star of the Show</staroftheshow>
 <staroftheshowdesc>Once per game, when Count Luthor scores a touchdown, his controlling coach may gain one team re-roll. If this re-roll has not been used by the end of the next drive, it is lost.</staroftheshowdesc>
+<masterassassin>Master Assassin</masterassassin>
+<masterassassindesc>Once per game, when Skitter successfully breaks an opposition player's armour as a result of a Stab Special Action, he may choose to re-roll the Injury roll.</masterassassindesc>
+<boundingleap>Bounding Leap</boundingleap>
+<boundingleapdesc>Once per game, after declaring that she will Leap but before rolling any dice, Rowana may choose to use this special rule. If she does, Rowana suffers no negative modifiers for the Agility test to Leap and may choose to re-roll the result.</boundingleapdesc>
+<catchoftheday>Catch of the Day</catchoftheday>
+<catchofthedaydesc>Once per half, if Rodney is Standing and begins his activation within 3 squares of a ball which is on the ground he may roll a D6. On a 1-2, nothing happens. On a 3+, Rodney immediately gains possession of the ball.</catchofthedaydesc>
 
 </en-GB>
