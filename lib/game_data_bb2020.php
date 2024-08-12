@@ -5724,7 +5724,7 @@ $stars = array(
        'teamrules'  => array(1,9),
        'special'  => array(68),
        'specialdesc'  => 'allyoucaneat',
-       'megastar'  => 0,
+       'megastar'  => 1,
    ),
     'Dribl (+ Drull)' => array (
        'id'     => -54,
