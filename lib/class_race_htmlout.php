@@ -11,7 +11,7 @@ class Race_HTMLOUT extends Race
 		<!-- Following HTML from class_race_htmlout.php profile -->
 		<center><img src="<?php echo RACE_ICONS.'/'.$roster['other']['icon'];?>" alt="Race icon"></center>
 		<ul>
-			<?php if ($rules['dungeon'] == 0)  : ?>
+			<?php if ($rules['dungeon'] == 0 || $rules['sevens'] == 0)  : ?>
 			<li><b><?php echo $lng->getTrn('common/format')?>:</b> 
 			<?php 
 			if ($roster['other']['format'] == 'BB') {
@@ -19,6 +19,9 @@ class Race_HTMLOUT extends Race
 			}
 			elseif ($roster['other']['format'] == 'DB') {
 			echo "Dungeon Bowl";
+			}
+			elseif ($roster['other']['format'] == 'SV') {
+			echo "Sevens";
 			}
 			;?>
 			</li>
@@ -87,50 +90,51 @@ class Race_HTMLOUT extends Race
 			array('GETsuffix' => 'pl', 'noHelp' => true, 'doNr' => false)
 		);
 		//List available star players for race
-		$racestars = array(); 
-		foreach ($stars as $s => $d) {  
-			$starplaysfor = $d['teamrules']; //defining team rules the star plays for
-			$teamdefrules = $roster['other']['special_rules']; //defining team standard rules
-			$teamdfavrule = $roster['other']['fav_rules'];//defining team chosen rule
-			$allteamrules = array_merge($teamdefrules, $teamdfavrule); //combining standard and chosen
-			$starcanplay = array_intersect($starplaysfor, $allteamrules); //checking for rules in common with star
-			if (!empty($starcanplay))  { //hide stars where rules do not match
-			//if (in_array($race->race_id, $d['races'])) {
+		if ($roster['other']['format'] == 'BB') {
+			$racestars = array(); 
+			foreach ($stars as $s => $d) {  
+				$starplaysfor = $d['teamrules']; //defining team rules the star plays for
+				$teamdefrules = $roster['other']['special_rules']; //defining team standard rules
+				$teamdfavrule = $roster['other']['fav_rules'];//defining team chosen rule
+				$allteamrules = array_merge($teamdefrules, $teamdfavrule); //combining standard and chosen
+				$starcanplay = array_intersect($starplaysfor, $allteamrules); //checking for rules in common with star
 				$tmp = new Star($d['id']);
-				$tmp->skills = skillsTrans($tmp->skills);    
-				$tmp->special = specialsTrans($tmp->special);            
-				$racestars[] = $tmp;
-				if ($tmp->megastar == 1) {       
-					$tmp->name = $tmp->name.'*';
+				if (!empty($starcanplay))  { //hide stars where rules do not match
+					$tmp->skills = skillsTrans($tmp->skills);    
+					$tmp->special = specialsTrans($tmp->special);            
+					$racestars[] = $tmp;
+					if ($tmp->megastar == 1) {       
+						$tmp->name = $tmp->name.'*';
+					}
+				}
+				if ($tmp->pa == 0) {       
+					$tmp->pa = '-';
+				}
+				if ($tmp->pa != '-' && $tmp->pa != '1+' && $tmp->pa != '2+' && $tmp->pa != '3+' && $tmp->pa != '4+' && $tmp->pa != '5+' && $tmp->pa != '6+') {       
+					$tmp->pa = $tmp->pa.'+';
 				}
 			}
-			if ($tmp->pa == 0) {       
-				$tmp->pa = '-';
-			}
-			if ($tmp->pa != '-' && $tmp->pa != '1+' && $tmp->pa != '2+' && $tmp->pa != '3+' && $tmp->pa != '4+' && $tmp->pa != '5+' && $tmp->pa != '6+') {       
-				$tmp->pa = $tmp->pa.'+';
-			}
+			$fields = array(
+				'name'   => array('desc' => $lng->getTrn('common/star'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'star_id')),
+				'ma'     => array('desc' => $lng->getTrn('common/ma')),
+				'st'     => array('desc' => $lng->getTrn('common/st')),
+				'ag'     => array('desc' => $lng->getTrn('common/ag'), 'suffix' => '+'),
+				'pa'     => array('desc' => $lng->getTrn('common/pa')),
+				'av'     => array('desc' => $lng->getTrn('common/av'), 'suffix' => '+'),
+				'skills' => array('desc' => $lng->getTrn('common/skills'), 'nosort' => true),
+				'special' => array('desc' => $lng->getTrn('common/specialrules'), 'nosort' => true),
+				'cost'   => array('desc' => $lng->getTrn('common/price'), 'kilo' => true, 'suffix' => 'k'),
+			);
+			HTMLOUT::sort_table(
+				$lng->getTrn('common/availablestars'),
+				urlcompile(T_URL_PROFILE,T_OBJ_RACE,$race->race_id,false,false),
+				$racestars,
+				$fields,
+				sort_rule('star'),
+				(isset($_GET['sort'])) ? array((($_GET['dir'] == 'a') ? '+' : '-') . $_GET['sort']) : array(),
+				array('anchor' => 's2', 'doNr' => false, 'noHelp' => true)
+			);
 		}
-		$fields = array(
-			'name'   => array('desc' => $lng->getTrn('common/star'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'star_id')),
-			'ma'     => array('desc' => $lng->getTrn('common/ma')),
-			'st'     => array('desc' => $lng->getTrn('common/st')),
-			'ag'     => array('desc' => $lng->getTrn('common/ag'), 'suffix' => '+'),
-			'pa'     => array('desc' => $lng->getTrn('common/pa')),
-			'av'     => array('desc' => $lng->getTrn('common/av'), 'suffix' => '+'),
-			'skills' => array('desc' => $lng->getTrn('common/skills'), 'nosort' => true),
-			'special' => array('desc' => $lng->getTrn('common/specialrules'), 'nosort' => true),
-			'cost'   => array('desc' => $lng->getTrn('common/price'), 'kilo' => true, 'suffix' => 'k'),
-		);
-		HTMLOUT::sort_table(
-			$lng->getTrn('common/availablestars'),
-			urlcompile(T_URL_PROFILE,T_OBJ_RACE,$race->race_id,false,false),
-			$racestars,
-			$fields,
-			sort_rule('star'),
-			(isset($_GET['sort'])) ? array((($_GET['dir'] == 'a') ? '+' : '-') . $_GET['sort']) : array(),
-			array('anchor' => 's2', 'doNr' => false, 'noHelp' => true)
-		);
 		// Teams of the chosen race.
 		$url = urlcompile(T_URL_PROFILE,T_OBJ_RACE,$race->race_id,false,false);
 		HTMLOUT::standings(STATS_TEAM,false,false,array('url' => $url, 'teams_from' => STATS_RACE, 'teams_from_id' => $race->race_id));

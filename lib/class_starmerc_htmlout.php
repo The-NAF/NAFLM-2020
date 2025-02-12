@@ -7,8 +7,8 @@ class Star_HTMLOUT extends Star
 		title($s->name);
 		$s->teamrules = specialsTrans($s->teamrules);  
 		$s->races = racesTrans($s->races);
-		if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/',$s->teamrules)) {       
-		$s->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch/", "Favoured of...", $s->teamrules);
+		if (preg_match('/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch, Favoured of Hashut/',$s->teamrules)) {       
+		$s->teamrules = preg_replace("/Favoured of Chaos Undivided, Favoured of Nurgle, Favoured of Khorne, Favoured of Slaanesh, Favoured of Tzeentch, Favoured of Hashut/", "Favoured of...", $s->teamrules);
 		}
 		if (preg_match('/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../',$s->teamrules)) {       
 		$s->teamrules = preg_replace("/Old World Classic, Badlands Brawl, Bribery and Corruption, Elven Kingdoms League, Lustrian Superleague, Worlds Edge Superleague, Masters of Undeath, Sylvanian Spotlight, Halfling Thimble Cup, Underworld Challenge, Favoured of.../", "Any Team", $s->teamrules);

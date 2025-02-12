@@ -166,6 +166,12 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <german>German</german>
     <french>French</french>
     <italian>Italian</italian>    
+	
+	<!-- Formats -->
+    <bb>Blood Bowl</bb>
+    <db>DungeonBowl</db>
+    <sv>Sevens</sv>
+	
 </common>
 
 <!-- Link names for menu elements -->
@@ -208,6 +214,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <facebook>Facebook</facebook>
     <twitter>Twitter</twitter>
     <whatsapp>Whatsapp</whatsapp>
+    <discord>Discord</discord>
     <instagram>Instagram</instagram>
 </menu>
 
@@ -314,13 +321,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <title>Team management</title>
             <select_rule>Select team special rule</select_rule>
             <hire_player>Hire player</hire_player>
-            <hire_journeyman>Hire journeymen</hire_journeyman>
+            <hire_journeyman>Perm hire used journeymen</hire_journeyman>
             <fire_player>Fire player</fire_player>
             <unbuy_player>Un-hire player</unbuy_player>
             <rename_player>Rename player</rename_player>
             <renumber_player>Renumber player</renumber_player>
-            <random_skill>New Random Skill</random_skill>
-            <retire_player>Temp Retire player</retire_player>
+            <random_skill>New random skill</random_skill>
+            <retire_player>Temp retire player</retire_player>
             <rename_team>Rename team</rename_team>
             <buy_goods>Buy team goods</buy_goods>
             <drop_goods>Let go of team goods</drop_goods>
@@ -344,17 +351,18 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <r13>Favoured of Khorne</r13>
                 <r14>Favoured of Slaanesh</r14>
                 <r15>Favoured of Tzeentch</r15>
+                <r19>Favoured of Hashut</r19>
             </favrule>
 
             <desc>
                 <select_rule> <![CDATA[ Select a team special rule.<br> Teams that have multiple special rules to choose from must make a selection here, to determine which star players they can induce.<br> Please select carefully as once chosen it cannot be changed.<br> <b>Please Note:</b> Some stars will not be available in inducements try-out until a rule choice is selected. ]]> </select_rule>
-                <hire_player> <![CDATA[ Hire a new player.<br> Hiring a player as a journeyman is free, but only players from a 0-16 allowed position on your team's roster are hire-able as journeymen. ]]> </hire_player>
-                <hire_journeyman> <![CDATA[ Hire one of your journeymen to permanently play on your team. ]]> </hire_journeyman>
+                <hire_player> <![CDATA[ Hire a new player.<br> Also, hire a new journeyman.<br> Hiring a player as a journeyman is free, but only players from a 0-16 allowed position on your team's roster are hire-able as journeymen.<BR> Tick the Journeyman? box to hire a new journeyman at no cost. ]]> </hire_player>
+                <hire_journeyman> <![CDATA[ Hire one of your used journeymen to permanently play on your team.<br> Must be done before firing the journeymen. ]]> </hire_journeyman>
                 <fire_player> <![CDATA[ Fire a player. Refund rate: ]]> </fire_player>
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>
-                <random_skill> <![CDATA[ Randomize a new skill for a player.<br> Please select carefully as once randomised and assigned it cannot be changed. ]]> </random_skill>
+                <random_skill> <![CDATA[ Randomize a new skill for a player.<br> Please select carefully as once randomised and assigned it cannot be changed.<br> Please contact a league commissioner to roll a characteristic. ]]> </random_skill>
                 <retire_player> <![CDATA[ Temporarily retire a player. No refund will apply.<br> Only players who suffered a lasting injury in the last game can be retired.<br> A retired player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
                 <rename_team> <![CDATA[ Rename your team. ]]> </rename_team>
                 <buy_goods> <![CDATA[ Buy team goods. ]]> </buy_goods>
@@ -486,6 +494,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <ageing2>Ageing 2</ageing2>
 
     </report>
+	
+	<sevens>
+		<instructionshead>Instructions for Sevens Matches</instructionshead>
+		<instructionstext><![CDATA[In Sevens only one player can gain an advancement. Please use the 'Misc SPP' box to assign SPP to ONE player per team.<br>Use the 'Next Skill x/y SPP' information next to each player to determine how many SPP to assign: x for a Primary skill (on a chosen player) or y for a Secondary skill (on a random player).<br>Please note that although you can choose a player to advance (Primary skill only), all skill advancements will be random.<br>Remember also to roll for "The Draft"- after every match roll a D6 for every player that has extra skills: unless the roll is higher than the number of skills the player(s) achieved, they will leave your team for the big leagues! (Mark the player(s) as DEAD in the Injury Box)]]></instructionstext>
+	</sevens>
 </matches>
 
 <mobile>
@@ -544,7 +557,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 <race>
     <amazon>Amazon (Teams of Legend)</amazon>
     <chaoschosen>Chaos Chosen</chaoschosen>
-    <chaosdwarf>Chaos Dwarf</chaosdwarf>
+    <chaosdwarf>Chaos Dwarf (Teams of Legend)</chaosdwarf>
     <darkelf>Dark Elf</darkelf>
     <dwarf>Dwarf</dwarf>
     <elvenunion>Elven Union</elvenunion>
@@ -573,6 +586,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<imperialnobility>Imperial Nobility</imperialnobility>
 	<amazons>Amazon</amazons>
     <vampires>Vampire</vampires>
+    <chaosdwarves>Chaos Dwarf</chaosdwarves>
     <gnome>Gnome</gnome>
 	<!-- Dungeon Bowl Teams -->
 	<collegeoffire>College of Fire</collegeoffire>
@@ -583,6 +597,37 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<collegeoflife>College of Life</collegeoflife>
 	<collegeofbeasts>College of Beasts</collegeofbeasts>
 	<collegeofheavens>College of Heavens</collegeofheavens>
+	<!-- Sevens Teams -->
+	<sevensamazon>Sevens Amazon</sevensamazon>
+	<sevenschaoschosen>Sevens Chaos Chosen</sevenschaoschosen>
+    <sevenschaosdwarf>Sevens Chaos Dwarf</sevenschaosdwarf>
+    <sevensdarkelf>Sevens Dark Elf</sevensdarkelf>
+    <sevensdwarf>Sevens Dwarf</sevensdwarf>
+    <sevenselvenunion>Sevens Elven Union</sevenselvenunion>
+    <sevensgoblin>Sevens Goblin</sevensgoblin>
+    <sevenshalfling>Sevens Halfling</sevenshalfling>
+    <sevenshighelf>Sevens High Elf</sevenshighelf>
+    <sevenshuman>Sevens Human</sevenshuman>
+    <sevenstombkings>Sevens Tomb Kings</sevenstombkings>
+    <sevenslizardman>Sevens Lizardman</sevenslizardman>
+    <sevensnecromantichorror>Sevens Necromantic Horror</sevensnecromantichorror>
+    <sevensnorse>Sevens Norse</sevensnorse>
+    <sevensnurgle>Sevens Nurgle</sevensnurgle>
+    <sevensogre>Sevens Ogre</sevensogre>
+    <sevensorc>Sevens Orc</sevensorc>
+    <sevensshamblingundead>Sevens Shambling Undead</sevensshamblingundead>
+    <sevensskaven>Sevens Skaven</sevensskaven>
+    <sevenswoodelf>Sevens Wood Elf</sevenswoodelf>
+    <sevenschaosrenegades>Sevens Chaos Renegades</sevenschaosrenegades>
+    <sevensunderworlddenizens>Sevens Underworld Denizens</sevensunderworlddenizens>
+    <sevensslann>Sevens Slann</sevensslann>
+    <sevenskhorne>Sevens Khorne</sevenskhorne>
+	<sevensoldworldalliance>Sevens Old World Alliance</sevensoldworldalliance>
+	<sevenssnotling>Sevens Snotling</sevenssnotling>
+	<sevensblackorc>Sevens Black Orc</sevensblackorc>
+	<sevensimperialnobility>Sevens Imperial Nobility</sevensimperialnobility>
+    <sevensvampire>Sevens Vampire</sevensvampire>
+    <sevensgnome>Sevens Gnome</sevensgnome>
 </race>
 
 <position>
@@ -611,7 +656,9 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chaosogre>Chaos Ogre</chaosogre>
     <!-- Chaos Dwarf -->
     <hobgoblinlineman>Hobgoblin Lineman</hobgoblinlineman>
+    <hobgoblinsneakystabba>Hobgoblin Sneaky Stabba</hobgoblinsneakystabba>
     <chaosdwarfblocker>Chaos Dwarf Blocker</chaosdwarfblocker>
+    <chaosdwarfflamesmith>Chaos Dwarf Flamesmith</chaosdwarfflamesmith>
     <bullcentaurblitzer>Bull Centaur Blitzer</bullcentaurblitzer>
     <enslavedminotaur>Enslaved Minotaur</enslavedminotaur>
     <!-- Dark Elf -->
@@ -890,7 +937,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <bloodlust2plus>Bloodlust (2+)</bloodlust2plus>   
     <bloodlust3plus>Bloodlust (3+)</bloodlust3plus>
     <trickster>Trickster</trickster>   
-    <myball>My Ball</myball>
+    <myball>My Ball</myball>  
+    <breathefire>Breathe Fire</breathefire>
 </skill>
 
 <starplayer>
@@ -960,6 +1008,19 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	 <!-- Added BB2020 Spike! #17 -->	
 	<rowanaforestfoot>Rowana Forestfoot</rowanaforestfoot>
 	<rodneyroachbait>Rodney Roachbait</rodneyroachbait>
+	 <!-- Added BB2020 Spike! #18 -->	
+	<htharktheunstoppable>H'Thark the Unstoppable</htharktheunstoppable>
+	<rashnakbackstabber>Rashnak Backstabber</rashnakbackstabber>
+	<zzhargmadeye>Zzharg Madeye</zzhargmadeye>
+	 <!-- Added 2024 Almanac -->	
+	<skitterstabstab>Skitter Stab Stab</skitterstabstab>
+	<jordellfreshbreeze>Jordell Freshbreeze</jordellfreshbreeze>
+	<jeremiahkool>Jeremiah Kool</jeremiahkool>
+	<maplehighgrove>Maple Highgrove</maplehighgrove>
+	<swiftvineglimmershard>Swiftvine Glimmershard</swiftvineglimmershard>
+	<anqipanqi>Anqi Panqi</anqipanqi>
+	<gufflepusmaw>Guffle Pusmaw</gufflepusmaw>
+	<kirothkrakeneye>Kiroth Krakeneye</kirothkrakeneye>
 
 </starplayer>
 	
@@ -1005,6 +1066,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <favouredofkhorne>Favoured of Khorne</favouredofkhorne>
     <favouredofslaanesh>Favoured of Slaanesh</favouredofslaanesh>
     <favouredoftzeentch>Favoured of Tzeentch</favouredoftzeentch>
+    <favouredofhashut>Favoured of Hashut</favouredofhashut>
     <lowcostlinemen>Low Cost Linemen</lowcostlinemen>
     <twoforone>Two for One</twoforone>
 	
@@ -1012,7 +1074,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<beerbarrelbash>Beer Barrel Bash!</beerbarrelbash>
 	<beerbarrelbashdesc>Once per drive, at the start of his activation, Thorsson may perform a Throw Keg Special action. When he does, select an opposition player within three squares of Thorsson and roll a D6. On a 3+, the player is immediately Knocked Down. However, on a 1, Thorsson is Knocked Down instead.</beerbarrelbashdesc>
 	<blastit>Blast It!</blastit>
-	<blastitdesc>Once per game, when Barik makes a Hail Mary Pass, he may re-roll any scatter results for determining where the ball lanes, and any friendly player attempting to catch the ball gains an additional +1 modifier to the roll.</blastitdesc>
+	<blastitdesc>Once per game, when Barik makes a Hail Mary Pass, he may re-roll any scatter results for determining where the ball lands, and any friendly player attempting to catch the ball gains an additional +1 modifier to the roll.</blastitdesc>
 	<blindrage>Blind Rage</blindrage>
 	<blindragedesc>Akhorne may choose to re-roll the D6 when rolling for the Dauntless skill</blindragedesc>
 	<brutalblock>Brutal Block</brutalblock>
@@ -1111,6 +1173,26 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 	<boundingleapdesc>Once per game, after declaring that she will Leap but before rolling any dice, Rowana may choose to use this special rule. If she does, Rowana suffers no negative modifiers for the Agility test to Leap and may choose to re-roll the result.</boundingleapdesc>
 	<catchoftheday>Catch of the Day</catchoftheday>
 	<catchofthedaydesc>Once per half, if Rodney is Standing and begins his activation within 3 squares of a ball which is on the ground he may roll a D6. On a 1-2, nothing happens. On a 3+, Rodney immediately gains possession of the ball.</catchofthedaydesc>
+	<thenistartedblastin>Then I Started Blastin'!</thenistartedblastin>
+	<thenistartedblastindesc>Once per half, at the start of his activation, Zzharg may perform a Blunderbuss Blast Special action. When he does, select a Standing opposition player within 3 squares of Zzharg and roll a D6. On a 3+, the selected player is hit: immediately make an unmodified Armour roll, and subsequent injury roll if necessary, against the selected player. On a 2, the opposing coach selects a player (from either team, but not Zzharg) within 3 squares of the originaly selected player to be hit instead. On a 1, Zzharg is hit instead. If the armour of the player is not broken, nothing happens.</thenistartedblastindesc>
+	<unstoppablemomentum>Unstoppable Momentum</unstoppablemomentum>
+	<unstoppablemomentumdesc>Whenever H'Thark performs a Blitz action, he may re-roll a single block dice.</unstoppablemomentumdesc>
+	<toxinconnoisseur>Toxin Connoisseur</toxinconnoisseur>
+	<toxinconnoisseurdesc>Once per game, when Rashnak successfully breaks an opposition player's armour as a result os a Stab Special action, you may apply an additional +1 modifier to the Injury roll. This modifier may be applied after the roll has been made.</toxinconnoisseurdesc>
+	<swiftasthebreeze>Swift as the Breeze</swiftasthebreeze>
+	<swiftasthebreezedesc>Once per game, Jordell can choose to pass a single Dodge, Leap or Rush test on a 2+, regardless of any modifiers.</swiftasthebreezedesc>
+	<theflashingblade>The Flashing Blade</theflashingblade>
+	<theflashingbladedesc>Once per game, at the start of his activation, Jeremiah may declare a Stab Special Action against an opposition player he is marking. After performing the Stab Special Action, Jeremiah may then perform a Move Action before his activation ends.</theflashingbladedesc>
+	<viciousvines>Vicious Vines</viciousvines>
+	<viciousvinesdesc>Once per half, when Maple declares a Block action, he may do so against an opposition player who is 2 squares away, following all the normal rules for making a Block, though he may not follow up. This Block action cannot be as part of a Blitz action.</viciousvinesdesc>
+	<furiousoutburst>Furious Outburst</furiousoutburst>
+	<furiousoutburstdesc>Once per half, so long as she is standing at the start of her activation, Swiftvine can place herself adjacent to a standing opposition player within 3 squares of her and immediately make a Stab Special Action against them. She may then place herself in an unoccupied square within 3 squares of her new position. Her activation then immediately ends. This counts as the team's Blitz action for the turn.</furiousoutburstdesc>
+	<savageblow>Savage Blow</savageblow>
+	<savageblowdesc>Once per game, when Anqi performs a Block action against an opposition player, he may choose to re-roll any number of the Block dice.</savageblowdesc>
+	<quickbite>Quick Bite</quickbite>
+	<quickbitedesc>Once per game, if Guffle is marking an opposition player who catches the ball, he may immediately make an unmodified Armour roll, and subsequent Injury roll if necessary, against that player. If the target's Armour is broken, Guffle immediately gains possession of the ball. No Turnover is caused as a result of this special rule.</quickbitedesc>
+	<blackink>Black Ink</blackink>
+	<blackinkdesc>Once per game, at the start of any of his activations, Kiroth can choose an opposition player he is marking. The chosen player loses their Tackle Zone until they are next activated.</blackinkdesc>
 </specialrules>
 
 <experience>

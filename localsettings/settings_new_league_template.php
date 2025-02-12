@@ -37,39 +37,52 @@ $settings['tourlist_hide_nodes'] = array('league', 'division', 'tournament'); //
  *   Rules
  *********************/
 // Please use the boolean values "true" and "false" wherever default values are boolean.
-$rules['max_team_players']      = 16;       // Default is 16.
-$rules['static_rerolls_prices'] = false;    // Default is "false". "true" forces re-roll prices to their un-doubled values.
-$rules['player_refund']         = 0;        // Player sell value percentage. Default is 0 = 0%, 0.5 = 50%, and so on.
-$rules['journeymen_limit']      = 11;       // Until a team can field this number of players, it may fill team positions with journeymen.
-$rules['post_game_ff']          = false;    // Default is false. Allows teams to buy and drop fan factor even though their first game has been played.
-$rules['initial_treasury']      = 1000000;  // Default is 1000000.
-$rules['initial_rerolls']       = 0;        // Default is 0.
-$rules['initial_fan_factor']    = 1;        // Default is 0.
-$rules['initial_ass_coaches']   = 0;        // Default is 0.
-$rules['initial_cheerleaders']  = 0;        // Default is 0.
+$rules['max_team_players']      	= 16;       // Default is 16.
+$rules['max_team_players_sevens'] 	= 11;       // Default is 16.
+$rules['static_rerolls_prices']		= false;    // Default is "false". "true" forces re-roll prices to their un-doubled values.
+$rules['player_refund']         	= 0;        // Player sell value percentage. Default is 0 = 0%, 0.5 = 50%, and so on.
+$rules['journeymen_limit']      	= 11;       // Until a team can field this number of players, it may fill team positions with journeymen.
+$rules['journeymen_limit_sevens'] 	= 7;      // Until a team can field this number of players, it may fill team positions with journeymen.
+$rules['post_game_ff']          	= false;    // Default is false. Allows teams to buy and drop fan factor even though their first game has been played. 
+$rules['post_game_rr']          	= false;    // Default is false. Allows teams to drop rerolls even though their first game has been played.
+$rules['initial_treasury'] 			= 1000000;  // Default is 1000000.
+$rules['initial_treasury_sevens'] 	= 600000;  // Default is 600000.
+$rules['initial_rerolls']       	= 0;        // Default is 0.
+$rules['initial_fan_factor']    	= 1;        // Default is 0.
+$rules['initial_ass_coaches']   	= 0;        // Default is 0.
+$rules['initial_cheerleaders']  	= 0;        // Default is 0.
 // For the below limits, the following applies: -1 = unlimited. 0 = disabled.
-$rules['max_rerolls']           = 8;       // Default is -1.
-$rules['max_fan_factor']        = 7;        // Default is 9.
-$rules['max_ini_fan_factor']    = 5;        // Default is 5.
-$rules['max_ass_coaches']       = 6;       // Default is -1.
-$rules['max_cheerleaders']      = 12;       // Default is -1.
+$rules['max_rerolls']           	= 8;       // Default is -1.
+$rules['max_rerolls_sevens']    	= 6;       // Default is -1.
+$rules['max_fan_factor']        	= 7;        // Default is 9.
+$rules['max_ini_fan_factor']    	= 5;        // Default is 5.
+$rules['max_ass_coaches']       	= 6;       // Default is -1.
+$rules['max_cheerleaders']      	= 12;       // Default is -1.
+$rules['max_ass_coaches_sevens'] 	= 3;       // Default is -1.
+$rules['max_cheerleaders_sevens'] 	= 6;     // Default is -1.
 // Allow/disallow teams of legend: 0 = enabled. 1 = disabled.
-$rules['amazon'] 				= 1; 	//Amazon (teams of legend)
-$rules['chorf'] 				= 0; 	//Chaos Dwarf (teams of legend)
-$rules['helf'] 					= 0; 	//High Elf (teams of legend)
-$rules['vamps'] 				= 0; 	//Vampires (teams of legend)
-$rules['khemri'] 				= 0; 	//Tomb Kings (teams of legend)
-$rules['slann'] 				= 0; 	//Slann (teams of legend)
+$rules['amazon'] 					= 1; 	//Amazon (teams of legend)
+$rules['chorf'] 					= 1; 	//Chaos Dwarf (teams of legend)
+$rules['helf'] 						= 0; 	//High Elf (teams of legend)
+$rules['vamps'] 					= 1; 	//Vampires (teams of legend)
+$rules['khemri'] 					= 0; 	//Tomb Kings (teams of legend)
+$rules['slann'] 					= 0; 	//Slann (teams of legend)
 // Allow/disallow dungeon bowl teams: 0 = enabled. 1 = disabled.
-$rules['dungeon'] 				= 1; 	//Dungeon Bowl Teams
-// Allow/disallow Mega-Stars: 0 = enabled. 1 = disabled.
-$rules['megastars'] 			= 0; 	//Mega-Stars
+$rules['dungeon'] 					= 1; 	//Dungeon Bowl Teams
+// Allow/disallow sevens teams: 0 = enabled. 1 = disabled.
+$rules['sevens'] 					= 1; 	//Sevens Teams
+// Toggle Automated Random Skill Rolls: 0 = enabled. 1 = disabled.
+$rules['randomskillrolls'] 			= 1; 	//Automated Random Skill Rolls
+// Toggle Manual Entry of Random Skill Rolls: 0 = enabled. 1 = disabled.
+$rules['randomskillmanualentry'] 	= 0; 	//Manual Random Skill Rolls
+// Allow/disallow Mega-Stars in general: 0 = enabled. 1 = disabled.
+$rules['megastars'] 				= 0; 	//Mega-Stars
 // Additional League Points.
-$rules['major_win_tds'] 		= 0; 	//Major Win for scoring how many TDs
-$rules['major_win_pts'] 		= 0; 	//Bonus points for a Major Win
-$rules['clean_sheet_pts'] 		= 0; 	//Bonus points for conceding 0 TDs (clean sheet)
-$rules['major_beat_cas'] 		= 0; 	//Major Beating for scoring how many Casualties
-$rules['major_beat_pts'] 		= 0; 	//Bonus points for a Major Beating
+$rules['major_win_tds'] 			= 0; 	//Major Win for scoring how many TDs
+$rules['major_win_pts'] 			= 0; 	//Bonus points for a Major Win
+$rules['clean_sheet_pts'] 			= 0; 	//Bonus points for conceding 0 TDs (clean sheet)
+$rules['major_beat_cas'] 			= 0; 	//Major Beating for scoring how many Casualties
+$rules['major_beat_pts'] 			= 0; 	//Bonus points for a Major Beating
 // Remove double backslashes in front of team number to enable team specific starting treasuries.
 $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of legend)
 											//	1			=>	1000000,	// Chaos Chosen
@@ -89,7 +102,7 @@ $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of 
 											//	15			=>	1000000,	// Nurgle
 											//	16			=>	1000000,	// Ogre
 											//	17			=>	1000000,	// Shambling Undead
-											//	18			=>	1000000,	// Vampire
+											//	18			=>	1000000,	// Vampire (teams of legend)
 											//	19			=>	1000000,	// Skaven
 											//	20			=>	1000000,	// Wood Elf
 											//	21			=>	1000000,	// Chaos Renegades
@@ -101,6 +114,8 @@ $rules['initial_team_treasury'] = array(	//	0			=>	1000000,	// Amazon (teams of 
 											//	27			=>	1000000,	// Imperial Nobility
 											//	28			=>	1000000,	// Khorne
 											//	29			=>	1000000,	// Amazon
+											//	30			=>	1000000,	// Vampire
+											//	34			=>	1000000,	// Gnomes
 										);	
 
 /*********************

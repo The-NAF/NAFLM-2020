@@ -5,7 +5,7 @@
 <beerbarrelbash>Beer Barrel Bash!</beerbarrelbash>
 <beerbarrelbashdesc>Once per drive, at the start of his activation, Thorsson may perform a Throw Keg Special action. When he does, select an opposition player within three squares of Thorsson and roll a D6. On a 3+, the player is immediately Knocked Down. However, on a 1, Thorsson is Knocked Down instead.</beerbarrelbashdesc>
 <blastit>Blast It!</blastit>
-<blastitdesc>Once per game, when Barik makes a Hail Mary Pass, he may re-roll any scatter results for determining where the ball lanes, and any friendly player attempting to catch the ball gains an additional +1 modifier to the roll.</blastitdesc>
+<blastitdesc>Once per game, when Barik makes a Hail Mary Pass, he may re-roll any scatter results for determining where the ball lands, and any friendly player attempting to catch the ball gains an additional +1 modifier to the roll.</blastitdesc>
 <blindrage>Blind Rage</blindrage>
 <blindragedesc>Akhorne may choose to re-roll the D6 when rolling for the Dauntless skill</blindragedesc>
 <brutalblock>Brutal Block</brutalblock>
@@ -104,5 +104,25 @@
 <boundingleapdesc>Once per game, after declaring that she will Leap but before rolling any dice, Rowana may choose to use this special rule. If she does, Rowana suffers no negative modifiers for the Agility test to Leap and may choose to re-roll the result.</boundingleapdesc>
 <catchoftheday>Catch of the Day</catchoftheday>
 <catchofthedaydesc>Once per half, if Rodney is Standing and begins his activation within 3 squares of a ball which is on the ground he may roll a D6. On a 1-2, nothing happens. On a 3+, Rodney immediately gains possession of the ball.</catchofthedaydesc>
+<thenistartedblastin>Then I Started Blastin'!</thenistartedblastin>
+<thenistartedblastindesc>Once per half, at the start of his activation, Zzharg may perform a Blunderbuss Blast Special action. When he does, select a Standing opposition player within 3 squares of Zzharg and roll a D6. On a 3+, the selected player is hit: immediately make an unmodified Armour roll, and subsequent injury roll if necessary, against the selected player. On a 2, the opposing coach selects a player (from either team, but not Zzharg) within 3 squares of the originaly selected player to be hit instead. On a 1, Zzharg is hit instead. If the armour of the player is not broken, nothing happens.</thenistartedblastindesc>
+<unstoppablemomentum>Unstoppable Momentum</unstoppablemomentum>
+<unstoppablemomentumdesc>Whenever H'Thark performs a Blitz action, he may re-roll a single block dice.</unstoppablemomentumdesc>
+<toxinconnoisseur>Toxin Connoisseur</toxinconnoisseur>
+<toxinconnoisseurdesc>Once per game, when Rashnak successfully breaks an opposition player's armour as a result os a Stab Special action, you may apply an additional +1 modifier to the Injury roll. This modifier may be applied after the roll has been made.</toxinconnoisseurdesc>
+<swiftasthebreeze>Swift as the Breeze</swiftasthebreeze>
+<swiftasthebreezedesc>Once per game, Jordell can choose to pass a single Dodge, Leap or Rush test on a 2+, regardless of any modifiers.</swiftasthebreezedesc>
+<theflashingblade>The Flashing Blade</theflashingblade>
+<theflashingbladedesc>Once per game, at the start of his activation, Jeremiah may declare a Stab Special Action against an opposition player he is marking. After performing the Stab Special Action, Jeremiah may then perform a Move Action before his activation ends.</theflashingbladedesc>
+<viciousvines>Vicious Vines</viciousvines>
+<viciousvinesdesc>Once per half, when Maple declares a Block action, he may do so against an opposition player who is 2 squares away, following all the normal rules for making a Block, though he may not follow up. This Block action cannot be as part of a Blitz action.</viciousvinesdesc>
+<furiousoutburst>Furious Outburst</furiousoutburst>
+<furiousoutburstdesc>Once per half, so long as she is standing at the start of her activation, Swiftvine can place herself adjacent to a standing opposition player within 3 squares of her and immediately make a Stab Special Action against them. She may then place herself in an unoccupied square within 3 squares of her new position. Her activation then immediately ends. This counts as the team's Blitz action for the turn.</furiousoutburstdesc>
+<savageblow>Savage Blow</savageblow>
+<savageblowdesc>Once per game, when Anqi performs a Block action against an opposition player, he may choose to re-roll any number of the Block dice.</savageblowdesc>
+<quickbite>Quick Bite</quickbite>
+<quickbitedesc>Once per game, if Guffle is marking an opposition player who catches the ball, he may immediately make an unmodified Armour roll, and subsequent Injury roll if necessary, against that player. If the target's Armour is broken, Guffle immediately gains possession of the ball. No Turnover is caused as a result of this special rule.</quickbitedesc>
+<blackink>Black Ink</blackink>
+<blackinkdesc>Once per game, at the start of any of his activations, Kiroth can choose an opposition player he is marking. The chosen player loses their Tackle Zone until they are next activated.</blackinkdesc>
 
 </en-GB>

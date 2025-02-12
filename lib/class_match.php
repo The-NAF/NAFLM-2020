@@ -177,12 +177,12 @@ class Match
         // Determine if team fan-factors are within the "> 0" limit. If not, don't save the negative fan-factor.
         if(isset($input['ffactor1'])) {
             $team1 = new Team($this->team1_id);
-            if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
+            if ($team1->rg_ff - $this->ffactor1 + $input['ffactor1'] < 1 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
                 $input['ffactor1'] = $this->ffactor1;
         }
         if(isset($input['ffactor2'])) {
             $team2 = new Team($this->team2_id);
-            if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 0 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
+            if ($team2->rg_ff - $this->ffactor2 + $input['ffactor2'] < 1 || $team1->rg_ff - $this->ffactor1 + $input['ffactor1'] > 7) 
                 $input['ffactor2'] = $this->ffactor2;
         }
         // Entry corrections
@@ -530,6 +530,7 @@ class Match
     const T_CREATE_ERROR__TEAM_DIVISION_IDS_DIFFER   = 6;
     const T_CREATE_ERROR__ILLEGAL_PARENT_LID_OF_TOUR = 7;
     const T_CREATE_ERROR__ILLEGAL_PARENT_DID_OF_TOUR = 8;
+    const T_CREATE_ERROR__ILLEGAL_FORMATS 			 = 9;
 
     public static $T_CREATE_ERROR_MSGS = array(
         self::T_CREATE_ERROR__SQL_QUERY_FAIL                => 'SQL query failed.',
@@ -540,6 +541,7 @@ class Match
         self::T_CREATE_ERROR__TEAM_DIVISION_IDS_DIFFER      => 'Illegal match-up, the passed teams are not associated with the same division.',
         self::T_CREATE_ERROR__ILLEGAL_PARENT_LID_OF_TOUR    => 'Illegal tournament ID, the parent league of the selected tournament is different from the league which the teams belong in.',
         self::T_CREATE_ERROR__ILLEGAL_PARENT_DID_OF_TOUR    => 'Illegal tournament ID, the parent division of the selected tournament is different from the division which the teams belong in.',
+        self::T_CREATE_ERROR__ILLEGAL_FORMATS    			=> 'Illegal match-up, the passed teams are not the same format.',
     );
     public static $T_CREATE_SQL_ERROR = array(
         'query' => null, # mysql fail query.
@@ -550,14 +552,18 @@ class Match
          * Creates a new match.
          * Input: team1_id, team2_id, round, f_tour_id
          **/
-        global $settings;
+        global $settings, $DEA;
         # Used multiple times in error conditions below.
         $tour__f_lid = (int) get_parent_id(T_NODE_TOURNAMENT, (int) $input['f_tour_id'], T_NODE_LEAGUE);
         $tour__f_did = (int) get_parent_id(T_NODE_TOURNAMENT, (int) $input['f_tour_id'], T_NODE_DIVISION);
         $t1__f_lid = (int) get_alt_col('teams', 'team_id', $input['team1_id'], 'f_lid');
         $t2__f_lid = (int) get_alt_col('teams', 'team_id', $input['team2_id'], 'f_lid');
         $t1__f_did = (int) get_alt_col('teams', 'team_id', $input['team1_id'], 'f_did');
-        $t2__f_did = (int) get_alt_col('teams', 'team_id', $input['team2_id'], 'f_did');        
+        $t2__f_did = (int) get_alt_col('teams', 'team_id', $input['team2_id'], 'f_did'); 
+        $t1__f_rid = (int) get_alt_col('teams', 'team_id', $input['team1_id'], 'f_race_id'); 
+        $t2__f_rid = (int) get_alt_col('teams', 'team_id', $input['team2_id'], 'f_race_id'); 
+        $t1__format = (string) get_alt_col('races', 'race_id', $t1__f_rid, 'format'); 
+        $t2__format = (string) get_alt_col('races', 'race_id', $t2__f_rid, 'format');        
         $errors = array(
             self::T_CREATE_ERROR__IDENTICAL_TEAM_IDS         => (int) $input['team1_id'] == (int) $input['team2_id'],
             self::T_CREATE_ERROR__IDENTICAL_PARENT_COACH     => (int) get_alt_col('teams', 'team_id', $input['team1_id'], 'owned_by_coach_id') == (int) get_alt_col('teams', 'team_id', $input['team2_id'], 'owned_by_coach_id'),
@@ -566,6 +572,7 @@ class Match
             self::T_CREATE_ERROR__TEAM_DIVISION_IDS_DIFFER   => (bool) get_alt_col('leagues', 'lid', $tour__f_lid, 'tie_teams') && ($t1__f_did != $t2__f_did),
             self::T_CREATE_ERROR__ILLEGAL_PARENT_LID_OF_TOUR => $t1__f_lid != $tour__f_lid || $t2__f_lid != $tour__f_lid,
             self::T_CREATE_ERROR__ILLEGAL_PARENT_DID_OF_TOUR => (bool) get_alt_col('leagues', 'lid', $tour__f_lid, 'tie_teams') && ($t1__f_did != $tour__f_did || $t2__f_did != $tour__f_did),
+            self::T_CREATE_ERROR__ILLEGAL_FORMATS     => $t1__format != $t2__format,
         );
         foreach ($errors as $exitStatus => $halt) {
             if ($halt) return array($exitStatus, null);

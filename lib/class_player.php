@@ -48,6 +48,7 @@ class Player
     public $value = 0;
     public $date_died = '';
     public $date_retired = '';
+    public $special = '';
 
     // Characteristics
     public $ma = 0;
@@ -136,7 +137,11 @@ class Player
         }
         if ($this->type == PLAYER_TYPE_JOURNEY) { # Check if player is journeyman like this - don't assume setStatusses() has ben called setting $this->is_journeyman.
             $this->position .= ' [J]';
-            $this->def_skills[] = 99; # Loner.
+			if ($DEA[$this->f_rname]['other']['format'] <> 'SV') {
+				$this->def_skills[] = 99; # 4+ Loner.
+			} else {
+				$this->def_skills[] = 120; # Sevens 5+ Loner.
+			}
         }
         $this->current_skills = $this->getSkillsStr(true);
         $this->may_buy_new_skill = $this->mayHaveNewSkill();
@@ -254,6 +259,28 @@ class Player
         $allowable_skills = 0; # Allowable skills = player level = SPR
         foreach (array_reverse($sparray) as $rank => $details) { # Loop through $sparray reversed so highest ranks come first.
             if ($this->mv_spp >= $details['SPP']) {
+                $allowable_skills = $details['SPR'];
+                break;
+            }
+        }        
+        # Returns the NUMBER of skills/chrs the player may take.
+        $skill_diff = $allowable_skills - $skill_count;
+        return ($this->is_sold || $this->is_dead || $skill_diff < 0) ? 0 : $skill_diff;
+    }
+    
+    public function mayHaveNewChosenSkill() {
+        global $sparray;
+        $this->setSkills();
+        $skill_count =   count($this->ach_nor_skills)
+                       + count($this->ach_dob_skills)
+                       + $this->ach_ma
+                       + $this->ach_st
+                       + $this->ach_ag
+                       + $this->ach_pa
+                       + $this->ach_av;
+        $allowable_skills = 0; # Allowable skills = player level = SPR
+        foreach (array_reverse($sparray) as $rank => $details) { # Loop through $sparray reversed so highest ranks come first.
+            if ($this->mv_spp >= $details['CSPP']) {
                 $allowable_skills = $details['SPR'];
                 break;
             }
@@ -789,8 +816,10 @@ class Player
         $lid = get_alt_col('teams', 'team_id', $input['team_id'], 'f_lid');
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => (int) $lid)); // Load correct $rules for league.
         // Do these fixes because we can't define class statics using string interpolation for $rules.
-        self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__TEAM_FULL] .= " You have filled all $rules[max_team_players] available positions.";
-        self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__JM_LIMIT_REACHED] .= " Your team is now able to fill $rules[journeymen_limit] positions.";
+		//	self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__TEAM_FULL] .= " You have filled all $rules[max_team_players] available positions.";
+		//	self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__JM_LIMIT_REACHED] .= " Your team is now able to fill $rules[journeymen_limit] positions.";
+		self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__TEAM_FULL] .= " You have filled all available positions.";
+		self::$T_CREATE_ERROR_MSGS[self::T_CREATE_ERROR__JM_LIMIT_REACHED] .= " Your team is now able to field enough players.";
         $JM = isset($opts['JM']) && $opts['JM'];
         $FREE = isset($opts['free']) && $opts['free'];
         $FORCE = isset($opts['force']) && $opts['force'];
@@ -820,7 +849,7 @@ class Player
             self::T_CREATE_ERROR__JM_LIMIT_REACHED   => $JM && $team->isJMLimitReached(),
             // Is position valid to make a journeyman? 
             // Journeymen may be made from those positions, from which 16 players of the position is allowed on a team.
-            self::T_CREATE_ERROR__INVALID_JM_POS     => $JM && $DEA[$team->f_rname]['players'][get_alt_col('game_data_players', 'pos_id', (int) $input['f_pos_id'], 'pos')]['qty'] < 12,
+            self::T_CREATE_ERROR__INVALID_JM_POS     => $JM && $DEA[$team->f_rname]['players'][get_alt_col('game_data_players', 'pos_id', (int) $input['f_pos_id'], 'pos')]['qty'] < 10,
         );
         foreach ($errors as $exitStatus => $halt) {
             if ($halt && !($FORCE && in_array($exitStatus, $ignoreableErrors))) return array($exitStatus, null);

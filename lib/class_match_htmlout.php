@@ -544,6 +544,17 @@ class Match_HTMLOUT extends Match
 		$divUrl = "<a href=\"" . urlcompile(T_URL_STANDINGS,T_OBJ_TEAM,false,T_NODE_DIVISION,get_parent_id(T_NODE_MATCH, $m->match_id, T_NODE_DIVISION)) . "\">" . get_parent_name(T_NODE_MATCH, $m->match_id, T_NODE_DIVISION) . "</a>";
 		$tourUrl = Tour::getTourUrl(get_parent_id(T_NODE_MATCH, $m->match_id, T_NODE_TOURNAMENT));
 
+		if ($DEA[$team1->f_rname]['other']['format'] =='SV' && $DEA[$team2->f_rname]['other']['format'] == 'SV') {
+			$is_sevens = true;
+			$format_txt = 'Sevens';
+		} elseif ($DEA[$team1->f_rname]['other']['format'] =='DB' && $DEA[$team2->f_rname]['other']['format'] == 'DB') {
+			$is_sevens = false;
+			$format_txt = 'Dungeon Bowl';
+		} else {
+			$is_sevens = false;
+			$format_txt = 'Blood Bowl';
+		}
+		
 		title($teamUrl1 . " - " . $teamUrl2);
 		
 		if ($rules['major_win_pts'] > 0 || $rules['major_beat_pts'] > 0 || $rules['clean_sheet_pts'] > 0) {
@@ -551,6 +562,7 @@ class Match_HTMLOUT extends Match
 		} else {
 			$CP = 8; // Colspan
 		}
+
 		?>
 		<!-- Following HTML from ./lib/class_match_htmlout.php report -->
 		<table>
@@ -562,6 +574,7 @@ class Match_HTMLOUT extends Match
 		<tr><td><b><?php echo $lng->getTrn('common/league');?></b>:</td><td colspan="3">    <?php   echo $leagueUrl; ?></td></tr>
 		<tr><td><b><?php echo $lng->getTrn('common/division');?></b>:</td><td colspan="3">  <?php   echo $divUrl;?></td></tr>
 		<tr><td><b><?php echo $lng->getTrn('common/tournament');?></b>:</td><td colspan="3"><?php   echo $tourUrl;?></td></tr>
+		<tr><td><b><?php echo $lng->getTrn('common/format');?></b>:</td><td colspan="3"><?php   echo $format_txt;?></td></tr>
 		<tr><td><b><?php echo $lng->getTrn('common/round');?></b>:</td><td colspan="3">     <?php   echo $T_ROUNDS[$m->round];?></td></tr>
 		<tr><td><b><?php echo $lng->getTrn('common/dateplayed');?></b>:</td><td colspan="3"><?php   echo ($m->is_played) ? textdate($m->date_played) : '<i>'.$lng->getTrn('matches/report/notplayed').'</i>';?></td></tr>
 		<?php
@@ -680,6 +693,11 @@ class Match_HTMLOUT extends Match
 			$playerFields = array_merge($T_MOUT_REL, $T_MOUT_ACH, //$T_MOUT_IR, 
 			$T_MOUT_INJ);
 			$CPP = count($playerFields);
+			if ($is_sevens == true) {
+				echo "<br><br><tr><td colspan=$CPP><b><i>".$lng->getTrn('matches/sevens/instructionshead')."</i></b><br>\n";
+				echo $lng->getTrn('matches/sevens/instructionstext');
+				echo "</td></tr>\n";
+				}
 			foreach (array(1 => $team1, 2 => $team2) as $id => $t) {
 				?>
 				<table class='common'>
@@ -732,7 +750,7 @@ class Match_HTMLOUT extends Match
 					elseif ($status == RETIRED)                     {$bgcolor = COLOR_HTML_RETIRED;  $NORMSTAT = false;}
 					elseif ($p->mayHaveNewSkill())                  {$bgcolor = COLOR_HTML_NEWSKILL;        $NORMSTAT = false;}
 					else {$bgcolor = false;}
-					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired));
+					self::_print_player_row($p->player_id, '<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'">'.$p->name.'</a>', $p->nr, $lng->getTrn('position/'.strtolower($lng->FilterPosition($p->position))).(($status == MNG) ? '&nbsp;[MNG]' : (($status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired)) ? '&nbsp;[RET]' : '')),$bgcolor, $mdat, $DIS || ($status == MNG) || $status == RETIRED && (!$m->is_played || $m->date_played > $p->date_retired),$is_sevens, $p->numberOfAchSkill());
 				}
 				echo "</table>\n";
 				echo "<br>\n";
@@ -852,13 +870,29 @@ class Match_HTMLOUT extends Match
 		}
 	}
 
-	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE) {
-		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ;
+	protected static function _print_player_row($FS, $name, $nr, $pos, $bgcolor, $mdat, $DISABLE, $is_sevens, $skillno) {
+		global $T_MOUT_REL, $T_MOUT_ACH, $T_MOUT_IR, $T_MOUT_INJ, $DEA;
 		$DIS = ($DISABLE) ? 'DISABLED' : '';
 		echo "<tr".(($bgcolor) ? " style='background-color: $bgcolor;'" : '').">\n";
 		echo "<td>$nr</td>\n";
 		echo "<td>$name</td>\n";
+		if ($is_sevens == true) {
+			if ($skillno == 0) {
+				echo "<td>$pos - Next Skill 3/6 SPP</td>\n";
+			} elseif ($skillno == 1) {
+				echo "<td>$pos - Next Skill 4/8 SPP</td>\n";
+			} elseif ($skillno == 2) {
+				echo "<td>$pos - Next Skill 6/12 SPP</td>\n";
+			} elseif ($skillno == 3) {
+				echo "<td>$pos - Next Skill 8/16 SPP</td>\n";
+			} elseif ($skillno == 4) {
+				echo "<td>$pos - Next Skill 10/20 SPP</td>\n";
+			} elseif ($skillno == 5) {
+				echo "<td>$pos - Next Skill 15/30 SPP</td>\n";
+			}  			
+		} else {
 		echo "<td>$pos</td>\n";
+		}
 		// MVP
 		echo "<!-- Following HTML from ./lib/class_match_htmlout.php _print_player_row -->";
 		echo "<td><select $DIS name='mvp_$FS'>";

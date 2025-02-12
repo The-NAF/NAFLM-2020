@@ -156,6 +156,7 @@ public $existing = false;
 public $theme_css = '';
 public $core_theme_id = 0;
 public $tv = 0;
+public $tv_sevens = 0;
 public $language = 'en-GB';
 public $amazon = 0;
 public $chorf = 0;
@@ -164,6 +165,9 @@ public $vamps = 0;
 public $khemri = 0;
 public $slann = 0;
 public $dungeon = 0;
+public $sevens = 0;
+public $randomskillrolls = 0;
+public $randomskillmanualentry = 0;
 public $megastars = 0;
 public $major_win_tds = 0;
 public $major_win_pts = 0;
@@ -171,7 +175,7 @@ public $clean_sheet_pts = 0;
 public $major_beat_cas = 0;
 public $major_beat_pts = 0;
 
-function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon, $megastars, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts) {
+function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welcome, $rules, $existing, $theme_css, $core_theme_id, $tv, $tv_sevens, $language, $amazon, $chorf, $helf, $vamps, $khemri, $slann, $dungeon,  $sevens, $randomskillrolls, $randomskillmanualentry, $megastars, $major_win_tds, $major_win_pts, $clean_sheet_pts, $major_beat_cas, $major_beat_pts) {
 	global $settings;
 	$this->lid = $lid;
 	$this->l_name = $name;
@@ -185,6 +189,7 @@ function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welco
     $this->theme_css = $theme_css;
     $this->core_theme_id = $core_theme_id;
     $this->tv = $tv;
+    $this->tv_sevens = $tv_sevens;
     $this->language = $language;
     $this->amazon = $amazon;
     $this->chorf = $chorf;
@@ -193,6 +198,9 @@ function __construct($lid, $name, $ptid, $stid, $league_name, $forum_url, $welco
     $this->khemri = $khemri;
     $this->slann = $slann;
     $this->dungeon = $dungeon;
+    $this->sevens = $sevens;
+    $this->randomskillrolls = $randomskillrolls;
+    $this->randomskillmanualentry = $randomskillmanualentry;
     $this->megastars = $megastars;
     $this->major_win_tds = $major_win_tds;
     $this->major_win_pts = $major_win_pts;
@@ -217,19 +225,25 @@ public static function getLeaguePreferences() {
             return new LeaguePref($row['lid'], $row['name'],
                 $row['prime_tid'], $row['second_tid'], $row['league_name'], $row['forum_url'],
                 $row['welcome'], $row['rules'], true, $theme_css, 
-                $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
+                $settings['stylesheet'], $rules['initial_treasury'], 
+				$rules['initial_treasury_sevens'], $settings['lang'],
 				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars'],
+				$rules['vamps'],$rules['khemri'],$rules['slann'],
+				$rules['dungeon'],$rules['sevens'],
+				$rules['randomskillrolls'],$rules['randomskillmanualentry'],$rules['megastars'],
 				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
 				$rules['major_beat_cas'],$rules['major_beat_pts']);
         }
     } else {
 		return new LeaguePref($sel_lid, $leagues['lname'], null, null, null, null, null, null, false, null, 
-            $settings['stylesheet'], $rules['initial_treasury'], $settings['lang'],
-				$rules['amazon'],$rules['chorf'],$rules['helf'],
-				$rules['vamps'],$rules['khemri'],$rules['slann'],$rules['dungeon'],$rules['megastars'],
-				$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
-				$rules['major_beat_cas'],$rules['major_beat_pts']);
+            $settings['stylesheet'], $rules['initial_treasury'], 
+			$rules['initial_treasury_sevens'], $settings['lang'],
+			$rules['amazon'],$rules['chorf'],$rules['helf'],
+			$rules['vamps'],$rules['khemri'],$rules['slann'],
+			$rules['dungeon'],$rules['sevens'],
+			$rules['randomskillrolls'],$rules['randomskillmanualentry'],$rules['megastars'],
+			$rules['major_win_tds'],$rules['major_win_pts'],$rules['clean_sheet_pts'],
+			$rules['major_beat_cas'],$rules['major_beat_pts']);
 	}
 }
 
@@ -254,6 +268,7 @@ function save() {
     $settingsFileContents = preg_replace("/settings\['stylesheet'\]\s*=\s['A-Za-z0-9_]+/", "settings['stylesheet'] = $this->core_theme_id", $settingsFileContents);
     $settingsFileContents = preg_replace("/settings\['lang'\]\s*=\s['A-Za-z0-9_\-]+/", "settings['lang'] = '$this->language'", $settingsFileContents);
     $settingsFileContents = preg_replace("/rules\['initial_treasury'\]\s*=\s['A-Za-z0-9_]+/", "rules['initial_treasury'] = $this->tv", $settingsFileContents);
+    $settingsFileContents = preg_replace("/rules\['initial_treasury_sevens'\]\s*=\s['A-Za-z0-9_]+/", "rules['initial_treasury_sevens'] = $this->tv_sevens", $settingsFileContents);
 	if ($this->amazon == 1) {
 		$settingsFileContents = preg_replace("/rules\['amazon'\]\s*=\s['A-Za-z0-9_]+/", "rules['amazon'] = $this->amazon", $settingsFileContents);
 	} else {
@@ -288,6 +303,21 @@ function save() {
 		$settingsFileContents = preg_replace("/rules\['dungeon'\]\s*=\s['A-Za-z0-9_]+/", "rules['dungeon'] = $this->dungeon", $settingsFileContents);
 	} else {
         $settingsFileContents = preg_replace("/rules\['dungeon'\]\s*=\s['A-Za-z0-9_]+/", "rules['dungeon'] = 0", $settingsFileContents);
+    }
+	if ($this->sevens == 1) {
+		$settingsFileContents = preg_replace("/rules\['sevens'\]\s*=\s['A-Za-z0-9_]+/", "rules['sevens'] = $this->sevens", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['sevens'\]\s*=\s['A-Za-z0-9_]+/", "rules['sevens'] = 0", $settingsFileContents);
+    }
+	if ($this->randomskillrolls == 1) {
+		$settingsFileContents = preg_replace("/rules\['randomskillrolls'\]\s*=\s['A-Za-z0-9_]+/", "rules['randomskillrolls'] = $this->randomskillrolls", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['randomskillrolls'\]\s*=\s['A-Za-z0-9_]+/", "rules['randomskillrolls'] = 0", $settingsFileContents);
+    }
+	if ($this->randomskillmanualentry == 1) {
+		$settingsFileContents = preg_replace("/rules\['randomskillmanualentry'\]\s*=\s['A-Za-z0-9_]+/", "rules['randomskillmanualentry'] = $this->randomskillmanualentry", $settingsFileContents);
+	} else {
+        $settingsFileContents = preg_replace("/rules\['randomskillmanualentry'\]\s*=\s['A-Za-z0-9_]+/", "rules['randomskillmanualentry'] = 0", $settingsFileContents);
     }
 	if ($this->megastars == 1) {
 		$settingsFileContents = preg_replace("/rules\['megastars'\]\s*=\s['A-Za-z0-9_]+/", "rules['megastars'] = $this->megastars", $settingsFileContents);
@@ -324,6 +354,7 @@ function save() {
     $settings['stylesheet'] = $this->core_theme_id;
     $settings['lang'] = $this->language;
     $rules['initial_treasury'] = $this->tv;
+    $rules['initial_treasury_sevens'] = $this->tv_sevens;
             
     return mysql_query($query);
 }
@@ -382,6 +413,14 @@ public static function showLeaguePreferences() {
                         </td>
                         <td>
                             <input type="number" min="0" name="tv" <?php echo $canEdit; ?> value="<?php echo $l_pref->tv; ?>" />
+                        </td>
+                    </tr>
+                    <tr title="<?php echo $lng->getTrn('tv_sevens_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('tv_sevens_title', 'LeaguePref'); ?>:
+                        </td>
+                        <td>
+                            <input type="number" min="0" name="tv_sevens" <?php echo $canEdit; ?> value="<?php echo $l_pref->tv_sevens; ?>" />
                         </td>
                     </tr>
                     <tr title="<?php echo $lng->getTrn('language_help', 'LeaguePref'); ?>">
@@ -520,6 +559,15 @@ public static function showLeaguePreferences() {
                             <b><?php echo $lng->getTrn('dungeonbowl', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
+                    <tr title="<?php echo $lng->getTrn('sevens_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('sevens_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='sevens' value='1' onclick='slideToggleFast("sevens");'	<?php if($rules['sevens'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('sevens', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
                     <tr title="<?php echo $lng->getTrn('megastars_help', 'LeaguePref'); ?>">
                         <td>
                             <?php echo $lng->getTrn('megastars_title', 'LeaguePref'); ?>
@@ -527,6 +575,24 @@ public static function showLeaguePreferences() {
                         <td>     
 							<input type='checkbox' name='megastars' value='1' onclick='slideToggleFast("megastars");'	<?php if($rules['megastars'] == 1) {echo 'checked';}?>>
                             <b><?php echo $lng->getTrn('megastars', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
+                    <tr title="<?php echo $lng->getTrn('randomskillrolls_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('randomskillrolls_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='randomskillrolls' value='1' onclick='slideToggleFast("randomskillrolls");'	<?php if($rules['randomskillrolls'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('randomskillrolls', 'LeaguePref'); ?></b>
+                        </td>                        
+                    </tr>
+                    <tr title="<?php echo $lng->getTrn('randomskillmanualentry_help', 'LeaguePref'); ?>">
+                        <td>
+                            <?php echo $lng->getTrn('randomskillmanualentry_title', 'LeaguePref'); ?>
+                        </td>
+                        <td>     
+							<input type='checkbox' name='randomskillmanualentry' value='1' onclick='slideToggleFast("randomskillmanualentry");'	<?php if($rules['randomskillmanualentry'] == 1) {echo 'checked';}?>>
+                            <b><?php echo $lng->getTrn('randomskillmanualentry', 'LeaguePref'); ?></b>
                         </td>                        
                     </tr>
                     <tr title="<?php echo $lng->getTrn('bonuspoints_help', 'LeaguePref'); ?>">
@@ -548,7 +614,7 @@ public static function showLeaguePreferences() {
                     </tr>
                     <tr title="<?php echo $submit_title; ?>">
                         <td colspan="2">
-                            <input type="submit" name="action" <?php echo $canEdit; ?> value="<?php echo $submit_text; ?>" style="position:relative; right:-200px;">
+                            <br><input type="submit" name="action" <?php echo $canEdit; ?> value="<?php echo $submit_text; ?>" style="position:relative; right:-200px;">
                         </td>
                     </tr>
                 </table>
@@ -569,10 +635,11 @@ public static function handleActions() {
 			$l_pref = new LeaguePref($_POST['lid'], "", $_POST['p_tour'], $_POST['s_tour'],
                 $_POST['league_name'], $_POST['forum_url'], $_POST['welcome'], 
                 $_POST['rules'], $_POST['existing'], $_POST['theme_css'], 
-                $_POST['core_theme_id'], $_POST['tv'], $_POST['language'],
+                $_POST['core_theme_id'], $_POST['tv'], $_POST['tv_sevens'], $_POST['language'],
 				$_POST['amazon'],$_POST['chorf'],$_POST['helf'],
 				$_POST['vamps'],$_POST['khemri'],$_POST['slann'],
-				$_POST['dungeon'],$_POST['megastars'],
+				$_POST['dungeon'],$_POST['sevens'],
+				$_POST['randomskillrolls'],$_POST['randomskillmanualentry'],$_POST['megastars'],
 				$_POST['major_win_tds'],$_POST['major_win_pts'],$_POST['clean_sheet_pts'],
 				$_POST['major_beat_cas'],$_POST['major_beat_pts']);
 			if($l_pref->validate()) {

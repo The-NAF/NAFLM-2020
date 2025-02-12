@@ -124,22 +124,24 @@ function SendToPDF()
 <?php title('Inducements try-out');?>
 <form action="" method="post" name="InduceForm">
 <table> <!-- Star Players -->
-    <tr>
-        <th class="left">Star Name</th>
+<?php 
+	if ($DEA[$t->f_rname]['other']['format'] <> 'SV') {
+		 print "<tr>
+        <th class='left'>Star Name</th>
         <th>Cost</th>
         <th>MA</th>
         <th>ST</th>
         <th>AG</th>
         <th>PA</th>
         <th>AV</th>
-        <th class="left">Skills</th> 
-        <th class="left">Special Rule</th>
-        <th class="left">Special Rule Description</th>
-    </tr>
-<?php     
+        <th class='left'>Skills</th> 
+        <th class='left'>Special Rule</th>
+        <th class='left'>Special Rule Description</th>
+    </tr>\n";
+    }
 		$i=1;
         $starcnt = 1;
-        while ($i <= MAX_STARS) {
+        while ($i <= MAX_STARS && $DEA[$t->f_rname]['other']['format'] <> 'SV') {
             print "  <tr>\n";
             if (array_key_exists("Star$starcnt", $_POST)) {
                 $sid=$_POST["Star$starcnt"];
@@ -195,16 +197,16 @@ function SendToPDF()
 </table> <!-- End of Star Player Table -->
 <table> <!-- Mercenaries Table -->
     <tr>
-        <td class="indtitle">Mercenaries</td>
-        <td class="indtitle">Position</td>
-        <td class="indtitle">Cost</td>
-        <td class="indtitle">MA</td>
-        <td class="indtitle">ST</td>
-        <td class="indtitle">AG</td>
-        <td class="indtitle">PA</td>
-        <td class="indtitle">AV</td>
-        <td class="indtitle">Skills</td>
-        <td class="indtitle">Extra Skill</td>
+        <td class="indtitle"><b>Mercenaries</b></td>
+        <td class="indtitle"><b>Position</b></td>
+        <td class="indtitle"><b>Cost</b></td>
+        <td class="indtitle"><b>MA</b></td>
+        <td class="indtitle"><b>ST</b></td>
+        <td class="indtitle"><b>AG</b></td>
+        <td class="indtitle"><b>PA</b></td>
+        <td class="indtitle"><b>AV</b></td>
+        <td class="indtitle"><b>Skills</b></td>
+        <td class="indtitle"><b>Extra Skill</b></td>
     </tr>
 <?php
         // Validate to not exceed maximum number of positionals? Leaving it open for now.
@@ -275,12 +277,12 @@ function SendToPDF()
 <tr><td>
 <table>
     <tr>
-        <td class="indtitle">Inducement</td>
-        <td class="indtitle">#</td>
-        <td class="indtitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td class="indtitle">Cost</td>
-        <td class="indtitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-        <td class="indtitle">Total Cost</td>
+        <td class="indtitle"><b>Inducement</b></td>
+        <td class="indtitle"><b>#</b></td>
+        <td class="indtitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="indtitle"><b>Cost</b></td>
+        <td class="indtitle">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="indtitle"><b>Total Cost</b></td>
     </tr>
 <?php
         // Regular inducements
@@ -291,7 +293,7 @@ function SendToPDF()
 
         foreach ($inducements as $ind_name => $ind) {
             $this_cost = $ind[in_array($rid, $ind['reduced_cost_races']) ? 'reduced_cost' : 'cost']; # Reduced cost?
-            if ($this_cost > 0) {   // Do not display ineligible Inducements
+            if ($this_cost > 0 && in_array($DEA[$t->f_rname]['other']['format'], $ind['available_formats'])) {   // Do not display ineligible Inducements
                 echo '<tr>';
                 print '<td>'.$ind_name.' (0-'.$ind['max'].')</td>';
                 echo '<td><SELECT name="'.str_replace(' ','_',$ind_name).'" onChange="this.form.submit()">'; // Changing spaces to underscores for (ugly?) POST workaround
@@ -401,9 +403,9 @@ function SendToPDF()
             else return str_replace('000','',$str);
         }
 
-        echo '<tr><td class="indtitle">Team Value:</td><td class="indtitle">'.kilo($t->value).'k</td></tr>';
-        echo '<tr><td class="indtitle">Inducements Value:</td><td class="indtitle">'.kilo($ind_cost).'k</td></tr>';
-        echo '<tr><td class="indtitle">Match Value:</td><td class="indtitle">'.kilo($ind_cost + $t->value).'k</td></tr>';
+        echo '<tr><td class="indtitle"><b>Team Value:</b></td><td class="indtitle">'.kilo($t->value).'k</td></tr>';
+        echo '<tr><td class="indtitle"><b>Inducements Value:</b></td><td class="indtitle">'.kilo($ind_cost).'k</td></tr>';
+        echo '<tr><td class="indtitle"><b>Match Value:</b></td><td class="indtitle">'.kilo($ind_cost + $t->value).'k</td></tr>';
 ?>
 
 </table>

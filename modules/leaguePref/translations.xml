@@ -26,7 +26,7 @@
 <rules_help>The rules to display under the Rules menu. This can be HTML.</rules_help>
 
 
-<submit_text>OK</submit_text>
+<submit_text>Save</submit_text>
 <submit_title>Update this league`s preferences</submit_title>
 
 <failedSave>Unable to save preferences</failedSave>
@@ -44,6 +44,9 @@
 <tv_title>&lt;b&gt;Initial Treasury&lt;/b&gt;</tv_title>
 <tv_help>Usually set this to 1000000, but you can pick other values.</tv_help>
 
+<tv_sevens_title>&lt;b&gt;Sevens Initial Treasury&lt;/b&gt;</tv_sevens_title>
+<tv_sevens_help>Usually set this to 600000, but you can pick other values.</tv_sevens_help>
+
 <language_title>&lt;b&gt;Language&lt;/b&gt;</language_title>
 <language_help>Your leagues default language.</language_help>
 
@@ -56,15 +59,27 @@
 <teams_legend_khemri>Tomb Kings (Teams of Legend)</teams_legend_khemri>
 <teams_legend_slann>Slann (Optional NAF roster)</teams_legend_slann>
 
-<dungeonbowl_title>&lt;b&gt;Dungeon Bowl Team Rosters&lt;/b&gt;&lt;br/&gt; Disable Dungeon Bowl team rosters from the team creation page.&lt;br/&gt;&lt;i&gt;(does not interfere with teams already created)&lt;/i&gt;</dungeonbowl_title>
+<dungeonbowl_title>&lt;br/&gt;&lt;b&gt;Dungeon Bowl Team Rosters&lt;/b&gt;&lt;br/&gt; Disable Dungeon Bowl team rosters from the team creation page.&lt;br/&gt;&lt;i&gt;(does not interfere with teams already created)&lt;/i&gt;</dungeonbowl_title>
 <dungeonbowl_help>Tick the box to disable Dungeon Bowl teams from being available on the team creation page: Ticked box = Disabled.</dungeonbowl_help>
 <dungeonbowl>Dungeon Bowl Teams</dungeonbowl>
+
+<sevens_title>&lt;br/&gt;&lt;b&gt;Sevens Team Rosters&lt;/b&gt;&lt;br/&gt; Disable Sevens team rosters from the team creation page.&lt;br/&gt;&lt;i&gt;(does not interfere with teams already created)&lt;/i&gt;</sevens_title>
+<sevens_help>Tick the box to disable Sevens teams from being available on the team creation page: Ticked box = Disabled.</sevens_help>
+<sevens>Sevens Teams</sevens>
 
 <megastars_title>&lt;br/&gt;&lt;b&gt;Mega-Stars&lt;/b&gt;&lt;br/&gt; Disable Mega-Stars from inducements.&lt;br/&gt;&lt;i&gt;(see latest FAQ for list of which Star Players are classed as Mega-Stars)&lt;/i&gt;</megastars_title>
 <megastars_help>Tick the box to disable Mega-Stars from being available on inducements: Ticked box = Disabled.</megastars_help>
 <megastars>Mega-Stars</megastars>
 
-<bonuspoints_title>&lt;b&gt;Additional League Points&lt;/b&gt;&lt;br/&gt; Define what bonus points to use. They will be added automatically according to these rules.&lt;br/&gt;&lt;i&gt;(must be used in conjunction with a Ranking System in the Tournament Manager that includes [bonus])&lt;/i&gt;</bonuspoints_title>
+<randomskillrolls_title>&lt;br/&gt;&lt;b&gt;Automated Random Skills Generator&lt;/b&gt;&lt;br/&gt; Disable Automated Random Skill option from Team Management Box.&lt;br/&gt;&lt;i&gt;(do not disable this unless you enable Manual Random Skill Entry below)&lt;/i&gt;</randomskillrolls_title>
+<randomskillrolls_help>Tick the box to disable Automated Random Skills from being available on the team management Box, in which case only Random Skill Manual Entry will be allowed: Ticked box = Disabled.</randomskillrolls_help>
+<randomskillrolls>Automated Random Skills</randomskillrolls>
+
+<randomskillmanualentry_title>&lt;br/&gt;&lt;b&gt;Manual Random Skill Entry&lt;/b&gt;&lt;br/&gt; Disable Manual Random Skill Entry from the Roster/team page.&lt;br/&gt;&lt;i&gt;(do not disable this unless you enable Automated Random Skill Rolls above)&lt;/i&gt;</randomskillmanualentry_title>
+<randomskillmanualentry_help>Tick the box to disable Manual Random Skill Entry from being available on the Roster/Team Page, in which case only Automated Random Skill generation will be allowed: Ticked box = Disabled.</randomskillmanualentry_help>
+<randomskillmanualentry>Manual Random Skill Entry</randomskillmanualentry>
+
+<bonuspoints_title>&lt;br/&gt;&lt;b&gt;Additional League Points&lt;/b&gt;&lt;br/&gt; Define what bonus points to use. They will be added automatically according to these rules.&lt;br/&gt;&lt;i&gt;(must be used in conjunction with a Ranking System in the Tournament Manager that includes [bonus])&lt;/i&gt;</bonuspoints_title>
 <bonuspoints_help>Define how many bonus points to award for Major Wins, Major Beatings and Clean Sheets. 
 Entering 0 points for all three will hide the Additonal League points calculator on the Match Report.
 </bonuspoints_help>

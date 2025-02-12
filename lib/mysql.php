@@ -133,6 +133,12 @@ $core_tables = array(
         'inj_pa'    => $CT_cols['chr'].' DEFAULT 0',
         'inj_av'    => $CT_cols['chr'].' DEFAULT 0',
         'inj_ni'    => $CT_cols['chr'].' DEFAULT 0',
+        'ma_mod'    => 'TINYINT SIGNED DEFAULT 0',
+        'st_mod'    => 'TINYINT SIGNED DEFAULT 0',
+        'ag_mod'    => 'TINYINT SIGNED DEFAULT 0',
+        'pa_mod'    => 'TINYINT SIGNED DEFAULT 0',
+        'av_mod'    => 'TINYINT SIGNED DEFAULT 0',
+        'ni_mod'    => 'TINYINT SIGNED DEFAULT 0',
         'win_pct' => $CT_cols['win_pct'].' DEFAULT 0', # All-time win pct (across all matches).
     ),
     'memberships' => array(

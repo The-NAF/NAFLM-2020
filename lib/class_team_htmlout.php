@@ -40,7 +40,7 @@ class Team_HTMLOUT extends Team
 		$result = mysql_query($queryCnt);
 		list($cnt) = mysql_fetch_row($result);
 		$pages = ($cnt == 0) ? 1 : ceil($cnt/T_HTML_TEAMS_PER_PAGE);
-		global $page;
+		global $DEA, $rules, $page;
 		$page = (isset($_GET['page']) && $_GET['page'] <= $pages) ? $_GET['page'] : 1; # Page 1 is default, of course.
 		$_url = "?section=teamlist&amp;";
 		echo '<br><center><table>';
@@ -56,23 +56,37 @@ class Team_HTMLOUT extends Team
 		while ($t = mysql_fetch_object($result)) {
 			$img = new ImageSubSys(IMGTYPE_TEAMLOGO, $t->team_id);
 			$t->logo = "<img border='0px' height='20' width='20' alt='Team race picture' src='".$img->getPath($t->f_race_id)."'>";
+			$format = $t->format;
+			$t->format = $lng->getTrn('common/'.strtolower($DEA[$t->f_rname]['other']['format']));
 			$retired = $t->retired;
 			$t->retired = ($t->retired) ? '<b>'.$lng->getTrn('common/yes').'</b>' : $lng->getTrn('common/no');
 			$t->rdy = ($t->rdy && !$retired) ? '<font color="green">'.$lng->getTrn('common/yes').'</font>' : '<font color="red">'.$lng->getTrn('common/no').'</font>';
 			$t->f_rname = $lng->getTrn('race/'.strtolower(str_replace(' ','', $t->f_rname)));
 			$teams[] = $t;
 		}
-
-		$fields = array(
-			'logo'    => array('desc' => 'Logo', 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id'), 'nosort' => true),
-			'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
-			'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
-			'rdy'     => array('desc' => $lng->getTrn('common/ready'), 'nosort' => true),
-			'retired' => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
-			'f_rname' => array('desc' => $lng->getTrn('common/race'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id')),
-			'tv'      => array('desc' => 'TV', 'nosort' => true, 'kilo' => true, 'suffix' => 'k'),
+		if ($rules['dungeon'] == 0 || $rules['sevens'] == 0) {
+			$fields = array(
+				'logo'    => array('desc' => 'Logo', 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id'), 'nosort' => true),
+				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
+				'format'  => array('desc' => $lng->getTrn('common/format'), 'nosort' => true),
+				'rdy'     => array('desc' => $lng->getTrn('common/ready'), 'nosort' => true),
+				'retired' => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
+				'f_rname' => array('desc' => $lng->getTrn('common/race'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id')),
+				'tv'      => array('desc' => 'TV', 'nosort' => true, 'kilo' => true, 'suffix' => 'k'),
 		);
-
+		} else {
+			$fields = array(
+				'logo'    => array('desc' => 'Logo', 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id'), 'nosort' => true),
+				'tname'   => array('desc' => $lng->getTrn('common/name'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'team_id')),
+				'f_cname' => array('desc' => $lng->getTrn('common/coach'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id')),
+				'rdy'     => array('desc' => $lng->getTrn('common/ready'), 'nosort' => true),
+				'retired' => array('desc' => $lng->getTrn('common/retired'), 'nosort' => true),
+				'f_rname' => array('desc' => $lng->getTrn('common/race'), 'nosort' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id')),
+				'tv'      => array('desc' => 'TV', 'nosort' => true, 'kilo' => true, 'suffix' => 'k'),
+		);	
+			
+		}
 		HTMLOUT::sort_table(
 			$lng->getTrn('common/teams'),
 			"index.php$_url",
@@ -163,8 +177,7 @@ class Team_HTMLOUT extends Team
 		}
 		$p = (isset($_POST['player']) && $_POST['type'] != 'hire_player') ? new Player($_POST['player']) : null;
 		switch ($_POST['type']) {
-			case 'select_rule':      status($team->selectRule($_POST['rule'])); break;
-				
+			case 'select_rule':      status($team->selectRule($_POST['rule'])); break;	
 			case 'hire_player':
 				list($exitStatus, $pid) = Player::create(
 					array(
@@ -184,6 +197,11 @@ class Team_HTMLOUT extends Team
 			case 'unbuy_player':    status($p->unbuy()); break;
 			case 'rename_player':   status($p->rename($_POST['name'])); break;
 			case 'renumber_player': status($p->renumber($_POST['number'])); break;
+			case 'random_skill': 	
+				$skill_type = $_POST['skill_type'];
+				$skill_cat = $_POST['skill_cat'];
+				status($p->randomSkill($skill_type,$skill_cat));
+				break;
 			case 'retire_player':   status($p->retirePlayer());
 					SQLTriggers::run(T_SQLTRIG_TEAM_DPROPS, array('obj' => T_OBJ_TEAM, 'id' => $team->team_id));
 					break;
@@ -296,7 +314,7 @@ class Team_HTMLOUT extends Team
 	}
 
 	private function _roster($ALLOW_EDIT, $DETAILED, $players) {
-		global $rules, $settings, $lng, $skillididx, $coach;
+		global $rules, $settings, $lng, $skillididx, $coach, $DEA;
 		$team = $this; // Copy. Used instead of $this for readability.
 
 		/******************************
@@ -384,120 +402,240 @@ class Team_HTMLOUT extends Team
 			/*if ($ALLOW_EDIT && $p->mayHaveNewSkill()) {
 				$x = ' &nbsp&nbsp&nbsp<a href="index.php?section=objhandler&type=1&obj=1&obj_id='.$p->player_id.'"><small>New Skill</small></a>';
 			*/
-			if ($ALLOW_EDIT && $p->mayHaveNewSkill()) {
-				$x .= "<form method='POST'>\n";
-				$x .= "<select name='skill'>\n";
-				$x .= "<option selected value='999'>-- Select or Roll Skill --</option>\n";
-				$x .= "<optgroup label='Primary skills'>\n";
-				foreach ($p->choosable_skills['norm'] as $s) {
-					$x .= "<option value='$s'>".$skillididx[$s]."</option>\n";
+			if ($rules['randomskillmanualentry'] == 1 && $DEA[$team->f_rname]['other']['format'] != 'SV') {
+				if ($ALLOW_EDIT && $p->mayHaveNewSkill()) {
+					$x = '<BR><small>&nbsp&nbsp&nbsp<u>Random skill available, see Team management box below</u></small>';
+					}
+				if ($DEA[$team->f_rname]['other']['format'] != 'SV') {
+					if ($ALLOW_EDIT && $p->mayHaveNewChosenSkill()) {
+					$x .= '<small><u> OR select a chosen skill and appropriate cost:</u></small><BR>';
+					$x .= "<form method='POST'>\n";
+					$x .= "<select name='skill'>\n";
+					$x .= "<option selected value='999'>-- Select Skill --</option>\n";
+					$x .= "<optgroup label='Primary skills'>\n";
+					foreach ($p->choosable_skills['norm'] as $s) {
+						if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 5) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 7) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 11) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 15) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 29))	{ 					
+							$x .= "<option value='$s'>".$skillididx[$s]."</option>\n";
+						}
+					}
+					$x .= "</optgroup>\n";
+					if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 11) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 13) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 17) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 21) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 25) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 39))	{ 
+						$x .= "<optgroup label='Secondary skills'>\n";
+						foreach ($p->choosable_skills['doub'] as $s) {
+							$x .= "<option value='$s'>".$skillididx[$s]."</option>\n";
+						}
+						$x .= "</optgroup>\n";
+					}
+					if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 17) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 23) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 27) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 31) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 49))	{
+						$x .= "<optgroup label='Characteristic improvement'>\n";
+						foreach ($p->choosable_skills['chr'] as $s) {
+							global $CHR_CONV;
+							if  ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st' ) {
+								$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
+							}
+							else {
+								$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
+							}
+						}
+						$x .= "</optgroup>\n";
+					}		
+					$x .= "</select>\n";
+					$x .= "<select name='skillcost'>\n";
+					$x .= "<option selected value='99'>-- Select Skill Cost --</option>\n";
+						# variable spp cost dependant on number of already achieved skills, options appear only if SPP available and if team is not sevens
+						
+						if ($p->numberOfAchSkill() == 0) { 
+							if ($p->mv_spp > 5) { 
+							$x .= "<option value='6|P'>6 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 11) { 
+								$x .= "<option value='12|S'>12 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 17) { 
+									$x .= "<option value='18|X'>18 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='18|S'>18 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 1) { 
+							if ($p->mv_spp > 7) { 
+							$x .= "<option value='8|P'>8 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 13) { 
+								$x .= "<option value='14|S'>14 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 19) { 
+									$x .= "<option value='20|X'>20 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='20|S'>20 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 2) { 
+							if ($p->mv_spp > 11) { 
+							$x .= "<option value='12|P'>12 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 17) { 
+								$x .= "<option value='18|S'>18 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 23) { 
+									$x .= "<option value='24|X'>24 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='24|S'>24 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 3) { 
+							if ($p->mv_spp > 15) { 
+							$x .= "<option value='16|P'>16 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 21) { 
+								$x .= "<option value='22|S'>22 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 27) { 
+									$x .= "<option value='28|X'>28 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='28|S'>28 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 4) { 
+							if ($p->mv_spp > 19) { 
+							$x .= "<option value='20|P'>20 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 25) { 
+								$x .= "<option value='26|S'>26 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 31) { 
+									$x .= "<option value='32|X'>32 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='32|S'>32 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 5) { 
+							if ($p->mv_spp > 29) { 
+							$x .= "<option value='30|P'>30 SPP (Chosen Primary)</option>\n";
+								if ($p->mv_spp > 39) { 
+								$x .= "<option value='40|S'>40 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 49) { 
+									$x .= "<option value='50|X'>50 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='50|S'>50 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} 
+						
+					$x .= '</select><input type="submit" name="button" value="OK" onClick="if(!confirm(\''.$lng->getTrn('common/confirm_box').'\')){return false;}">
+					<input type="hidden" name="type" value="skill">
+					<input type="hidden" name="player" value="'.$p->player_id.'">
+					</form>
+					</td>
+					';
+					}
 				}
-				$x .= "</optgroup>\n";
-				if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 5) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 7) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 11) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 15) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 29))	{ 
-					$x .= "<optgroup label='Secondary skills'>\n";
-					foreach ($p->choosable_skills['doub'] as $s) {
+			} else {
+				if ($ALLOW_EDIT && $p->mayHaveNewSkill()) {
+					$x .= "<form method='POST'>\n";
+					$x .= "<select name='skill'>\n";
+					$x .= "<option selected value='999'>-- Select or Roll Skill --</option>\n";
+					$x .= "<optgroup label='Primary skills'>\n";
+					foreach ($p->choosable_skills['norm'] as $s) {
 						$x .= "<option value='$s'>".$skillididx[$s]."</option>\n";
 					}
 					$x .= "</optgroup>\n";
-				}
-				if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 17) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 23) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 27) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 31) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 49))	{
-					$x .= "<optgroup label='Characteristic improvement'>\n";
-					foreach ($p->choosable_skills['chr'] as $s) {
-						global $CHR_CONV;
-						if  ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st' ) {
-							$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
+					if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 5) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 7) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 11) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 15) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 29))	{ 
+						$x .= "<optgroup label='Secondary skills'>\n";
+						foreach ($p->choosable_skills['doub'] as $s) {
+							$x .= "<option value='$s'>".$skillididx[$s]."</option>\n";
 						}
-						else {
-							$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
-						}
+						$x .= "</optgroup>\n";
 					}
-					$x .= "</optgroup>\n";
-				}
-				$x .= "</select>\n";
-				$x .= "<select name='skillcost'>\n";
-				$x .= "<option selected value='99'>-- Select Skill Cost --</option>\n";
-					# variable spp cost dependant on number of already achieved skills, options appear only if SPP available
-					if ($p->numberOfAchSkill() == 0) { 
-					$x .= "<option value='3|R'>3 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 5) { 
-						$x .= "<option value='6|P'>6 SPP (Chosen Primary/Random Secondary)</option>\n";
+					if (($p->numberOfAchSkill() == 0 && $p->mv_spp > 17) || ($p->numberOfAchSkill() == 1 && $p->mv_spp > 19) || ($p->numberOfAchSkill() == 2 && $p->mv_spp > 23) || ($p->numberOfAchSkill() == 3 && $p->mv_spp > 27) || ($p->numberOfAchSkill() == 4 && $p->mv_spp > 31) || ($p->numberOfAchSkill() == 5 && $p->mv_spp > 49))	{
+						$x .= "<optgroup label='Characteristic improvement'>\n";
+						foreach ($p->choosable_skills['chr'] as $s) {
+							global $CHR_CONV;
+							if  ($CHR_CONV[$s] == 'ma' || $CHR_CONV[$s] == 'av' || $CHR_CONV[$s] == 'st' ) {
+								$x .= "<option value='ach_$s'>+ ".ucfirst($CHR_CONV[$s])."</option>\n";
+							}
+							else {
+								$x .= "<option value='ach_$s'>- ".ucfirst($CHR_CONV[$s])."</option>\n";	
+							}
+						}
+						$x .= "</optgroup>\n";
+					}
+					$x .= "</select>\n";
+					$x .= "<select name='skillcost'>\n";
+					$x .= "<option selected value='99'>-- Select Skill Cost --</option>\n";
+						# variable spp cost dependant on number of already achieved skills, options appear only if SPP available
+						if ($p->numberOfAchSkill() == 0) { 
+						$x .= "<option value='3|R'>3 SPP (Random Primary)</option>\n";
+							if ($p->mv_spp > 5) { 
+							$x .= "<option value='6|P'>6 SPP (Chosen Primary/Random Secondary)</option>\n";
+								if ($p->mv_spp > 11) { 
+								$x .= "<option value='12|S'>12 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 17) { 
+									$x .= "<option value='18|X'>18 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='18|S'>18 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 1) { 
+						$x .= "<option value='4|R'>4 SPP (Random Primary)</option>\n";
+							if ($p->mv_spp > 7) { 
+							$x .= "<option value='8|P'>8 SPP (Chosen Primary/Random Secondary)</option>\n";
+								if ($p->mv_spp > 13) { 
+								$x .= "<option value='14|S'>14 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 19) { 
+									$x .= "<option value='20|X'>20 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='20|S'>20 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
+								}
+							}
+						} elseif ($p->numberOfAchSkill() == 2) { 
+						$x .= "<option value='6|R'>6 SPP (Random Primary)</option>\n";
 							if ($p->mv_spp > 11) { 
-							$x .= "<option value='12|S'>12 SPP (Chosen Secondary)</option>\n";
+							$x .= "<option value='12|P'>12 SPP (Chosen Primary/Random Secondary)</option>\n";
 								if ($p->mv_spp > 17) { 
-								$x .= "<option value='18|X'>18 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='18|S'>18 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+								$x .= "<option value='18|S'>18 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 23) { 
+									$x .= "<option value='24|X'>24 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='24|S'>24 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
 								}
 							}
-						}
-					} elseif ($p->numberOfAchSkill() == 1) { 
-					$x .= "<option value='4|R'>4 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 7) { 
-						$x .= "<option value='8|P'>8 SPP (Chosen Primary/Random Secondary)</option>\n";
-							if ($p->mv_spp > 13) { 
-							$x .= "<option value='14|S'>14 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp > 19) { 
-								$x .= "<option value='20|X'>20 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='20|S'>20 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+						} elseif ($p->numberOfAchSkill() == 3) { 
+						$x .= "<option value='8|R'>8 SPP (Random Primary)</option>\n";
+							if ($p->mv_spp > 15) { 
+							$x .= "<option value='16|P'>16 SPP (Chosen Primary/Random Secondary)</option>\n";
+								if ($p->mv_spp > 21) { 
+								$x .= "<option value='22|S'>22 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 27) { 
+									$x .= "<option value='28|X'>28 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='28|S'>28 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
 								}
 							}
-						}
-					} elseif ($p->numberOfAchSkill() == 2) { 
-					$x .= "<option value='6|R'>6 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 11) { 
-						$x .= "<option value='12|P'>12 SPP (Chosen Primary/Random Secondary)</option>\n";
-							if ($p->mv_spp > 17) { 
-							$x .= "<option value='18|S'>18 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp > 23) { 
-								$x .= "<option value='24|X'>24 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='24|S'>24 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+						} elseif ($p->numberOfAchSkill() == 4) { 
+						$x .= "<option value='10|R'>10 SPP (Random Primary)</option>\n";
+							if ($p->mv_spp > 19) { 
+							$x .= "<option value='20|P'>20 SPP (Chosen Primary/Random Secondary)</option>\n";
+								if ($p->mv_spp > 25) { 
+								$x .= "<option value='26|S'>26 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 31) { 
+									$x .= "<option value='32|X'>32 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='32|S'>32 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
 								}
 							}
-						}
-					} elseif ($p->numberOfAchSkill() == 3) { 
-					$x .= "<option value='8|R'>8 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 15) { 
-						$x .= "<option value='16|P'>16 SPP (Chosen Primary/Random Secondary)</option>\n";
-							if ($p->mv_spp > 21) { 
-							$x .= "<option value='22|S'>22 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp > 27) { 
-								$x .= "<option value='28|X'>28 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='28|S'>28 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+						} elseif ($p->numberOfAchSkill() == 5) { 
+						$x .= "<option value='15|R'>15 SPP (Random Primary)</option>\n";
+							if ($p->mv_spp > 29) { 
+							$x .= "<option value='30|P'>30 SPP (Chosen Primary/Random Secondary)</option>\n";
+								if ($p->mv_spp > 39) { 
+								$x .= "<option value='40|S'>40 SPP (Chosen Secondary)</option>\n";
+									if ($p->mv_spp > 49) { 
+									$x .= "<option value='50|X'>50 SPP (Random Stat Improvement)</option>\n";
+									$x .= "<option value='50|S'>50 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
+									}
 								}
 							}
-						}
-					} elseif ($p->numberOfAchSkill() == 4) { 
-					$x .= "<option value='10|R'>10 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 19) { 
-						$x .= "<option value='20|P'>20 SPP (Chosen Primary/Random Secondary)</option>\n";
-							if ($p->mv_spp > 25) { 
-							$x .= "<option value='26|S'>26 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp > 31) { 
-								$x .= "<option value='32|X'>32 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='32|S'>32 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
-								}
-							}
-						}
-					} elseif ($p->numberOfAchSkill() == 5) { 
-					$x .= "<option value='15|R'>15 SPP (Random Primary)</option>\n";
-						if ($p->mv_spp > 29) { 
-						$x .= "<option value='30|P'>30 SPP (Chosen Primary/Random Secondary)</option>\n";
-							if ($p->mv_spp > 39) { 
-							$x .= "<option value='40|S'>40 SPP (Chosen Secondary)</option>\n";
-								if ($p->mv_spp > 49) { 
-								$x .= "<option value='50|X'>50 SPP (Random Stat Improvement)</option>\n";
-								$x .= "<option value='50|S'>50 SPP (Chosen Secondary instead of Rolled Stat Improvement)</option>\n";
-								}
-							}
-						}
-					} 
-				$x .= '
-				</select>
-				<input type="submit" name="button" value="OK" onClick="if(!confirm(\''.$lng->getTrn('common/confirm_box').'\')){return false;}">
-				<input type="hidden" name="type" value="skill">
-				<input type="hidden" name="player" value="'.$p->player_id.'">
-				</form>
-				</td>
-				';
+						} 
+					$x .= '
+					</select>
+					<input type="submit" name="button" value="OK" onClick="if(!confirm(\''.$lng->getTrn('common/confirm_box').'\')){return false;}">
+					<input type="hidden" name="type" value="skill">
+					<input type="hidden" name="player" value="'.$p->player_id.'">
+					</form>
+					</td>
+					';
+				}	
 			}
 			$p->skills .= $x;
 			if ($p->pa == 0 || $p->pa >6) {       
@@ -1530,29 +1668,49 @@ class Team_HTMLOUT extends Team
 		<div class="boxBody">
 			<?php
 			$base = 'profile/team';
-			$tmanage = array(
-				'select_rule'       => $lng->getTrn($base.'/box_tm/select_rule'),
-				'hire_player'       => $lng->getTrn($base.'/box_tm/hire_player'),
-				'hire_journeyman'   => $lng->getTrn($base.'/box_tm/hire_journeyman'),
-				'fire_player'       => $lng->getTrn($base.'/box_tm/fire_player'),
-				'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
-				'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
-				'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),
-				'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
-				'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
-				'buy_goods'         => $lng->getTrn($base.'/box_tm/buy_goods'),
-				'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
-				'ready_state'       => $lng->getTrn($base.'/box_tm/ready_state'),
-				'retire'            => $lng->getTrn($base.'/box_tm/retire'),
-				'delete'            => $lng->getTrn($base.'/box_tm/delete'),
-			);
+			if ($rules['randomskillrolls'] == 1) {
+				$tmanage = array(
+					'select_rule'       => $lng->getTrn($base.'/box_tm/select_rule'),
+					'hire_player'       => $lng->getTrn($base.'/box_tm/hire_player'),
+					'hire_journeyman'   => $lng->getTrn($base.'/box_tm/hire_journeyman'),
+					'fire_player'       => $lng->getTrn($base.'/box_tm/fire_player'),
+					'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
+					'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
+					'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),
+					'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
+					'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
+					'buy_goods'         => $lng->getTrn($base.'/box_tm/buy_goods'),
+					'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
+					'ready_state'       => $lng->getTrn($base.'/box_tm/ready_state'),
+					'retire'            => $lng->getTrn($base.'/box_tm/retire'),
+					'delete'            => $lng->getTrn($base.'/box_tm/delete'),
+				);
+			} else {
+				$tmanage = array(
+					'select_rule'       => $lng->getTrn($base.'/box_tm/select_rule'),
+					'hire_player'       => $lng->getTrn($base.'/box_tm/hire_player'),
+					'hire_journeyman'   => $lng->getTrn($base.'/box_tm/hire_journeyman'),
+					'fire_player'       => $lng->getTrn($base.'/box_tm/fire_player'),
+					'unbuy_player'      => $lng->getTrn($base.'/box_tm/unbuy_player'),
+					'rename_player'     => $lng->getTrn($base.'/box_tm/rename_player'),
+					'renumber_player'   => $lng->getTrn($base.'/box_tm/renumber_player'),				
+					'random_skill'   	=> $lng->getTrn($base.'/box_tm/random_skill'),
+					'retire_player'   	=> $lng->getTrn($base.'/box_tm/retire_player'),
+					'rename_team'       => $lng->getTrn($base.'/box_tm/rename_team'),
+					'buy_goods'         => $lng->getTrn($base.'/box_tm/buy_goods'),
+					'drop_goods'        => $lng->getTrn($base.'/box_tm/drop_goods'),
+					'ready_state'       => $lng->getTrn($base.'/box_tm/ready_state'),
+					'retire'            => $lng->getTrn($base.'/box_tm/retire'),
+					'delete'            => $lng->getTrn($base.'/box_tm/delete'),
+				);				
+			}
 			# If a favoured of ... rule has already been selected OR if it does not apply, hide option
 			if (strlen($team->getFavrulechosen()) >= 1 || strlen($team->getFavruleoptions()) == 0  ) { 
 			unset($tmanage['select_rule']);
 			}
 			# If one of these are selected from the menu, a JavaScript confirm prompt is displayed before submitting.
 			# Note: Don't add "hire_player" here - players may be un-bought if not having played any games.
-			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods','retire_player','select_rule');
+			$tmange_confirm = array('hire_journeyman', 'fire_player', 'buy_goods', 'drop_goods','retire_player','select_rule','random_skill');
 			// Set default choice.
 			if (!isset($_POST['menu_tmanage'])) {
 				reset($tmanage);
@@ -1611,18 +1769,35 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 					foreach ($DEA[$team->f_rname]['players'] as $pos => $details) {
 						// Show players on the select list if buyable, or if player is a potential journeyman AND team has not reached journeymen limit. Also Checking for big guy limits via isMaxBigGuys and dungeon bowl positional limits via isPlayerBuyable
-						if ($team->isMaxBigGuys()) {
-							if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
-								(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {
-								echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
-								$DISABLE = false;
+						if ($DEA[$team->f_rname]['other']['format'] =='SV') {
+							if ($team->isMaxBigGuys()) {
+								if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
+									(($details['qty'] == 11) && count($active_players) < $rules['journeymen_limit_sevens'])) {
+									echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
+									$DISABLE = false;
+								}
 							}
-						}
-						else {
-							if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost']) ||
-								(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {
-								echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
-								$DISABLE = false;
+							else {
+								if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost']) ||
+									(($details['qty'] == 11) && count($active_players) < $rules['journeymen_limit_sevens'])) {
+									echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
+									$DISABLE = false;
+								}
+							}
+						} else {
+							if ($team->isMaxBigGuys()) {
+								if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost'] && $details['is_bigguy'] == 0) ||
+									(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {
+									echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
+									$DISABLE = false;
+								}
+							}
+							else {
+								if (($team->isPlayerBuyable($details['pos_id']) && $team->treasury >= $details['cost']) ||
+									(($details['qty'] == 16 || $details['qty'] == 12) && count($active_players) < $rules['journeymen_limit'])) {
+									echo "<option value='$details[pos_id]'>" . $details['cost']/1000 . "k | ".$lng->GetTrn('position/'.strtolower($lng->FilterPosition($pos)))."</option>\n";
+									$DISABLE = false;
+								}
 							}
 						}
 					}
@@ -1785,6 +1960,45 @@ class Team_HTMLOUT extends Team
 					<?php
 					break;
 				/**************
+				 * New Random Skill
+				 **************/
+				case 'random_skill':
+					echo $lng->getTrn('profile/team/box_tm/desc/random_skill');
+					?>
+					<hr><br>
+					<?php echo $lng->getTrn('common/player');?>:<br>
+					<select name="player">
+					<?php
+					$DISABLE = true;
+					foreach ($players as $p) {
+						if ($p->is_dead || $p->is_sold || $p->is_retired) 
+						continue;
+						if (($p->numberOfAchSkill() == 0 && $p->mv_spp >2) || ($p->numberOfAchSkill() == 1 && $p->mv_spp >3) || ($p->numberOfAchSkill() == 2 && $p->mv_spp >5) || ($p->numberOfAchSkill() == 3 && $p->mv_spp >7) || ($p->numberOfAchSkill() == 4 && $p->mv_spp >9) || ($p->numberOfAchSkill() == 5 && $p->mv_spp >14))
+						echo "<option value='$p->player_id'>$p->nr $p->name ($p->mv_spp SPP)</option>\n";
+						$DISABLE = false;
+					}
+					?>
+					</select>
+					<br><br>
+					<?php echo $lng->getTrn('common/skill_type');?>:<br>
+					<select name="skill_type">
+					<option value='P'>Primary</option>
+					<option value='S'>Secondary</option>
+					</select>
+					<br><br>
+					<?php echo $lng->getTrn('common/skill_cat');?>:<br>
+					<select name="skill_cat">
+					<option value='G'>General</option>
+					<option value='A'>Agility</option>
+					<option value='S'>Strength</option>
+					<option value='P'>Passing</option>
+					<option value='M'>Mutation</option>
+					</select>
+					<input type="hidden" name="type" value="random_skill">
+					<?php
+					break;
+					
+				/**************
 				 * Temporary retire player
 				 **************/
 				case 'retire_player':
@@ -1825,7 +2039,7 @@ class Team_HTMLOUT extends Team
 				case 'buy_goods':
 					echo $lng->getTrn('profile/team/box_tm/desc/buy_goods');
 					$goods_temp = $team->getGoods();
-					if ($DEA[$team->f_rname]['other']['rr_cost'] != $goods_temp['rerolls']['cost']) {
+					if ($DEA[$team->f_rname]['other']['rr_cost'] != $goods_temp['rerolls']['cost'] && $DEA[$team->f_rname]['other']['format'] != 'SV') {
 						echo $lng->getTrn('profile/team/box_tm/desc/buy_goods_warn');
 					}
 					?>
@@ -1836,6 +2050,8 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 					foreach ($team->getGoods() as $name => $details) {
 						if ($name == 'ff_bought' && !$team->mayBuyFF())
+							continue;
+						if ($DEA[$team->f_rname]['other']['format'] =='SV' && $name == 'rerolls' && !$team->mayBuyRR())
 							continue;
 						if (($team->$name < $details['max'] || $details['max'] == -1) && $team->treasury >= $details['cost']) {
 							echo "<option value='$name'>" . $details['cost']/1000 . "k | $details[item]</option>\n";
@@ -1860,6 +2076,8 @@ class Team_HTMLOUT extends Team
 					$DISABLE = true;
 					foreach ($team->getGoods() as $name => $details) {
 						if ($name == 'ff_bought' && !$team->mayBuyFF())
+							continue;
+						if ($name == 'rerolls' && !$team->mayDropRR())
 							continue;
 						if ($team->$name > 0) {
 							echo "<option value='$name'>$details[item]</option>\n";

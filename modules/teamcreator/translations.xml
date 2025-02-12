@@ -8,13 +8,16 @@
 <created>Team Created. Redirecting please wait.</created>
 <tooExpensive>Your team costs more than the available funds</tooExpensive>
 <tooFewPlayers>You must have at least 11 players</tooFewPlayers>
+<tooFewPlayerssevens>You must have at least 7 players</tooFewPlayerssevens>
 <tooManyBigGuys>Too many big guys</tooManyBigGuys>
 <tooManyBlitzers>Too many players of type: Blitzer</tooManyBlitzers>
 <tooManyRunners>Too many players of type: Runner</tooManyRunners>
 <tooManyThrowers>Too many players of type: Thrower</tooManyThrowers>
 <tooManyBlockers>Too many players of type: Blocker</tooManyBlockers>
 <tooManySpecial>Too many players of type: Special</tooManySpecial>
-<tooManyPlayers>Too many players</tooManyPlayers>
+<tooManyPos>Too many positionals for a Sevens team (limit is 4)</tooManyPos>
+<tooManyPlayers>Too many players, a team can have 16 players max</tooManyPlayers>
+<tooManySevensPlayers>Too many players, a Sevens team can have 11 players max</tooManySevensPlayers>
 <tooManyRR>Too many rerolls</tooManyRR>
 <tooManyFF>Too many fans</tooManyFF>
 <tooManyAc>Too many coaches</tooManyAc>
@@ -28,6 +31,7 @@
 <noRaceSelected>No race selected</noRaceSelected>
 <createBtn>Create</createBtn>
 <inducementsCheck>Inducements</inducementsCheck>
+<sevensCheck>Sevens</sevensCheck>
 <playerCount># Players</playerCount>
 <total>Total (k)</total>
 <normal>Primary</normal>

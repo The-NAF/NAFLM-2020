@@ -57,7 +57,7 @@ class SQLCore
 		}
 		foreach ($skillarray as $grp => $skills) {
 			foreach ($skills as $id => $s) {
-				$status &= mysql_query("INSERT INTO $skillstbl(skill_id, name, cat) VALUES ($id, '".mysql_real_escape_string($s)."', '$grp')");
+				$status &= mysql_query("INSERT INTO $skillstbl(skill_id, name, cat) VALUES ($id, '".mysql_real_escape_string($s)."', '$grp')");			
 			}
 		}
 		return $status;
@@ -1113,9 +1113,10 @@ class SQLCore
 				READS SQL DATA
 			BEGIN
 				DECLARE ach_ma,ach_st,ach_ag,ach_pa,ach_av, def_ma,def_st,def_ag,def_pa,def_av '.$CT_cols['chr'].' DEFAULT 0;
-				DECLARE cnt_skills_random, cnt_skills_norm, cnt_skills_doub TINYINT UNSIGNED;
+				DECLARE cnt_skills_random, cnt_skills_norm, cnt_skills_doub, cnt_skills TINYINT UNSIGNED;
 				DECLARE extra_val '.$CT_cols['pv'].';
 				DECLARE f_pos_id '.$CT_cols['pos_id'].';
+                DECLARE is_sevens BIT;
 
 				SELECT
 					players.f_pos_id, players.extra_val, players.ach_ma, players.ach_st, players.ach_ag, players.ach_pa, players.ach_av
@@ -1126,6 +1127,12 @@ class SQLCore
 				SET cnt_skills_random = (SELECT COUNT(*) FROM players_skills WHERE f_pid = pid AND cost = "R");
 				SET cnt_skills_norm = (SELECT COUNT(*) FROM players_skills WHERE f_pid = pid AND cost = "P");
 				SET cnt_skills_doub = (SELECT COUNT(*) FROM players_skills WHERE f_pid = pid AND cost = "S");
+                SET cnt_skills = cnt_skills_random + cnt_skills_norm + cnt_skills_doub;
+                
+                SET is_sevens = (SELECT CASE WHEN r.format = "SV" THEN 1 ELSE 0 END FROM races r 
+                                    JOIN teams t ON t.f_race_id = r.race_id
+                                    JOIN players p ON  p.owned_by_team_id = t.team_id
+                                    WHERE player_id = pid);
 
 				SELECT
 					IFNULL(SUM(IF(inj = '.NI.', 1, 0) + IF(agn1 = '.NI.', 1, 0) + IF(agn2 = '.NI.', 1, 0)), 0),
@@ -1150,9 +1157,13 @@ class SQLCore
 					+ (ach_ma + ach_pa) * 20000
 					+ ach_ag            * 40000
 					+ ach_st            * 80000
-					+ cnt_skills_random * 10000
-					+ cnt_skills_norm   * 20000
-					+ cnt_skills_doub   * 40000
+					+ cnt_skills_random * (SELECT CASE WHEN is_sevens =0 THEN 10000 ELSE
+						CASE WHEN cnt_skills <2 THEN 10000 ELSE 20000 END END)
+					+ cnt_skills_norm   * (SELECT CASE WHEN is_sevens =0 THEN 20000 ELSE
+						CASE WHEN cnt_skills <2 THEN 20000 ELSE 30000 END END)
+                    + cnt_skills_doub   * (SELECT CASE WHEN is_sevens =0 THEN 40000 ELSE
+						CASE WHEN cnt_skills <2 THEN 20000 ELSE 30000 END END)
+					- (SELECT CASE WHEN is_sevens =1 AND cnt_skills >1 THEN 10000 ELSE 0 END)
 					+ extra_val
 					- inj_ma * '.$rules['value_reduction_ma'].'
 					- inj_av * '.$rules['value_reduction_av'].'
@@ -1223,6 +1234,7 @@ class SQLCore
 				DECLARE apothecary '.$core_tables['teams']['apothecary'].';
 				DECLARE ass_coaches '.$core_tables['teams']['ass_coaches'].';
 				DECLARE treasury '.$core_tables['teams']['treasury'].';
+				DECLARE issevens bit;
 
 				SELECT
 					teams.f_race_id, teams.rerolls, teams.ff_bought, teams.cheerleaders, teams.apothecary, teams.ass_coaches, teams.treasury
@@ -1231,12 +1243,14 @@ class SQLCore
 				FROM teams WHERE team_id = tid;
 
 				SET ff = ff_bought + (SELECT IFNULL(SUM(mv_teams.ff),0) FROM mv_teams WHERE mv_teams.f_tid = tid);
+				
+				SET issevens = (SELECT CASE WHEN format = "SV" then 1 ELSE 0 END FROM races WHERE race_id = f_race_id);
 
 				SET tv = (SELECT IFNULL(SUM(value),0) FROM players WHERE owned_by_team_id = tid AND players.status = '.NONE.' AND players.date_sold IS NULL)
 					+ rerolls      * (SELECT cost_rr FROM races WHERE races.race_id = f_race_id)
-					+ cheerleaders * '.$rules['cost_cheerleaders'].'
-					+ apothecary   * '.$rules['cost_apothecary'].'
-					+ ass_coaches  * '.$rules['cost_ass_coaches'].'
+					+ cheerleaders * IF(issevens = 0,'.$rules['cost_cheerleaders'].','.$rules['cost_cheerleaders_sevens'].')
+					+ apothecary   * IF(issevens = 0,'.$rules['cost_apothecary'].','.$rules['cost_apothecary_sevens'].')
+					+ ass_coaches  * IF(issevens = 0,'.$rules['cost_ass_coaches'].','.$rules['cost_ass_coaches_sevens'].')
 					+ '.(((int) $rules['bank_threshold'] > 0) ? '1' : '0').' * IF(treasury > '. $rules['bank_threshold']*1000 .',treasury - '. $rules['bank_threshold']*1000 .',0);
 			END',
 
@@ -1412,6 +1426,160 @@ class SQLCore
 			END IF; 
 			SELECT Name INTO skill_text	FROM game_data_skills WHERE Skill_id = random_skill;
 			END',
+
+			/*
+				Random Player Skill
+			*/
+			'CREATE PROCEDURE random_player_skill(IN skilltype VARCHAR(1), IN rolltype VARCHAR(1), IN pid INT, OUT skill_type VARCHAR(20), OUT first_roll SMALLINT UNSIGNED,
+			OUT second_roll SMALLINT UNSIGNED, OUT random_skill INT, OUT skill_text VARCHAR(20), OUT msg VARCHAR(80))
+				NOT DETERMINISTIC
+				CONTAINS SQL
+			BEGIN
+			DECLARE initial_skills, existing_skill  VARCHAR(50);
+			DECLARE num_of_skills, earned_SPP, spent_SPP, player_SPP, SPP_cost INT;
+			DECLARE has_frenzy, has_grab, has_bnc, has_pogo, has_TTM, has_noh  INT;
+			
+			DROP TEMPORARY TABLE IF EXISTS player_skills;
+			CREATE TEMPORARY TABLE player_skills (owned_skill INT); 
+
+			SET initial_skills = (SELECT CONCAT(gdt.skills) FROM game_data_players gdt JOIN players p ON p.f_pos_id = gdt.pos_id WHERE p.player_id = pid);
+
+			IF LENGTH(initial_skills) > 0
+            THEN
+			CALL splitString(initial_skills,",","player_skills(owned_skill)");
+			END IF;
+
+			INSERT INTO player_skills(owned_skill) SELECT f_skill_ID AS owned_skill FROM players_skills WHERE f_pid = pid;
+			
+			SET num_of_skills = (SELECT COUNT(f_skill_ID) FROM players_skills WHERE f_pid = pid);
+			
+			SET earned_SPP = (SELECT COALESCE(SUM(spp),0) AS earned_SPP FROM mv_players WHERE f_pid = pid);
+            SET spent_SPP = (SELECT COALESCE(extra_spp,0) AS spent_SPP FROM players WHERE player_id = pid);
+			SET player_SPP = (SELECT earned_SPP + spent_SPP);
+			
+			SET has_TTM = 0;
+			SET has_frenzy = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 5));
+			SET has_grab = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 51));
+			SET has_bnc = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 91));
+			SET has_pogo = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 116));
+			SET has_TTM = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 110));
+			SET has_noh = (SELECT EXISTS(SELECT owned_skill FROM player_skills WHERE owned_skill = 100));
+			
+			CALL random_skill(skilltype,@skill_type,@first_roll,@second_roll,@random_skill,@skill_text);
+
+			SET existing_skill = (SELECT FIND_IN_SET(@random_skill,  (SELECT GROUP_CONCAT(owned_skill SEPARATOR ",") FROM player_skills)));
+
+			WHILE existing_skill >0 
+			OR (has_frenzy =1 AND @random_skill =51) 					#doesnt allow grab if player has frenzy
+			OR (has_grab =1 AND @random_skill =5) 						#doesnt allow frenzy if player has grab
+			OR (has_pogo =1 AND @random_skill =25) 						#doesnt allow leap if player has pogo
+			OR (has_bnc =1 AND @random_skill IN (5, 7, 8, 10, 22))		#doesnt allow diving tackle, frenzy, running pass, on the ball or shadowing if player has ball&chain
+			OR (has_noh =1 AND @random_skill IN (7, 12, 20, 21, 31, 40, 41, 42, 44, 45, 46, 47, 48, 49))	#doesnt allow sure hands diving catch, catch, safe pair of hands or any passing skill except leader or on the ball if player has no hands
+			OR (has_TTM =0 AND @random_skill =58)						#doesnt allow strong arm if player does not have throw team mate
+			DO
+			CALL random_skill(skilltype,@skill_type,@first_roll,@second_roll,@random_skill,@skill_text);
+			SET existing_skill = (SELECT FIND_IN_SET(@random_skill,  (SELECT GROUP_CONCAT(owned_skill SEPARATOR ",") FROM player_skills)));
+			END WHILE;
+
+			SET skill_type = @skill_type;
+			SEt first_roll = @first_roll;
+			SET second_roll = @second_roll;
+			SET random_skill = @random_skill;
+			SET skill_text = @skill_text;
+			
+			IF rolltype = "P" AND 
+			(SELECT norm FROM game_data_players gdp	JOIN players p ON p.f_pos_id = gdp.pos_id WHERE p.player_id = pid) LIKE CONCAT("%", skilltype, "%")
+			THEN 
+			SET msg = CONCAT("New random Primary Skill: ", skill_text);
+			SET SPP_cost = (SELECT CASE 
+							WHEN num_of_skills = 0 THEN 3 
+							WHEN num_of_skills = 1 THEN 4 
+							WHEN num_of_skills = 2 THEN 6 
+							WHEN num_of_skills = 3 THEN 8 
+							WHEN num_of_skills = 4 THEN 10 
+							WHEN num_of_skills = 5 THEN 15
+							END);
+			END IF;
+			
+			IF rolltype = "P" AND 
+			(SELECT norm FROM game_data_players gdp	JOIN players p ON p.f_pos_id = gdp.pos_id WHERE p.player_id = pid) NOT LIKE CONCAT("%", skilltype, "%")
+			THEN 
+			SET msg = CONCAT("Player does not have ", skilltype, " set as an available Primary Skill");
+			SET skill_text = "N/A";
+			SET SPP_cost = 0;
+			SIGNAL SQLSTATE "45000"
+			SET MESSAGE_TEXT = msg;
+			END IF;
+			
+			IF rolltype = "S" AND 
+			(SELECT doub FROM game_data_players gdp	JOIN players p ON p.f_pos_id = gdp.pos_id WHERE p.player_id = pid) LIKE CONCAT("%", skilltype, "%")
+			THEN 
+			SET msg = CONCAT("New random Secondary Skill: ", skill_text);
+			SET SPP_cost = (SELECT CASE 
+							WHEN num_of_skills = 0 THEN 6 
+							WHEN num_of_skills = 1 THEN 8 
+							WHEN num_of_skills = 2 THEN 12 
+							WHEN num_of_skills = 3 THEN 16 
+							WHEN num_of_skills = 4 THEN 20 
+							WHEN num_of_skills = 5 THEN 30
+							END);
+			END IF;
+			
+			IF rolltype = "S" AND 
+			(SELECT doub FROM game_data_players gdp	JOIN players p ON p.f_pos_id = gdp.pos_id WHERE p.player_id = pid) NOT LIKE CONCAT("%", skilltype, "%")
+			THEN 
+			SET msg = CONCAT("Player does not have ", skilltype, " set as an available Secondary Skill");
+			SET skill_text = "N/A";
+			SET SPP_cost = 0;
+			SIGNAL SQLSTATE "45000"
+			SET MESSAGE_TEXT = msg;
+			END IF;
+			
+			IF player_SPP < SPP_cost
+			THEN
+			SET msg = "Player does not have enough SPP available";
+			SET skill_text = "N/A";
+			SIGNAL SQLSTATE "45000"
+			SET MESSAGE_TEXT = msg;
+			END IF;
+			
+			IF msg LIKE "New random Primary Skill%" AND player_SPP >= SPP_cost
+			THEN
+			INSERT INTO players_skills(f_pid, f_skill_id, type, cost) VALUES (pid, @random_skill, "N", "R");
+			UPDATE players SET extra_spp = extra_spp - SPP_cost WHERE player_id = pid;
+			END IF;
+			
+			IF msg LIKE "New random Secondary Skill%" AND player_SPP >= SPP_cost
+			THEN
+			INSERT INTO players_skills(f_pid, f_skill_id, type, cost) VALUES (pid, @random_skill, "D", "P");
+			UPDATE players SET extra_spp = extra_spp - SPP_cost WHERE player_id = pid;
+			END IF;
+			END',
+
+			/*
+				Split String (required by random player skill)
+			*/
+			'CREATE PROCEDURE splitString(IN inputString text, IN delimiterChar CHAR(1), IN tablename text)
+				NOT DETERMINISTIC
+				CONTAINS SQL
+			BEGIN
+			  DROP TEMPORARY TABLE IF EXISTS temp_string;
+			  CREATE TEMPORARY TABLE temp_string(vals text); 
+			  WHILE LOCATE(delimiterChar,inputString) > 1 DO
+				INSERT INTO temp_string 
+				  SELECT SUBSTRING_INDEX(inputString,delimiterChar,1);
+				SET inputString = REPLACE(inputString, (
+					SELECT LEFT(inputString, LOCATE(delimiterChar, inputString))
+				),"");
+			  END WHILE;
+			  INSERT INTO temp_string(vals) VALUES(inputString);
+			  SET @s = CONCAT("INSERT INTO ",tablename," SELECT TRIM(vals) FROM temp_string");
+				PREPARE stmt FROM @s;
+				EXECUTE stmt;
+				DEALLOCATE PREPARE stmt;
+			END',
+			
+			
 		);
 		global $hrs;
 		$routines[] = self::mkHRS($hrs);

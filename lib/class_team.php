@@ -60,11 +60,25 @@ class Team
         return $this->doubleRRprice;
     }
 
+    public function mayDropRR() {
+        global $rules;
+        setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
+        $this->mayDropRR = (!$rules['post_game_rr'] && $this->mv_played == 0 && $this->mv_played == $this->played_0);
+        return $this->mayDropRR;
+    }
+
     public function mayBuyFF() {
         global $rules;
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
         $this->mayBuyFF = ($rules['post_game_ff'] || $this->mv_played == 0 || $this->mv_played == $this->played_0);
         return $this->mayBuyFF;
+    }
+
+    public function mayBuyRR() {
+        global $rules;
+        setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
+        $this->mayBuyRR = ($this->mv_played == 0 || $this->mv_played == $this->played_0);
+        return $this->mayBuyRR;
     }
 
     public function setStats($node, $node_id, $set_avg = false) {
@@ -281,8 +295,14 @@ class Team
          **/
         global $rules;
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
-        $query = "SELECT (COUNT(*) >= ".$rules['max_team_players'].") FROM players
-            WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND status NOT IN (".DEAD.")";
+        $query = "SELECT CASE WHEN r.format = 'SV'  
+			THEN (COUNT(p.player_id) >= ".$rules['max_team_players_sevens'].") 
+			ELSE (COUNT(p.player_id) >= ".$rules['max_team_players'].")  END
+			FROM players p 
+			INNER JOIN game_data_players gdp ON gdp.pos_id = p.f_pos_id 
+			INNER JOIN races r ON r.race_id = gdp.f_race_id 
+			WHERE p.owned_by_team_id = $this->team_id 
+			AND p.date_sold IS NULL AND p.status NOT IN (".DEAD.")";
         $result = mysql_query($query);
         $row = mysql_fetch_row($result);
         return (bool) $row[0];
@@ -310,7 +330,7 @@ class Team
         $query = "SELECT CASE WHEN r.format = 'BB' THEN
 		(SELECT IFNULL(COUNT(*) < qty, TRUE) FROM players, game_data_players 
 		WHERE f_pos_id = pos_id AND owned_by_team_id = $this->team_id AND f_pos_id = $pos_id AND date_died IS NULL AND date_sold IS NULL)
-		ELSE
+		WHEN r.format = 'DB' THEN
 		(SELECT IFNULL(COUNT(p.player_id) <  
 			CASE WHEN gdp.pos_type = 'BZ'THEN r.bz_qty 
 			WHEN gdp.pos_type = 'RN'THEN r.rn_qty
@@ -323,6 +343,25 @@ class Team
 		WHERE p.owned_by_team_id = $this->team_id 
 		AND gdp.pos_type = (SELECT pos_type FROM game_data_players WHERE pos_id = $pos_id) 
 		AND p.date_died IS NULL AND p.date_sold IS NULL)  
+        ELSE
+        (SELECT CASE WHEN gdp.pos_type = 'LN' THEN IFNULL(COUNT(p.player_id) < gdp.qty, TRUE)
+		ELSE IFNULL(
+		(SELECT COUNT(p.player_id) 
+		FROM players p 
+		INNER JOIN game_data_players gdp ON gdp.pos_id = p.f_pos_id 
+		INNER JOIN races r ON r.race_id = gdp.f_race_id 
+		WHERE p.owned_by_team_id = $this->team_id 
+		AND gdp.pos_type <> 'LN'
+		AND p.date_died IS NULL AND p.date_sold IS NULL) < 4, TRUE) 
+        AND (SELECT IFNULL(COUNT(*) < qty, TRUE) FROM players, game_data_players 
+		WHERE f_pos_id = pos_id AND owned_by_team_id = $this->team_id AND f_pos_id = $pos_id AND date_died IS NULL AND date_sold IS NULL)
+        END
+		FROM players p 
+		LEFT JOIN game_data_players gdp ON gdp.pos_id = p.f_pos_id 
+		INNER JOIN races r ON r.race_id = gdp.f_race_id 
+		WHERE p.owned_by_team_id = $this->team_id 
+		AND gdp.pos_type = (SELECT pos_type FROM game_data_players WHERE pos_id = $pos_id) 
+		AND p.date_died IS NULL AND p.date_sold IS NULL) 
 		END 
 		FROM races r JOIN teams t on r.race_id = t.f_race_id 
 		WHERE t.team_id =$this->team_id";
@@ -347,9 +386,13 @@ class Team
     }
     
     public function isJMLimitReached() {
-        global $rules;
+        global $DEA, $rules;
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => $this->f_lid)); // Load correct $rules for league.
-        return ($rules['journeymen_limit'] <= (int) SQLFetchField("SELECT COUNT(*) FROM players WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND date_died IS NULL AND status = ".NONE));
+		if ($DEA[$this->f_rname]['other']['format'] <>'SV') {
+			return ($rules['journeymen_limit'] <= (int) SQLFetchField("SELECT COUNT(*) FROM players WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND date_died IS NULL AND status = ".NONE));
+		} else {
+			return ($rules['journeymen_limit_sevens'] <= (int) SQLFetchField("SELECT COUNT(*) FROM players WHERE owned_by_team_id = $this->team_id AND date_sold IS NULL AND date_died IS NULL AND status = ".NONE));
+		}
     }
 
     public function getToursPlayedIn($ids_only = false) {

@@ -163,11 +163,15 @@ class TeamCreator implements ModuleInterface
 			$race['name'] = $rname;
 			$race['rid'] = $rid;
 			$race['apoth'] = !in_array($rid, $racesNoApothecary);
-			if (array_key_exists($rid, $rules['initial_team_treasury'])) {
-				$race['treasury'] = $rules['initial_team_treasury'][$rid];
-			} else {
-				$race['treasury'] = $rules['initial_treasury'];
-			};
+			if  ($DEA[$raceididx[$rid]]['other']['format'] <> 'SV') {
+				if (array_key_exists($rid, $rules['initial_team_treasury'])) {
+					$race['treasury'] = $rules['initial_team_treasury'][$rid];
+				} else {
+					$race['treasury'] = $rules['initial_treasury'];
+				}
+			} else  {
+				$race['treasury'] = $rules['initial_treasury_sevens'];
+			}
 			$race['players'] = array();
 			$race['others'] = array();
 			foreach ($DEA[$raceididx[$rid]]['players'] as $pos => $d) {
@@ -180,44 +184,81 @@ class TeamCreator implements ModuleInterface
 			}
 			$race['player_count'] = sizeof($race['players']);
 
-			if ($rules['max_rerolls'] <> 0) {
-			$race['others'][] = self::addTeamAttribute(	'Rerolls',
-														$DEA[$raceididx[$rid]]['other']['rr_cost'] / 1000,
-														$rules['max_rerolls']);
+			if  ($DEA[$raceididx[$rid]]['other']['format'] <> 'SV') {
+				if ($rules['max_rerolls'] <> 0) {
+				$race['others'][] = self::addTeamAttribute(	'Rerolls',
+															$DEA[$raceididx[$rid]]['other']['rr_cost'] / 1000,
+															$rules['max_rerolls']);
+				}
+				if ($rules['max_fan_factor'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Dedicated Fans (Note: you will automatically get 1 for free)',
+																$rules['cost_fan_factor'] / 1000,
+
+																$rules['max_ini_fan_factor']);
+				}
+
+				if ($rules['max_cheerleaders'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Cheerleaders',
+																$rules['cost_cheerleaders'] / 1000,
+
+																$rules['max_cheerleaders']);
+				}
+
+				if ($rules['max_ass_coaches'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Ass Coaches',
+																$rules['cost_ass_coaches'] / 1000,
+
+																$rules['max_ass_coaches']);
+				}
+
+				if ($race['apoth']) {
+					$race['others'][] = self::addTeamAttribute(	'Apothecary',
+																$rules['cost_apothecary'] / 1000,
+
+																1);
+				}
+			} else {
+				if ($rules['max_rerolls_sevens'] <> 0) {
+				$race['others'][] = self::addTeamAttribute(	'Rerolls',
+															$DEA[$raceididx[$rid]]['other']['rr_cost'] / 1000,
+															$rules['max_rerolls_sevens']);
+				}
+				if ($rules['max_fan_factor'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Dedicated Fans (Note: you will automatically get 1 for free)',
+																$rules['cost_fan_factor_sevens'] / 1000,
+
+																$rules['max_ini_fan_factor']);
+				}
+
+				if ($rules['max_cheerleaders_sevens'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Cheerleaders',
+																$rules['cost_cheerleaders_sevens'] / 1000,
+
+																$rules['max_cheerleaders_sevens']);
+				}
+
+				if ($rules['max_ass_coaches_sevens'] <> 0) {
+					$race['others'][] = self::addTeamAttribute(	'Ass Coaches',
+																$rules['cost_ass_coaches_sevens'] / 1000,
+
+																$rules['max_ass_coaches_sevens']);
+				}
+
+				if ($race['apoth']) {
+					$race['others'][] = self::addTeamAttribute(	'Apothecary',
+																$rules['cost_apothecary_sevens'] / 1000,
+
+																1);
+				}
 			}
-
-			if ($rules['max_fan_factor'] <> 0) {
-				$race['others'][] = self::addTeamAttribute(	'Dedicated Fans (Note: you will automatically get 1 for free)',
-															$rules['cost_fan_factor'] / 1000,
-
-															$rules['max_ini_fan_factor']);
-			}
-
-			if ($rules['max_cheerleaders'] <> 0) {
-				$race['others'][] = self::addTeamAttribute(	'Cheerleaders',
-															$rules['cost_cheerleaders'] / 1000,
-
-															$rules['max_cheerleaders']);
-			}
-
-			if ($rules['max_ass_coaches'] <> 0) {
-				$race['others'][] = self::addTeamAttribute(	'Ass Coaches',
-															$rules['cost_ass_coaches'] / 1000,
-
-															$rules['max_ass_coaches']);
-			}
-
-			if ($race['apoth']) {
-				$race['others'][] = self::addTeamAttribute(	'Apothecary',
-															$rules['cost_apothecary'] / 1000,
-
-															1);
-			}
-
+			
 			foreach($inducements as $name => $d) {
 				$inducement = array();
 				$inducement['name'] = $name;
 				$inducement['max'] = $d['max'];
+				if (!in_array($DEA[$raceididx[$rid]]['other']['format'], $d['available_formats'])) {	
+					continue;
+				}
 				if($race['apoth'] && $name == 'Igor') {
 					continue;
 				} else if (!$race['apoth'] && $name == 'Wandering Apothecaries') {
@@ -284,18 +325,29 @@ class TeamCreator implements ModuleInterface
 		$th = $race['other']['th_qty'];
 		$bk = $race['other']['bk_qty'];
 		$sp = $race['other']['sp_qty'];
-		if (array_key_exists($rid, $rules['initial_team_treasury'])) {
-			$init_treasury = $rules['initial_team_treasury'][$rid];
-		} else {
-			$init_treasury = $rules['initial_treasury'];
-		};
+		$svl = 4; //sevens limit to 4 positionals
+		if  ($race['other']['format'] <> 'SV') {
+				if (array_key_exists($rid, $rules['initial_team_treasury'])) {
+					$race['treasury'] = $rules['initial_team_treasury'][$rid];
+				} else {
+					$race['treasury'] = $rules['initial_treasury'];
+				}
+			}
+		else  {
+			$race['treasury'] = $rules['initial_treasury_sevens'];
+		}
+		$init_treasury = $race['treasury'];
 		$treasury = $init_treasury;
 		$treasury -= $rerolls * $race['other']['rr_cost'];
-		$treasury -= $fans * $rules['cost_fan_factor'];
-		$treasury -= $cl * $rules['cost_cheerleaders'];
-		$treasury -= $ac * $rules['cost_ass_coaches'] ;
-
-
+		if  ($race['other']['format'] <> 'SV') {
+			$treasury -= $fans * $rules['cost_fan_factor'];
+			$treasury -= $cl * $rules['cost_cheerleaders'];
+			$treasury -= $ac * $rules['cost_ass_coaches'];
+		} else {		
+			$treasury -= $fans * $rules['cost_fan_factor_sevens'];
+			$treasury -= $cl * $rules['cost_cheerleaders_sevens'];
+			$treasury -= $ac * $rules['cost_ass_coaches_sevens'];
+		}
 		$rerolls += $rules['initial_rerolls'];
 		$fans += $rules['initial_fan_factor'];
 		$cl += $rules['initial_ass_coaches'];
@@ -303,7 +355,11 @@ class TeamCreator implements ModuleInterface
 		if (!in_array($rid, $racesNoApothecary)) {
 			$apoth = $_POST['qtyo4'];
 			if ($apoth) {
-			 $treasury -= 50000;
+				if  ($race['other']['format'] <> 'SV') {
+					$treasury -= 50000;
+				} else {
+					$treasury -= 80000;
+				}
 			}
 		} else {
 			$apoth = 0;
@@ -341,6 +397,12 @@ class TeamCreator implements ModuleInterface
 					$sp -= 1;
 					}
 				}
+				if  ($race['other']['format'] == 'SV') {
+					if ($d['pos_type'] <> 'LN') {
+					$svl -= 1;
+					}
+				}
+				$bz -= $d['pos_type'];
 				$rn -= $d['pos_type'];
 				$th -= $d['pos_type'];
 				$bk -= $d['pos_type'];
@@ -357,7 +419,7 @@ class TeamCreator implements ModuleInterface
 		/* Enforce league rules and common BB ones */
 		$errors = array();
 		if ($treasury < 0) {
-			$errors[] = $lng->getTrn('tooExpensive', 'TeamCreator') . ' (' . $init_treasury/1000 . ' kGP)';
+			$errors[] = $lng->getTrn('tooExpensive', 'TeamCreator') . ' (' . $init_treasury/1000 . ' k)';
 		}
 		if ($bg < 0) {
 			$errors[] = $lng->getTrn('tooManyBigGuys', 'TeamCreator');
@@ -377,24 +439,46 @@ class TeamCreator implements ModuleInterface
 		if ($sp < 0) {
 			$errors[] = $lng->getTrn('tooManySpecial', 'TeamCreator');
 		}
-		if (sizeof($players) < 11) {
-			$errors[] = $lng->getTrn('tooFewPlayers', 'TeamCreator');
-		}
-		if (sizeof($players) > $rules['max_team_players']) {
-			$errors[] = $lng->getTrn('tooManyPlayers', 'TeamCreator');
-		}
-		if(self::checkLimit($rules['max_rerolls'], $rerolls)) {
+		if  ($race['other']['format'] <> 'SV') {
+			if (sizeof($players) < 11) {
+				$errors[] = $lng->getTrn('tooFewPlayers', 'TeamCreator');
+			}
+			if (sizeof($players) > $rules['max_team_players']) {
+				$errors[] = $lng->getTrn('tooManyPlayers', 'TeamCreator');
+			}
+			if(self::checkLimit($rules['max_rerolls'], $rerolls)) {
 			$errors[] = $lng->getTrn('tooManyRR', 'TeamCreator') . " " . $rerolls . " vs " . $rules['max_rerolls'];
+			}
+			if(self::checkLimit($rules['max_ass_coaches'], $ac)) {
+			$errors[] = $lng->getTrn('tooManyAc', 'TeamCreator') . " " . $ac . " vs " . $rules['max_ass_coaches'];
+			}
+			if(self::checkLimit($rules['max_cheerleaders'], $cl)) {
+				$errors[] = $lng->getTrn('tooManyCl', 'TeamCreator') . " " . $cl . " vs " . $rules['max_cheerleaders'];
+			}
+		} else {
+			if ($svl < 0) {
+				$errors[] = $lng->getTrn('tooManyPos', 'TeamCreator');
+			}
+			if (sizeof($players) < 7) {
+				$errors[] = $lng->getTrn('tooFewPlayerssevens', 'TeamCreator');
+			}	
+			if (sizeof($players) > $rules['max_team_players_sevens']) {
+				$errors[] = $lng->getTrn('tooManySevensPlayers', 'TeamCreator');
+			}
+			if(self::checkLimit($rules['max_rerolls_sevens'], $rerolls)) {
+			$errors[] = $lng->getTrn('tooManyRR', 'TeamCreator') . " " . $rerolls . " vs " . $rules['max_rerolls_sevens'];
+			}
+			if(self::checkLimit($rules['max_ass_coaches_sevens'], $ac)) {
+			$errors[] = $lng->getTrn('tooManyAc', 'TeamCreator') . " " . $ac . " vs " . $rules['max_ass_coaches_sevens'];
+			}
+			if(self::checkLimit($rules['max_cheerleaders_sevens'], $cl)) {
+				$errors[] = $lng->getTrn('tooManyCl', 'TeamCreator') . " " . $cl . " vs " . $rules['max_cheerleaders_sevens'];
+			}
 		}
 		if(self::checkLimit($rules['max_fan_factor'], $fans)) {
 			$errors[] = $lng->getTrn('tooManyFF', 'TeamCreator') . " " . $fans . " vs " . $rules['max_fan_factor'];
 		}
-		if(self::checkLimit($rules['max_ass_coaches'], $ac)) {
-			$errors[] = $lng->getTrn('tooManyAc', 'TeamCreator') . " " . $ac . " vs " . $rules['max_ass_coaches'];
-		}
-		if(self::checkLimit($rules['max_cheerleaders'], $cl)) {
-			$errors[] = $lng->getTrn('tooManyCl', 'TeamCreator') . " " . $cl . " vs " . $rules['max_cheerleaders'];
-		}
+		
 
 		/* Actually create the team in the database */
 		if(sizeof($errors) == 0) {
@@ -490,7 +574,7 @@ EOQ;
 
 	/* Used when accessed from coach profile */
 	public static function newTeam($cid) {
-		global $lng, $coach, $raceididx, $leagues, $rules, $divisions;
+		global $lng, $coach, $raceididx, $leagues, $rules, $divisions, $DEA;
 		self::handlePost($cid);
 		 //remove teams of legends that have been marked as inactive 
 			if ($rules['amazon'] == 1) {
@@ -521,6 +605,7 @@ EOQ;
 		$txtNoInduce = $lng->getTrn('noInduce', 'TeamCreator');
 		$txtNoTeamName = $lng->getTrn('noTeamName', 'TeamCreator');
 		$txtTooFewPlayers = $lng->getTrn('tooFewPlayers', 'TeamCreator');
+		$txtTooFewPlayerssevens = $lng->getTrn('tooFewPlayerssevens', 'TeamCreator');
 		$txtTooManyBigGuys = $lng->getTrn('tooManyBigGuys', 'TeamCreator');
 		$txtRaceSelectTitle = $lng->getTrn('race', 'TeamCreator');
 		$txtRaceSelectOption = $lng->getTrn('raceDefaultOption', 'TeamCreator');
@@ -740,11 +825,6 @@ EOQ;
 				submit = false;
 			}
 
-			if (submit && pCount < 11) {
-				alert('$txtTooFewPlayers');
-				submit = false;
-			}
-
 			if (submit) {
 				oForm.submit();
 			}
@@ -763,7 +843,7 @@ EOQ;
 		$i = 0;
 		foreach ($raceididx as $rname) {
 			$translatedRaceName = $lng->getTrn('race/'.strtolower(str_replace(' ','', $rname)));
-			if ( substr($translatedRaceName, 0, 7) != 'College' ) {
+			if ( substr($translatedRaceName, 0, 7) != 'College' && substr($translatedRaceName, 0, 6) != 'Sevens') {
 			echo "<option value='$i'>$translatedRaceName</option>";
 			}
 			$i++;
@@ -779,9 +859,21 @@ EOQ;
 				$i++;
 			}
 		}
+		if ($rules['sevens'] == 0) {
+			echo  "<optgroup label='Sevens Teams'>";
+			$i = 0;
+			foreach ($raceididx as $rname) {
+				$translatedRaceName = $lng->getTrn('race/'.strtolower(str_replace(' ','', $rname)));
+				if ( substr($translatedRaceName, 0, 6) == 'Sevens' ) {
+				echo "<option value='$i'>$translatedRaceName</option>";
+				}
+				$i++;
+			}
+		}
 		echo <<<EOQ
 		</optgroup></select></td>
 EOQ;
+		
 		if (isset($coach)) {
 			$lgeDiv = $lng->getTrn('common/league') . '/' . $lng->getTrn('common/division');
 		echo <<<EOQ
@@ -817,7 +909,8 @@ EOQ;
 		$txtDollar = $lng->getTrn('dollar', 'TeamCreator');
 		$txtQuantity = $lng->getTrn('quantity', 'TeamCreator');
 		$txtSubtotal = $lng->getTrn('subtotal', 'TeamCreator');
-
+		
+		
 		echo <<<EOQ
 		<td align="right" id="indTxt">$txtInducements:</td>
 		<td><input type="checkbox" id="induce" onChange="changeInduce(this.checked)" /><input type="hidden" id="oldInduce" value="false" /></td>

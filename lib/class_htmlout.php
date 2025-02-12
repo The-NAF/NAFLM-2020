@@ -8,6 +8,7 @@ define('T_STATE_ALLTIME', 1);
 define('T_STATE_ACTIVE', 2);
 define('T_NODE_ALL', -1);  # All nodes.
 define('T_RACE_ALL', -1);  # All races.
+define('T_FORMAT_ALL', -1);  # All formats.
 
 class HTMLOUT
 {
@@ -309,9 +310,10 @@ class HTMLOUT
 		} else {
 			$_SELECTOR = HTMLOUT::nodeSelector(array('force_node' => array($node,$node_id), 'race' => $enableRaceSelector, 'sgrp' => true, 'ffilter' => true, 'obj' => $obj));
 		}
-		list($sel_node, $sel_node_id, $sel_state, $sel_race, $sel_sgrp, $sel_ff_field, $sel_ff_ineq, $sel_ff_limit) = $_SELECTOR;
+		list($sel_node, $sel_node_id, $sel_state, $sel_race, $sel_format, $sel_sgrp, $sel_ff_field, $sel_ff_ineq, $sel_ff_limit) = $_SELECTOR;
 		$filter_node = array($sel_node => $sel_node_id);
 		$filter_race = ($sel_race != T_RACE_ALL) ? array(T_OBJ_RACE => $sel_race) : array();
+		$filter_format = ($sel_format != T_FORMAT_ALL) ? array(T_OBJ_FORMAT => $sel_format) : array();
 		$filter_having = array('having' => array($sel_ff_field.(($sel_ff_ineq == self::T_NS__ffilter_ineq_gt) ? '>=' : '<=').$sel_ff_limit));
 		if ($_COACH_TEAM_LIST && $sel_state != T_STATE_ALLTIME) {
 			$filter_having['having'][] = 'rdy IS TRUE';
@@ -526,6 +528,7 @@ class HTMLOUT
 		$s_node_id  = self::T_NSStr__node_id;
 		$s_state    = "NS_state";
 		$s_race     = "NS_race";
+		$s_format   = "NS_format";
 		$s_sgrp     = "NS_sgrp";
 		# Field filter
 		$s_ffilter_field = "NS_ffilter__field"; # Field name, e.g. "mv_played".
@@ -535,6 +538,7 @@ class HTMLOUT
 		$hideNodes = (array_key_exists('nonodes', $opts) && $opts['nonodes']); # This is not a "set" option because it was implemented later, and for backwards compabillity (not changing the caller's syntax) we therefore do it this way.
 		$setState = (array_key_exists('state', $opts) && $opts['state']);
 		$setRace = (array_key_exists('race', $opts) && $opts['race']);
+		$setFormat = (array_key_exists('format', $opts) && $opts['format']);
 		$setSGrp = (array_key_exists('sgrp', $opts) && $opts['sgrp']);
 		$setFFilter = (array_key_exists('ffilter', $opts) && $opts['ffilter']);
 		$obj = ($setFFilter) ? $opts['obj'] : null;
@@ -543,6 +547,7 @@ class HTMLOUT
 		$def_node_id = (is_object($coach) && isset($coach->settings['home_lid'])) ? $coach->settings['home_lid'] : $settings['default_visitor_league'];
 		$def_state   = T_STATE_ACTIVE; # No longer T_STATE_ALLTIME;
 		$def_race    = T_RACE_ALL;
+		$def_format  = T_FORMAT_ALL;
 		$def_sgrp    = 'GENERAL';
 		$def_ffilter_field = 'mv_played';
 		$def_ffilter_ineq  = self::T_NS__ffilter_ineq_gt;
@@ -555,6 +560,7 @@ class HTMLOUT
 		$NEW = isset($_POST['ANS']);
 		$_SESSION[$s_state] = ($NEW && $setState) ? (int) $_POST['state_in'] : (isset($_SESSION[$s_state]) ? $_SESSION[$s_state] : $def_state);
 		$_SESSION[$s_race]  = ($NEW && $setRace)  ? (int) $_POST['race_in']  : (isset($_SESSION[$s_race])  ? $_SESSION[$s_race]  : $def_race);
+		$_SESSION[$s_format]  = ($NEW && $setFormat)  ? (int) $_POST['format_in']  : (isset($_SESSION[$s_format])  ? $_SESSION[$s_format]  : $def_format);
 		$_SESSION[$s_sgrp]  = ($NEW && $setSGrp)  ? $_POST['sgrp_in']        : (isset($_SESSION[$s_sgrp])  ? $_SESSION[$s_sgrp]  : $def_sgrp);
 		# NOTE: Form selections updates of $_SESSION node vars are done via self::updateNodeSelectorLeagueVars().
 		$_SESSION[$s_node]    = $force_node    ? $force_node    : (isset($_SESSION[$s_node])     ? $_SESSION[$s_node]    : $def_node);
@@ -609,7 +615,7 @@ class HTMLOUT
 				<?php
 				echo "<option style='font-weight: bold;' value='".T_RACE_ALL."'>-".$lng->getTrn('common/all')."-</option>\n";
 				foreach ($raceididx as $rid => $rname) {
-					if ( substr($rname, 0, 7) != 'College' ) {
+					if ( substr($rname, 0, 7) != 'College' && substr($rname, 0, 6) != 'Sevens' ) {
 						echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
 					}
 				}
@@ -622,6 +628,35 @@ class HTMLOUT
 					}
 					echo "</optgroup>";
 				}
+				if ($rules['sevens'] == 0) {
+					echo  "<optgroup label='Sevens Teams'>";
+					foreach ($raceididx as $rid => $rname) {
+						if ( substr($rname, 0, 6) == 'Sevens' ) {
+							echo "<option value='$rid'".(($_SESSION[$s_race] == $rid) ? 'SELECTED' : '').">".$lng->getTrn('race/'.str_replace(' ', '', strtolower($rname)).'')."</option>\n";
+						}
+					}
+					echo "</optgroup>";
+				}
+				?>
+			</select>
+			<?php
+		}
+		if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
+			echo $lng->getTrn('common/format');
+			?>
+			<select name="format_in" id="format_in">
+				<?php
+				echo "<option style='font-weight: bold;' value='".T_FORMAT_ALL."'>-".$lng->getTrn('common/all')."-</option>\n";
+				echo "<option value='BB'".(($_SESSION[$s_format] == 'BB') ? 'SELECTED' : '').">".$lng->getTrn('common/bb')."</option>\n";
+
+				if ($rules['dungeon'] == 0) {
+					echo "<option value='DB'".(($_SESSION[$s_format] == 'DB') ? 'SELECTED' : '').">".$lng->getTrn('common/db')."</option>\n";
+					}
+					echo "</optgroup>";
+				if ($rules['sevens'] == 0) {
+					echo "<option value='SV'".(($_SESSION[$s_format] == 'SV') ? 'SELECTED' : '').">".$lng->getTrn('common/sv')."</option>\n";
+					}
+					echo "</optgroup>";
 				?>
 			</select>
 			<?php
@@ -695,6 +730,7 @@ class HTMLOUT
 			($allNodes) ? false : $_SESSION[$s_node_id],
 			($setState) ? $_SESSION[$s_state] : false,
 			($setRace) ? $_SESSION[$s_race] : false,
+			($setFormat) ? $_SESSION[$s_format] : false,
 			($setSGrp) ? $_SESSION[$s_sgrp] : false,
 			($setFFilter) ? $_SESSION[$s_ffilter_field] : false,
 			($setFFilter) ? $_SESSION[$s_ffilter_ineq]  : false,
@@ -1083,6 +1119,7 @@ class HTMLOUT
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=29" style="height:10px;line-height:10px;">Amazon</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=26" style="height:10px;line-height:10px;">Black Orc</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=1" style="height:10px;line-height:10px;">Chaos Chosen</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=33" style="height:10px;line-height:10px;">Chaos Dwarf</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=21" style="height:10px;line-height:10px;">Chaos Renegades</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=3" style="height:10px;line-height:10px;">Dark Elf</a></li>
 				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=4" style="height:10px;line-height:10px;">Dwarf</a></li>
@@ -1150,8 +1187,44 @@ class HTMLOUT
 			</ul></li>
 			<?php endif; ?>
 			
+			<?php if ($rules['sevens'] == 0)  : ?>
+			<li class="subfirst"><a rel="nofollow" href="#">Sevens Rosters ></a>
+				<ul>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=60" style="height:10px;line-height:10px;">Sevens Amazon</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=86" style="height:10px;line-height:10px;">Sevens Black Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=61" style="height:10px;line-height:10px;">Sevens Chaos Chosen</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=62" style="height:10px;line-height:10px;">Sevens Chaos Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=81" style="height:10px;line-height:10px;">Sevens Chaos Renegades</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=63" style="height:10px;line-height:10px;">Sevens Dark Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=64" style="height:10px;line-height:10px;">Sevens Dwarf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=65" style="height:10px;line-height:10px;">Sevens Elven Union</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=89" style="height:10px;line-height:10px;">Sevens Gnome</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=66" style="height:10px;line-height:10px;">Sevens Goblin</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=67" style="height:10px;line-height:10px;">Sevens Halfling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=68" style="height:10px;line-height:10px;">Sevens High Elf</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=69" style="height:10px;line-height:10px;">Sevens Human</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=87" style="height:10px;line-height:10px;">Sevens Imperial Nobility</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=88" style="height:10px;line-height:10px;">Sevens Khorne</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=71" style="height:10px;line-height:10px;">Sevens Lizardman</a></li>
+			    <li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=73" style="height:10px;line-height:10px;">Sevens Necromantic Horror</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=74" style="height:10px;line-height:10px;">Sevens Norse</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=75" style="height:10px;line-height:10px;">Sevens Nurgle</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=84" style="height:10px;line-height:10px;">Sevens Old World Alliance</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=76" style="height:10px;line-height:10px;">Sevens Ogre</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=72" style="height:10px;line-height:10px;">Sevens Orc</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=79" style="height:10px;line-height:10px;">Sevens Skaven</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=77" style="height:10px;line-height:10px;">Sevens Shambling Undead</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=82" style="height:10px;line-height:10px;">Sevens Slaan</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=85" style="height:10px;line-height:10px;">Sevens Snotling</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=70" style="height:10px;line-height:10px;">Sevens Tomb Kings</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=83" style="height:10px;line-height:10px;">Sevens Underworld Denizens</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=78" style="height:10px;line-height:10px;">Sevens Vampire</a></li>
+				<li><a href="index.php?section=objhandler&type=1&obj=4&obj_id=80" style="height:10px;line-height:10px;">Sevens Wood Elf</a></li>
+			</ul></li>
+			<?php endif; ?>
+			
 			<li><a href="index.php?section=stars" style="height:10px;line-height:10px;">Star Players List</a></li>
-			<li><a href="https://www.warhammer-community.com/wp-content/uploads/2017/11/P9GJXUTdGyGDeZkk.pdf">BB2020 Latest FAQ & Errata</a></li> 
+			<li><a href="https://warcomprod2024productionstorage.s3.eu-west-2.amazonaws.com/bloodbowl_faqs&errata_errata&designerscommentary_eng_24.09-axlajwasve.pdf">BB2020 Latest FAQ & Errata</a></li> 
 		</ul>
 	</li>  
 
