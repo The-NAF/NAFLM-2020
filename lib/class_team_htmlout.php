@@ -664,7 +664,7 @@ class Team_HTMLOUT extends Team
 				foreach ($s->getStats(T_OBJ_TEAM,$team->team_id) as $k => $v) {
 					$s->$k = $v;
 				}
-				$s->is_dead = $s->is_sold = $s->is_mng = $s->is_journeyman = false;
+				$s->is_dead = $s->is_sold = $s->is_mng = $s->is_journeyman = $s->is_retired = false;
 				$s->HTMLbcolor = COLOR_HTML_STARMERC;
 				$s->href = array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'player_id'); # Like in below $fields def, but with T_OBJ_STAR instead.
 				array_push($stars, $s);
@@ -701,7 +701,7 @@ class Team_HTMLOUT extends Team
 			$smerc->mv_spp = '-';
 			$smerc->mv_misc = '-';
 			$smerc->value = 0;
-			$smerc->is_dead = $smerc->is_sold = $smerc->is_mng = $smerc->is_journeyman = false;
+			$smerc->is_dead = $smerc->is_sold = $smerc->is_mng = $smerc->is_journeyman = $smerc->is_retired = false;
 			$smerc->HTMLbcolor = COLOR_HTML_STARMERC;
 			array_push($players, $smerc);
 		}
@@ -1022,7 +1022,7 @@ class Team_HTMLOUT extends Team
 					</tr>
 					<tr>
 						<td><?php echo $lng->getTrn('common/teamspecialrules');?></td>
-						<td><?php echo specialsTrans($race->special_rules);?></td>
+						<td><?php echo $race->special_rules;?></td>
 					</tr>
 					<?php 
 					if (strlen($team->getFavruleoptions()) != 0) {
