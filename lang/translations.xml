@@ -55,7 +55,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <skills>Skills &amp; Traits</skills>
     <skill_type>Skill Type</skill_type>
     <skill_cat>Skill Category</skill_cat>
-    <normal>Primary</normal>
+     <normal>Primary</normal>
     <double>Secondary</double>
     <injs>Injuries</injs>
     <pos>Position</pos>
@@ -120,7 +120,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <draw>Draw</draw>
     <streaks>Streaks</streaks>
     <played>Played</played>
+	<playedmatches>Matches Played</playedmatches>
     <playedtours>Tours played</playedtours>
+	<playedseasons>Seasons Played</playedseasons>
+	<rebuycost>Rebuy Cost</rebuycost>
     <wontours>Won tours</wontours>
     <ma>Ma</ma>
     <st>St</st>
@@ -166,12 +169,12 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <german>German</german>
     <french>French</french>
     <italian>Italian</italian>    
-	
+
 	<!-- Formats -->
     <bb>Blood Bowl</bb>
     <db>DungeonBowl</db>
     <sv>Sevens</sv>
-	
+
 </common>
 
 <!-- Link names for menu elements -->
@@ -362,8 +365,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <unbuy_player> <![CDATA[ Regret hiring a player. 100% refund.<br> This is only possible for players which have not participated in any matches. ]]> </unbuy_player>
                 <rename_player> <![CDATA[ Rename a player. ]]> </rename_player>
                 <renumber_player> <![CDATA[ Renumber a player. ]]> </renumber_player>
-                <random_skill> <![CDATA[ Randomize a new skill for a player.<br> Please select carefully as once randomised and assigned it cannot be changed.<br> Please contact a league commissioner to roll a characteristic. ]]> </random_skill>
                 <retire_player> <![CDATA[ Temporarily retire a player. No refund will apply.<br> Only players who suffered a lasting injury in the last game can be retired.<br> A retired player will remain part of the team as a permanent MNG and take up a slot, but can only be unretired on a redraft.<br> Cannot be undone, but can be fired later. ]]> </retire_player>
+                <random_skill> <![CDATA[ Randomize a new skill for a player.<br> Please select carefully as once randomised and assigned it cannot be changed.<br> Please contact a league commissioner to roll a characteristic. ]]> </random_skill>
                 <rename_team> <![CDATA[ Rename your team. ]]> </rename_team>
                 <buy_goods> <![CDATA[ Buy team goods. ]]> </buy_goods>
                 <buy_goods_warn> <![CDATA[ <br><br>Please note that re-roll prices are currently <font color='red'><b>doubled</b></font>.<br>If your intention is to buy a non-doubled RR, then buy it anyway and reclaim the lost gold by asking an admin to reinsert the overcharged amount. ]]> </buy_goods_warn>
@@ -387,7 +390,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <ach_skills>Remove ach. player skills</ach_skills>
             <ff>Manage team Dedicated Fans</ff>
             <resetrule>Reset selected team special rule</resetrule>
-            <transferteam>Transfer team</transferteam>
+			<transferteam>Transfer Team</transferteam>
             <removeNiggle>Remove player niggle</removeNiggle>
             <addniggle>Add player niggle</addniggle>
             <removeMNG>Remove player MNG/Unretire</removeMNG>
@@ -403,13 +406,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <dval> <![CDATA[ Change a player's value by a certain amount. ]]> </dval>
                 <extra_skills> <![CDATA[ Manage a player's extra skills. ]]> </extra_skills>
                 <ach_skills> <![CDATA[ Remove a player's achieved skills. This makes the player able to rechoose a skill. ]]> </ach_skills>
-                <ff> <![CDATA[ Make changes to team's Dedicated Fans. ]]> </ff>
-                <resetrule> <![CDATA[ Reset the currently selected team special rule. ]]> </resetrule>
-                <transferteam> <![CDATA[ Transfer this team to another coach. ]]> </transferteam>
-                <removeNiggle> <![CDATA[ Remove a niggling injury from a player. ]]> </removeNiggle>
-                <addniggle> <![CDATA[ Add a niggling injury to a player. ]]> </addniggle>
-                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone! ]]> </removeMNG>
-                <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone! ]]> </removenegastat>
+                <ff> <![CDATA[ Make changes to team's Dedicated Fans .]]> </ff>
+                <resetrule> <![CDATA[ Reset the currently selected team special rule .]]> </resetrule>
+				<transferteam><![CDATA[ Change ownership of the team to a different coach .]]></transferteam>
+                <removeNiggle> <![CDATA[ Remove a niggling injury from a player.]]> </removeNiggle>
+                <addniggle> <![CDATA[ Add a niggling injury to a player.]]> </addniggle>
+                <removeMNG> <![CDATA[ Remove the player's MNG status OR Unretire player.<br><b>WARNING</b>: Cannot be undone!]]> </removeMNG>
+                <removenegastat> <![CDATA[ Remove a player's stat injury.<br><b>WARNING</b>: Cannot be undone!]]> </removenegastat>
             </desc>
         </box_admin>
     </team>
@@ -494,7 +497,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <ageing2>Ageing 2</ageing2>
 
     </report>
-	
+
 	<sevens>
 		<instructionshead>Instructions for Sevens Matches</instructionshead>
 		<instructionstext><![CDATA[In Sevens only one player can gain an advancement. Please use the 'Misc SPP' box to assign SPP to ONE player per team.<br>Use the 'Next Skill x/y SPP' information next to each player to determine how many SPP to assign: x for a Primary skill (on a chosen player) or y for a Secondary skill (on a random player).<br>Please note that although you can choose a player to advance (Primary skill only), all skill advancements will be random.<br>Remember also to roll for "The Draft"- after every match roll a D6 for every player that has extra skills: unless the roll is higher than the number of skills the player(s) achieved, they will leave your team for the big leagues! (Mark the player(s) as DEAD in the Injury Box)]]></instructionstext>

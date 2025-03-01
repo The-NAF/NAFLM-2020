@@ -644,6 +644,12 @@ class Team_HTMLOUT extends Team
 			else {       
 				$p->pa = $p->pa.'+';
 			}
+			$p->seasons = $p->getSeasons();
+			if     ($p->is_sold)   				$p->rebuy = 'n/a';
+			elseif ($p->is_dead)   				$p->rebuy = 'n/a';
+			elseif ($p->is_journeyman_used)     $p->rebuy = 'n/a';
+			elseif ($p->is_journeyman)          $p->rebuy = 'n/a';
+			else								$p->rebuy = $p->getRebuy();
 		}
 
 		/* If enabled add stars and summed mercenaries entries to the roster */
@@ -667,6 +673,8 @@ class Team_HTMLOUT extends Team
 				$s->is_dead = $s->is_sold = $s->is_mng = $s->is_journeyman = $s->is_retired = false;
 				$s->HTMLbcolor = COLOR_HTML_STARMERC;
 				$s->href = array('link' => urlcompile(T_URL_PROFILE,T_OBJ_STAR,false,false,false), 'field' => 'obj_id', 'value' => 'player_id'); # Like in below $fields def, but with T_OBJ_STAR instead.
+				$s->seasons = 'n/a';
+				$s->rebuy = 'n/a';
 				array_push($stars, $s);
 			}
 			$players = array_merge($players, $stars);
@@ -703,6 +711,8 @@ class Team_HTMLOUT extends Team
 			$smerc->value = 0;
 			$smerc->is_dead = $smerc->is_sold = $smerc->is_mng = $smerc->is_journeyman = $smerc->is_retired = false;
 			$smerc->HTMLbcolor = COLOR_HTML_STARMERC;
+			$smerc->seasons = 'n/a';
+			$smerc->rebuy = 'n/a';
 			array_push($players, $smerc);
 		}
 		/******************************
@@ -736,12 +746,36 @@ class Team_HTMLOUT extends Team
 			'mv_spp'    => array('desc' => ($DETAILED) ? 'SPP/extra' : 'SPP', 'nosort' => ($DETAILED) ? true : false),
 			'value'     => array('desc' => $lng->getTrn('common/value'), 'kilo' => true, 'suffix' => 'k'),
 		);
+		$fieldsDetailed = array(
+			'nr'        => array('desc' => '#', 'editable' => 'updatePlayerNumber', 'javaScriptArgs' => array('team_id', 'player_id'), 'editableClass' => 'number', 'allowEdit' => $allowEdit),
+			'name'      => array('desc' => $lng->getTrn('common/name'), 'editable' => 'updatePlayerName', 'javaScriptArgs' => array('team_id', 'player_id'), 'allowEdit' => $allowEdit),
+			'info'      => array('desc' => '', 'nosort' => true, 'icon' => true, 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_PLAYER,false,false,false), 'field' => 'obj_id', 'value' => 'player_id')),
+			'position'  => array('desc' => $lng->getTrn('common/pos'), 'nosort' => true),
+			'ma'        => array('desc' => 'Ma'),
+			'st'        => array('desc' => 'St'),
+			'ag'        => array('desc' => 'Ag', 'suffix' => '+'),
+			'pa'        => array('desc' => 'Pa'),	
+			'av'        => array('desc' => 'Av', 'suffix' => '+'),
+			'skills'    => array('desc' => $lng->getTrn('common/skills'), 'nosort' => true),
+			'injs'      => array('desc' => $lng->getTrn('common/injs'), 'nosort' => true),
+			'mv_cp'     => array('desc' => 'Cp'),
+			'mv_td'     => array('desc' => 'Td'),
+			'mv_deflct' => array('desc' => 'Def'),
+			'mv_intcpt' => array('desc' => 'Int'),
+			'mv_cas'    => array('desc' => ($DETAILED) ? 'BH/SI/Ki' : 'Cas', 'nosort' => ($DETAILED) ? true : false),
+			'mv_mvp'    => array('desc' => 'MVP'),
+			'mv_misc'   => array('desc' => 'Misc'),
+			'mv_spp'    => array('desc' => ($DETAILED) ? 'SPP/extra' : 'SPP', 'nosort' => ($DETAILED) ? true : false),
+			'value'     => array('desc' => $lng->getTrn('common/value'), 'kilo' => true, 'suffix' => 'k'),
+			'seasons'	=> array('desc' => 'Seasons', 'nosort' => true),
+			'rebuy'		=> array('desc' => 'Rebuy', 'kilo' => true, 'suffix' => 'k', 'nosort' => true),
+		);
 		echo "<a href=".urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$this->team_id,false,false)."&amp;detailed=".(($DETAILED) ? 0 : 1).">".$lng->getTrn('profile/team/viewtoggle')."</a><br><br>\n";
 		HTMLOUT::sort_table(
 			$team->name.' roster',
 			urlcompile(T_URL_PROFILE,T_OBJ_TEAM,$team->team_id,false,false).(($DETAILED) ? '&amp;detailed=1' : '&amp;detailed=0'),
 			$players,
-			$fields,
+			($DETAILED) ? $fieldsDetailed : $fields,
 			($DETAILED) ? array('+is_dead', '+is_sold', '+is_mng', '+is_retired', '+is_journeyman', '+nr', '+name') : sort_rule('player'),
 			(isset($_GET['sort'])) ? array((($_GET['dir'] == 'a') ? '+' : '-') . $_GET['sort']) : array(),
 			array('color' => ($DETAILED) ? true : false, 'doNr' => false, 'noHelp' => true)

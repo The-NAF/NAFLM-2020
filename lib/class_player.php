@@ -146,6 +146,8 @@ class Player
         $this->current_skills = $this->getSkillsStr(true);
         $this->may_buy_new_skill = $this->mayHaveNewSkill();
         $this->setChoosableSkills();
+		$this->islowcost = false;
+		if (in_array(118,$this->def_skills)) $this->islowcost = true;
     }
     
     public function setStats($node, $node_id, $set_avg = false) {
@@ -728,6 +730,26 @@ class Player
         return array($injhist, $stats, $match_objs);
     }
     
+    public function getSeasons() {
+		/**
+		 * Get number of seasons player played in
+		**/
+		$seasons_result = mysql_query("SELECT COUNT(DISTINCT f_did) as SeasonsPlayed FROM snbbl2023.match_data WHERE f_player_id = $this->player_id");
+		$row = mysql_fetch_row($seasons_result);
+		return (int) $row[0];
+	}
+
+	public function getRebuy() {
+		/**
+		 * Get rebuy cost for the player
+		**/
+		$tmpRebuy = $this->value + ($this->getSeasons() * 20000);
+		if ($this->islowcost) {
+			$tmpRebuy = $tmpRebuy + 15000;
+		}
+		return (int) $tmpRebuy;
+	}
+
     /***************
      * Statics
      ***************/

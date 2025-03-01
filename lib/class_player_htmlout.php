@@ -87,7 +87,8 @@ class Player_HTMLOUT extends Player
 		title($p->name);
 		$players = $team->getPlayers();
 		$i = $next = $prev = 0;
-		$end = end(array_keys($players));
+		$preend = array_keys($players);
+		$end = end($preend);
 		foreach ($players as $player) {
 			if ($player->player_id == $p->player_id) {
 				if ($i == 0) {
@@ -115,6 +116,12 @@ class Player_HTMLOUT extends Player
 		$p = $this; // Copy. Used instead of $this for readability.
 		$p->skills = $p->getSkillsStr(true);
 		$p->injs = $p->getInjsStr(true);
+		$p->seasons = $p->getSeasons();
+		if     ($p->is_sold)   				$p->rebuy = 'n/a';
+		elseif ($p->is_dead)   				$p->rebuy = 'n/a';
+		elseif ($p->is_journeyman_used)     $p->rebuy = 'n/a';
+		elseif ($p->is_journeyman)          $p->rebuy = 'n/a';
+		else								$p->rebuy = $p->getRebuy();
 		?>
 		<!-- Following HTM from class_player_htmlout.php _about -->
 		<div class="row">
@@ -134,19 +141,19 @@ class Player_HTMLOUT extends Player
 							<td><b><?php echo $lng->getTrn('common/exp');?></b></td>
 							<td><?php 
 							if ($p->numberOfAchSkill() == 0) { 
-								echo $lng->getTrn('experience/rookie');
+								echo $lng->getTrn('experience/rookie') . ' (L0)';
 							} elseif ($p->numberOfAchSkill() == 1) {
-								echo $lng->getTrn('experience/expd');
+								echo $lng->getTrn('experience/expd') . ' (L1)';
 							} elseif ($p->numberOfAchSkill() == 2) {
-								echo $lng->getTrn('experience/vet');
+								echo $lng->getTrn('experience/vet') . ' (L2)';
 							} elseif ($p->numberOfAchSkill() == 3) {
-								echo $lng->getTrn('experience/emstar');
+								echo $lng->getTrn('experience/emstar') . ' (L3)';
 							} elseif ($p->numberOfAchSkill() == 4) {
-								echo $lng->getTrn('experience/star');
+								echo $lng->getTrn('experience/star') . ' (L4)';
 							} elseif ($p->numberOfAchSkill() == 5) {
-								echo $lng->getTrn('experience/supstar');
+								echo $lng->getTrn('experience/supstar') . ' (L5)';
 							} elseif ($p->numberOfAchSkill() == 6) {
-								echo $lng->getTrn('experience/legend');
+								echo $lng->getTrn('experience/legend') . ' (L6)';
 							} ?></td>
 						</tr>
 						<tr>
@@ -206,12 +213,24 @@ class Player_HTMLOUT extends Player
 						}
 						?>
 						<tr>
-							<td><b><?php echo $lng->getTrn('common/played');?></b></td>
+							<td><b><?php echo $lng->getTrn('common/playedmatches');?></b></td>
 							<td><?php echo $p->mv_played;?></td>
 						</tr>
 						<tr>
 							<td><b>W/L/D</b></td>
 							<td><?php echo "$p->mv_won/$p->mv_lost/$p->mv_draw"; ?></td>
+						</tr>
+						<tr>
+							<td><b><?php echo $lng->getTrn('common/playedseasons');?></b></td>
+							<td><?php echo $p->seasons; ?></td>
+						</tr>
+						<tr>
+							<td><b><?php echo $lng->getTrn('common/rebuycost');?></b></td>
+							<td><?php if (is_numeric($p->rebuy)) {
+								echo $p->rebuy/1000 .'k'; }
+							else {
+								echo $p->rebuy;
+							} ?></td>
 						</tr>
 						<?php
 						if (Module::isRegistered('SGraph')) {
