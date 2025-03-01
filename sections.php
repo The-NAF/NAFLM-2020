@@ -11,7 +11,7 @@ function getFormAction($params) {
 function sec_login() {
     global $lng, $settings;
     $_URL_forgotpass = "index.php?section=login&amp;forgotpass=1";
-    if (isset($_GET['forgotpass'])) {
+    if (isset($_GET['forgotpass_DONOTUSE'])) {
         if (!isset($_POST['_retry'])) {
             title($lng->getTrn('login/forgotpass'));
         }
@@ -84,9 +84,12 @@ function sec_login() {
             if(!Mobile::isMobile()) {
                 if (Module::isRegistered('Registration') && $settings['allow_registration']) {
                     echo "<a href='handler.php?type=registration'><b>Register</b></a>";
-                }  
-                echo "<br><br>";
-                echo "<a href='$_URL_forgotpass'><b>".$lng->getTrn('login/forgotpass').'</b></a>';
+                } else {
+					echo "<br><br>";
+					echo "<h3>If you wish to register,<br />please contact a commissioner!<h3>";
+				}
+				echo "<br><br>";
+                #echo "<a href='$_URL_forgotpass'><b>".$lng->getTrn('login/forgotpass').'</b></a>';
             }
             ?>
             </div>
