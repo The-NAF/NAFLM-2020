@@ -907,6 +907,7 @@ class HTMLOUT
 		<head>
 			<meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 			<title><?php echo $settings['site_name']; ?></title>
+			<link rel="icon" type="image/x-icon" href="favicon.ico">
 			<link type="text/css" href="css/stylesheet_default.css" rel="stylesheet">
 			<link type="text/css" href="css/stylesheet<?php echo $settings['stylesheet']; ?>.css" rel="stylesheet">
 			<link type="text/css" href="css/league_override_<?php echo self::getSelectedNodeLidOrDefault(); ?>.css" rel="stylesheet">
