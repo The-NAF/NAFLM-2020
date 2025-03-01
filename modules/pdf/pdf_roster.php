@@ -203,7 +203,7 @@ $sum_p_missing_value=0;
 $sum_avail_players=0;
 $sum_players=0;
 $sum_cp=0;
-$sum_td=0;;
+$sum_td=0;
 $sum_def=0;
 $sum_int=0;
 $sum_cas=0;
@@ -240,7 +240,7 @@ foreach ($players as $p) {
   }
   
   // Concatenate special rules
-  $specialstr = $p->getSpecialsStr(false);
+  //$specialstr = $p->getSpecialsStr(false);
   
   // Colorcoding new skills available
   if ($p->mayHaveNewSkill()) $bgc=COLOR_ROSTER_NEWSKILL;
@@ -405,6 +405,8 @@ if ($_POST) {
         array_push($star_array_tmp,$val);
       continue;
     }
+    elseif ($key == 'Mercbudget') { $ind_mercbudget = (int) str_replace('k','000',$val); continue; }
+	elseif ($key == 'Mercdetails') { $ind_mercdetails = utf8_decode($val); continue; }
     elseif (strpos($key,'Merc') !== false) {
       $merc_nr = preg_replace("/[^0-9]/","", $key);
       $merc_array_tmp[$merc_nr] = $pos[$val];
@@ -412,10 +414,8 @@ if ($_POST) {
       else $extra_array_tmp[$merc_nr] = '';
       continue;
     }
-	elseif ($key == 'Mercdetails') { $ind_mercdetails = utf8_decode($val); continue; }
     elseif ($key == 'Card') { $ind_card = (int) str_replace('k','000',$val); continue; }
     elseif ($key == 'Sidebet') { $ind_bet = (int) str_replace('k','000',$val); continue; }
-    elseif ($key == 'Mercbudget') { $ind_mercbudget = (int) str_replace('k','000',$val); continue; }
     elseif ($key == 'Part-time Assistant Coaches') { $ind_sac = (int) $val; continue; }
     elseif ($key == 'Temp Agency Cheerleaders') { $ind_tem = (int) $val; continue; }
     elseif ($key == 'Bloodweiser Kegs') { $ind_babes = (int) $val; continue; }
@@ -532,7 +532,7 @@ if ($_POST) {
         if ($m['skills'] == '') $m['skills'] = $m['extra']; 
         else $m['skills'] = $m['skills'] . ', ' . $m['extra'];
       }
-      $ss = array('name'=>utf8_decode($m['name']), 'ma'=>$m['ma'], 'st'=>$m['st'], 'ag'=>$m['ag'], 'pa'=>$m['pa'], 'av'=>$m['av'], 'skills'=>utf8_decode($m['skills']),
+      $ss = array('name'=>utf8_decode($m['name']), 'ma'=>$m['ma'], 'st'=>$m['st'], 'ag'=>$m['ag'], 'pa'=>$m['pa'], 'av'=>$m['av'], 'skills'=>utf8_decode($m['skills']), 'special'=>'Mercenary',
             'cp'=>' ', 'td'=>' ', 'def'=>' ', 'int'=>' ', 'cas'=>' ', //'mvp'=>' ', 
 			'misc'=>' ', 'spp'=>' ', 'value'=>$pdf->Mf($m['cost']));
       $currenty+=$pdf->print_srow($ss, $currentx, $currenty, $h, $bgc, DEFLINECOLOR, 0.5, 8);
