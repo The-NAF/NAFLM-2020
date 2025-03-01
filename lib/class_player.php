@@ -336,7 +336,7 @@ class Player
          * Regret selling player (un-sell).
          */
         global $rules;
-        $lid = get_alt_col('teams', 'team_id?', $this->owned_by_team_id, 'f_lid');
+        $lid = get_alt_col('teams', 'team_id', $this->owned_by_team_id, 'f_lid');
         setupGlobalVars(T_SETUP_GLOBAL_VARS__LOAD_LEAGUE_SETTINGS, array('lid' => (int) $lid)); // Load correct $rules for league.
         if (!$this->is_sold || $this->is_dead)
             return false;
@@ -420,7 +420,7 @@ class Player
     public function addNiggle() {
         if ($this->is_journeyman || $this->is_sold || $this->is_dead)
             return false;
-        $query = "UPDATE players SET inj_ni = inj_ni +1, ni_mod = ni_mod +1 WHERE player_id = $this->player_id";
+        $query = "UPDATE players SET inj_ni = inj_ni + 1, ni_mod = ni_mod + 1 WHERE player_id = $this->player_id";
         return mysql_query($query);
     }
     

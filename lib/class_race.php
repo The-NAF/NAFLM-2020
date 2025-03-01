@@ -17,6 +17,7 @@ class Race
 		$this->race_id = $race_id;
 		$this->race = $this->name = $raceididx[$this->race_id];
 		$this->setStats(false,false,false);
+		$this->setRaceSpecialRules(true);
 	}
 
 	public function setStats($node, $node_id, $set_avg = false) {

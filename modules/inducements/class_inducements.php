@@ -325,7 +325,7 @@ function SendToPDF()
         for ($i=0;$i<=1000;$i+=50) {
             $card_list .= '<option>'.$i."k</option>\n";
         }
-        $cardb = '';
+        $cardb = '0k';
         if (isset($_POST["Card"])) {
             $cardb = $_POST["Card"];
             if ($cardb != 0) {
@@ -347,7 +347,7 @@ function SendToPDF()
         for ($i=0;$i<=1000;$i+=10) {
             $mercb_list .= '<option>'.$i."k</option>\n";
         }
-        $mercb = '';
+        $mercb = '0k';
         if (isset($_POST["Mercbudget"])) {
             $mercb = $_POST["Mercbudget"];
             if ($mercb != 0) {
@@ -377,7 +377,7 @@ function SendToPDF()
         for ($i=0;$i<=100;$i+=10) {
             $bet_list .= '<option>'.$i."k</option>\n";
         }
-        $betb = '';
+        $betb = '0k';
         if (isset($_POST["Sidebet"])) {
             $betb = $_POST["Sidebet"];
             if ($betb != 0) {
