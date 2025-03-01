@@ -306,7 +306,7 @@ class HTMLOUT
 		$_COACH_TEAM_LIST = ($W_TEAMS_FROM && $opts['teams_from'] == T_OBJ_COACH);
 		if ($_COACH_TEAM_LIST) {
 			list(,,$T_STATE) = HTMLOUT::nodeSelector(array('nonodes' => true, 'state' => true)); # Produces a state selector.
-			$_SELECTOR = array(false,false,$T_STATE,T_RACE_ALL,'GENERAL','mv_played',self::T_NS__ffilter_ineq_gt,0);
+			$_SELECTOR = array(false,false,$T_STATE,T_RACE_ALL,0,'GENERAL','mv_played',self::T_NS__ffilter_ineq_gt,0);
 		} else {
 			$_SELECTOR = HTMLOUT::nodeSelector(array('force_node' => array($node,$node_id), 'race' => $enableRaceSelector, 'sgrp' => true, 'ffilter' => true, 'obj' => $obj));
 		}
