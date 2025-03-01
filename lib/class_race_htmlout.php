@@ -31,7 +31,7 @@ class Race_HTMLOUT extends Race
 			<?php endif; ?>
 			<li><b><?php echo $lng->getTrn('common/reroll')?>:</b> <?php echo $roster['other']['rr_cost']/1000;?>k</li>		
 			<li><b><?php echo $lng->getTrn('common/maxbigguys')?>:</b> <?php echo $roster['other']['bigguy_qty'];?></li>
-			<li><b><?php echo $lng->getTrn('common/specialrules')?>:</b> <?php echo specialsTrans($race->special_rules);?>
+			<li><b><?php echo $lng->getTrn('common/specialrules')?>:</b> <?php echo $race->special_rules;?>
 			<?php if (strlen($race->getraceFavruleoptions()) >= 1 ) {
 				$fav_str = specialsTrans($race->getraceFavruleoptions());
 				//separate OWC choice for norse
