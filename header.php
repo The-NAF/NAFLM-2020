@@ -30,7 +30,7 @@ $credits = array(	'Pierluigi Masia',
 					'Ryan Williams',
 					'Ian Williams');
 define('NAFLM_VERSION', '4.5');
-define('NAFLM_BUILD_DATE', '12th October 2024');
+define('NAFLM_BUILD_DATE', '17th March 2025');
 define('CONTENT_VERSION', '2024 Almanac');
 define('CONTENT_DETAIL', 'Blood Bowl 2020, Dungeon Bowl, Death Zone, Death Match, 2021/2022/2024 Almanacs and up to and including Spike! #18');
 define('CONTENT_DATE', 'February 2025');
@@ -70,6 +70,8 @@ define('T_OBJ_COACH',   3);
 
 define('T_OBJ_RACE',   4);
 define('T_OBJ_STAR',   5);
+
+define('T_OBJ_FORMAT', 6);
 
 define('T_NODE_MATCH',      11);
 define('T_NODE_TOURNAMENT', 12);
