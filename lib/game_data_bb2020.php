@@ -2977,7 +2977,9 @@ $DEA = array (
 			'format'		=> 'BB',
             'tier' 			=> 2,
             'special_rules' => array (13),
-			'fav_rules' 	=> array (),
+
+            'fav_rules' 	=> array (),
+
 			'icon' 			=> 'khorne.png',
 			'race_id' 		=> T_RACE_KHORNE, # (Khorne)
 		),
@@ -8110,7 +8112,9 @@ $DEA = array (
 			'format'		=> 'SV',
             'tier' 			=> 2,
             'special_rules' => array (13),
-			'fav_rules' 	=> array (),
+
+            'fav_rules' 	=> array (),
+
 			'icon' 			=> 'khorne.png',
 			'race_id' 		=> T_RACE_SEVENS_KHORNE, # (Sevens Khorne)
 		),
