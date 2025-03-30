@@ -208,6 +208,7 @@ class HTMLOUT
 				break;
 			case STATS_TEAM:
 				$fields_before = array(
+					//'format' => array('desc' => $lng->getTrn('common/format')),
 					'tv' => array('desc' => $lng->getTrn('common/value'), 'kilo' => true, 'suffix' => 'k'),
 				);
 				$fields_after = array(
@@ -306,7 +307,7 @@ class HTMLOUT
 		$_COACH_TEAM_LIST = ($W_TEAMS_FROM && $opts['teams_from'] == T_OBJ_COACH);
 		if ($_COACH_TEAM_LIST) {
 			list(,,$T_STATE) = HTMLOUT::nodeSelector(array('nonodes' => true, 'state' => true)); # Produces a state selector.
-			$_SELECTOR = array(false,false,$T_STATE,T_RACE_ALL,'GENERAL','mv_played',self::T_NS__ffilter_ineq_gt,0);
+			$_SELECTOR = array(false,false,$T_STATE,T_RACE_ALL,T_FORMAT_ALL,'GENERAL','mv_played',self::T_NS__ffilter_ineq_gt,0);
 		} else {
 			$_SELECTOR = HTMLOUT::nodeSelector(array('force_node' => array($node,$node_id), 'race' => $enableRaceSelector, 'sgrp' => true, 'ffilter' => true, 'obj' => $obj));
 		}
@@ -353,7 +354,7 @@ class HTMLOUT
 					'f_tname' => array('desc' => $lng->getTrn('common/team'),   'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_TEAM,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_team_id')),
 				);
 				$PAGELENGTH = $settings['standings']['length_players'];
-				list($objs, $PAGES) = Stats::getRaw(T_OBJ_PLAYER, $filter_node+$filter_having+$filter_race, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
+				list($objs, $PAGES) = Stats::getRaw(T_OBJ_PLAYER, $filter_node+$filter_having+$filter_race+$filter_format, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
 				break;
 			case STATS_TEAM:
 				$tblTitle = $lng->getTrn('menu/statistics_menu/team_stn');
@@ -365,7 +366,7 @@ class HTMLOUT
 				{
 					case T_OBJ_COACH:
 						$fields_before['f_rname'] = array('desc' => $lng->getTrn('common/race'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_RACE,false,false,false), 'field' => 'obj_id', 'value' => 'f_race_id'));
-						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+$filter_race+array(T_OBJ_COACH => (int) $opts['teams_from_id']), false, $sortRule, $set_avg);
+						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+$filter_race+$filter_format+array(T_OBJ_COACH => (int) $opts['teams_from_id']), false, $sortRule, $set_avg);
 						break;
 					case T_OBJ_RACE:
 						$fields_before['f_cname'] = array('desc' => $lng->getTrn('common/coach'), 'href' => array('link' => urlcompile(T_URL_PROFILE,T_OBJ_COACH,false,false,false), 'field' => 'obj_id', 'value' => 'owned_by_coach_id'));
@@ -375,7 +376,7 @@ class HTMLOUT
 					// All teams
 					default:
 						$PAGELENGTH = $settings['standings']['length_teams'];
-						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+$filter_race, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
+						list($objs, $PAGES) = Stats::getRaw(T_OBJ_TEAM, $filter_node+$filter_having+$filter_race+$filter_format, array($PAGE, $PAGELENGTH), $sortRule, $set_avg);
 				}
 				// Translating race name
 				foreach($objs as &$o)
@@ -641,7 +642,7 @@ class HTMLOUT
 			</select>
 			<?php
 		}
-		if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
+		/*if ($setFormat || ($rules['dungeon'] == 0 || $rules['sevens'] == 0)) {
 			echo $lng->getTrn('common/format');
 			?>
 			<select name="format_in" id="format_in">
@@ -660,7 +661,7 @@ class HTMLOUT
 				?>
 			</select>
 			<?php
-		}
+		}*/
 		if ($setSGrp) {
 			echo $lng->getTrn('common/sgrp');
 			?>
@@ -1108,6 +1109,7 @@ class HTMLOUT
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_PLAYER,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/player_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_COACH,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/coach_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_RACE,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/race_stn');?></a></li>
+			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_FORMAT,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/format_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_STAR,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/star_stn');?></a></li>
 		</ul>
 	</li>

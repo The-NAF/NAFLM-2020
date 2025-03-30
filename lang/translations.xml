@@ -401,7 +401,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <!-- <chown> -->
                 <spp> <![CDATA[ Manage a player's extra SPP. ]]> </spp>
                 <dval> <![CDATA[ Change a player's value by a certain amount. ]]> </dval>
-                <extra_skills> <![CDATA[ Manage a player's extra skills. ]]> </extra_skills>
+                <extra_skills> <![CDATA[ Manage a player's extra skills.<br> Lets you add or remove a skill but will not change that player's SPPs.<BR> Defaults to 20k increase in value when adding, change player's value manually if required.]]> </extra_skills>
                 <ach_skills> <![CDATA[ Remove a player's achieved skills. This makes the player able to rechoose a skill. ]]> </ach_skills>
                 <ff> <![CDATA[ Make changes to team's Dedicated Fans. ]]> </ff>
                 <resetrule> <![CDATA[ Reset the currently selected team special rule. ]]> </resetrule>

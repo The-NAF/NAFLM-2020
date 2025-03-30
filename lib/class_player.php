@@ -501,10 +501,15 @@ class Player
             $query = "UPDATE players SET ach_$fname = ach_$fname + 1 WHERE player_id = $this->player_id";
 			$query2 = "UPDATE players SET extra_spp = extra_spp - $skillcost WHERE player_id = $this->player_id";
 		}
-        elseif ($IS_REGULAR || $IS_EXTRA) {
+        elseif ($IS_REGULAR) {
             $this->{$skillcats[$type]['obj_idx']}[] = $skill;
             $query = "INSERT INTO players_skills(f_pid, f_skill_id, type, cost) VALUES ($this->player_id, $skill, '$type', '$costtype')";
             $query2 = "UPDATE players SET extra_spp = extra_spp - $skillcost WHERE player_id = $this->player_id";
+        }
+        elseif ($IS_EXTRA) {
+            $this->{$skillcats[$type]['obj_idx']}[] = $skill;
+            $query = "INSERT INTO players_skills(f_pid, f_skill_id, type, cost) VALUES ($this->player_id, $skill, '$type', 'P')";
+            $query2 = "UPDATE players SET extra_spp = extra_spp WHERE player_id = $this->player_id";
         }
         return mysql_query($query) && mysql_query($query2) && SQLTriggers::run(T_SQLTRIG_PLAYER_DPROPS, array('id' => $this->player_id, 'obj' => $this)); # Update PV and TV.
     }

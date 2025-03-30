@@ -9,21 +9,22 @@ class Team_HTMLOUT extends Team
 		/*
 			NOTE: We do NOT show teams not having played any matches for nodes = {T_NODE_TOURNAMENT, T_NODE_DIVISION}.
 		*/
-		list($sel_node, $sel_node_id, $sel_state, $sel_race) = HTMLOUT::nodeSelector(array('race' => true, 'state' => true));
+		list($sel_node, $sel_node_id, $sel_state, $sel_race, $sel_format) = HTMLOUT::nodeSelector(array('race' => true, 'state' => true, 'format' => true));
 		$ALL_TIME = ($sel_node === false && $sel_node_id === false);
-		$fields = '_RRP AS "team_id", owned_by_coach_id, f_race_id, teams.name AS "tname", f_cname, f_rname, tv, teams.rdy AS "rdy", teams.retired AS "retired"';
+		$fields = '_RRP AS "team_id", owned_by_coach_id, f_race_id, teams.name AS "tname", f_cname, f_rname, tv, teams.rdy AS "rdy", teams.retired AS "retired", races.format AS "format"';
 		$where = array();
 		if ($sel_state == T_STATE_ACTIVE) $where[] = 'teams.rdy IS TRUE AND teams.retired IS FALSE';
 		if ($sel_race != T_RACE_ALL) 	  $where[] = "teams.f_race_id = $sel_race";
+		if ($sel_format != T_FORMAT_ALL)  $where[] = "races.format = $sel_format";
 		if ($sel_node == T_NODE_LEAGUE || $ALL_TIME) {
 			if (!$ALL_TIME) {
 				$where[] = "f_lid = $sel_node_id";
 			}
 			$where = (count($where) > 0) ? 'WHERE '.implode(' AND ', $where) : '';
 			$queryCnt = "SELECT COUNT(*) FROM teams $where";
-			$queryGet = 'SELECT '.preg_replace('/\_RRP/', 'team_id', $fields).' FROM teams '.$where.' ORDER BY tname ASC';
+			$queryGet = 'SELECT '.preg_replace('/\_RRP/', 'team_id', $fields).' FROM teams JOIN races ON teams.f_race_id = races.race_id '.$where.' ORDER BY tname ASC';
 		} else {
-			$q = "SELECT $fields FROM matches, teams, tours, divisions WHERE matches._RRP = teams.team_id AND matches.f_tour_id = tours.tour_id AND tours.f_did = divisions.did ";
+			$q = "SELECT $fields FROM matches, teams, races, tours, divisions WHERE matches._RRP = teams.team_id AND teams.f_race_id = races.race_id AND matches.f_tour_id = tours.tour_id AND tours.f_did = divisions.did ";
 			switch ($sel_node) {
 				case false: break;
 				case T_NODE_TOURNAMENT: $q .= "AND tours.tour_id = $sel_node_id";   break;
