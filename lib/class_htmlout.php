@@ -1109,7 +1109,6 @@ class HTMLOUT
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_PLAYER,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/player_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_COACH,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/coach_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_RACE,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/race_stn');?></a></li>
-			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_FORMAT,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/format_stn');?></a></li>
 			<li><a rel="nofollow" href="<?php echo urlcompile(T_URL_STANDINGS,T_OBJ_STAR,false,false,false);?>"><?php echo $lng->getTrn('menu/statistics_menu/star_stn');?></a></li>
 		</ul>
 	</li>
