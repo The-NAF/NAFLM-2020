@@ -2861,12 +2861,20 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <retired>Retraite</retired>
     <skills>Compétences</skills>
     <skill>Compétence</skill>
+    <normal>Primaire</normal>
+    <double>Secondaire</double>
     <injs>Blessures</injs>
     <pos>Position</pos>
+    <exp>Experience</exp>
+    <maxqty>Qté Max.</maxqty>
     <price>Prix</price>
     <number>Numéro</number>
     <opponent>Adversaire</opponent>
+    <tier>Tiers</tier>
+    <format>Format</format>
     <reroll>Relance</reroll>
+    <maxbigguys>Nombre maximum de Gros Bras autorisé</maxbigguys>
+    <specialrules>Règles Spéciales</specialrules>
     <apothecary>Apothicaire</apothecary>
     <ass_coach>Coach Assistant</ass_coach>
     <cheerleader>Pom Pom Girl</cheerleader>
@@ -2901,8 +2909,18 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <coaches>Coachs</coaches>
     <race>Race</race>
     <races>Races</races>
-    <star>Champion</star>
+    <star>Champion/Méga-Champion</star>
+    <starlist>Liste des Champions</starlist>
+    <specialrule>Règle Spéciale</specialrule>
+    <specialruledesc>Description de la Règle Spéciale</specialruledesc>
+    <teamspecialrules>Règle Spéciale d'Equipe</teamspecialrules>
+    <teamfavspecialrules>Règle Spéciale de l'Equipe choisie</teamfavspecialrules>
+    <notyetselected>Pas encore choisi</notyetselected>
+    <chooseone>Choisissez un parmi: </chooseone>
+    <playsfor>Joue Pour</playsfor>
     <stars>Champions</stars>
+    <roster>Roster</roster>
+    <availablestars>Champions disponibles</availablestars>
     <won>Victoires</won>
     <lost>Défaites</lost>
     <draw>Nuls</draw>
@@ -2917,6 +2935,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <ma>Mv</ma>
     <st>F</st>
     <ag>Ag</ag>
+    <pa>Pa</pa>
     <av>Ar</av>
     <english>Anglais</english>
     <spanish>Espagnol</spanish>
@@ -2925,6 +2944,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <italian>Italien</italian>
     <td>Touchdowns</td>
     <intcpt>Interceptions</intcpt>
+    <deflct>Interférences</deflct>
     <cp>Réussites</cp>
     <ki>Tués</ki>
     <bh>Commotionnés</bh>
@@ -2996,6 +3016,10 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <plugins>Modules</plugins>
     <rules>Règles</rules>
     <forum>Forum</forum>
+    <facebook>Facebook</facebook>
+    <twitter>Twitter</twitter>
+    <whatsapp>Whatsapp</whatsapp>
+    <instagram>Instagram</instagram>
 </menu>
 
 <!-- Section translations -->
@@ -3075,7 +3099,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <tmanage>Gestion d'équipe + info</tmanage>
         <!-- About sec. -->
         <logo>Logo d'équipe</logo>
-        <stad>Stade de l'équipe</stad>
+        <stad>Image du stade de l'équipe</stad>
+        <sponsor>Sponsor de l'équipe</sponsor>
+        <stadium>Stade de l'équipe</stadium>
+        <nosponsor>--Entrez un nom de sponsor--</nosponsor>
+        <nostadium>--Entrez un nom de stade--</nostadium>
         <!-- News sec. -->            
         <news>Articles</news>
         <tnews>Articles sur l'équipe</tnews>
@@ -3092,12 +3120,14 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         
         <box_tm>
             <title>Gestion de l'équipe</title>
+            <select_rule>Sélectionnez une règle spéciale d'équipe</select_rule>
             <hire_player>Engager un joueur</hire_player>
             <hire_journeyman>Engager un journalier</hire_journeyman>
             <fire_player>Renvoyer un joueur</fire_player>
             <unbuy_player>Annuler l'achat d'un joueur</unbuy_player>
             <rename_player>Renommer un joueur</rename_player>
             <renumber_player>Re-numéroter un joueur</renumber_player>
+            <retire_player>Mettre un joueur en retraite temporaire</retire_player>
             <rename_team>Renommer une équipe</rename_team>
             <buy_goods>Acheter des avantages d'équipe</buy_goods>
             <drop_goods>Se séparer d'avantages d'équipe</drop_goods>
@@ -3112,8 +3142,19 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <retire>Mettre l'équipe en retraite ?</retire>
                 <suredeleteteam>Êtes-vous certain de vouloir effacer l\'équipe ?</suredeleteteam>
             </fdescs>
-            
+
+            <!-- Favoured of rule selector-->
+            <favrule>
+                <r1>Classique du Vieux Monde</r1>
+                <r11>Favori du Chaos Universel</r11>
+                <r12>Favori de Nurgle</r12>
+                <r13>Favori de Khorne</r13>
+                <r14>Favori de Slaanesh</r14>
+                <r15>Favori de  Tzeentch</r15>
+            </favrule>
+
             <desc>
+                <select_rule> <![CDATA[ Sélectionnez une règle spéciale d'équipe.<br> Les équipes qui ont un choix à faire parmi plusieurs règles spéciales doivent faire un choix ici, pour déterminer quels champions sont accessibles.<br> Sélectionnez prudemment, car ce choix ne peut pas être changé par la suite.<br> <b>Note:</b> Certains champions ne seront pas accessibles en Coups de Pouce tant qu'une règle spéciale n'a pas été choisie. ]]> </select_rule>
                 <hire_player> Embaucher un nouveau joueur.&lt;br&gt; Engager un journalier est gratuit, mais seule la position 0-16 est éligible. </hire_player>
                 <hire_journeyman> Engager un des journaliers en tant que joueur définitif de l'équipe. </hire_journeyman>
                 <fire_player> Renvoyer un joueur. Remboursement de : </fire_player>
@@ -3141,8 +3182,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
             <dval>Gérer la valeur bonus des joueurs</dval>
             <extra_skills>Gérer les compétences suppl. des joueurs</extra_skills>
             <ach_skills>Retirer des compétences de joueurs</ach_skills>
-            <!-- <ff> -->
-            <!-- <removeNiggle> -->
+            <ff>Gérer les Fans dédiés</ff>
+            <resetrule>Réinitialiser la règle spéciale d'équipe choisie</resetrule>
+            <transferteam>Transférer l'équipe</transferteam>
+            <removeNiggle>Retirer une Blessure Persistante</removeNiggle>
+            <addniggle>Ajouter une Blessure Persistante</addniggle>
+            <removeMNG>Retirer un RPM</removeMNG>
+            <removenegastat>Retirer des séquelles</removenegastat>
             
             <desc>
                 <unhire_journeyman> Revenir sur le recrutement permanent d'un journalier en tant que joueur.&lt;br&gt; Ne fonctionne que sur les positions 0-16 de la fiche d'équipe.</unhire_journeyman>
@@ -3154,8 +3200,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
                 <dval> Changer la valeur d'un joueur d'un certain montant. </dval>
                 <extra_skills> Gérer les compétences supplémentaires d'un joueur. </extra_skills>
                 <ach_skills> Retirer une compétence selectionnée. Cela permet de choisir une compétence en remplacement. </ach_skills>
-                <!-- <ff> -->
-                <!-- <removeNiggle> -->
+                <ff> <![CDATA[ Changer les Fans Dédiés de l'équipe. ]]> </ff>
+                <resetrule> <![CDATA[ Réinitialiser la règle spéciale d'équipe actuellement choisie. ]]> </resetrule>
+                <transferteam> <![CDATA[ Transférer l'équipe à un autre coach. ]]> </transferteam>
+                <removeNiggle> <![CDATA[ Retirer une Blessure Persistante à un joueur. ]]> </removeNiggle>
+                <addniggle> <![CDATA[ Ajouter une Blessure Persistante à un joueur. ]]> </addniggle>
+                <removeMNG> <![CDATA[ Retirer un RPM OU annulez la retraite temporaire d'un joueur.<br><b>ATTENTION</b>: Ne peut pas être annulé! ]]> </removeMNG>
+                <removenegastat> <![CDATA[ Retirer un séquelle d'un joueur.<br><b>ATTENTION</b>: Ne peut pas être annulé! ]]> </removenegastat>
             </desc>
         </box_admin>
     </team>
@@ -3218,6 +3269,7 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
         <treas>Trésorerie</treas>
         <ff>Popularité</ff>
         <smp>Points de fair-play</smp>
+        <bonus>Points additionnels de ligue</bonus>
         <pts>points</pts>
         <tcas>Pertes totales de l'équipe</tcas>
         <fame>FAME</fame>
@@ -3243,11 +3295,11 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
 
 <mobile>
     <team>
-        <!-- <miss_next_game> -->
-        <!-- <may_buy_new_skill> -->
-        <!-- <management> -->
-        <!-- <desktop_site> -->
-        <!-- <noteams> -->
+        <miss_next_game>Rate le prochain match</miss_next_game>
+        <may_buy_new_skill>peut prendre de nouvelles compétences</may_buy_new_skill>
+        <management>Management</management>
+        <desktop_site>Site version bureau</desktop_site>
+        <noteams>Vous n'avez pas d'équipe! Ce site mobile n'est pas assez évolué pour vous aider -- vous devez utiliser la &lt;a href="index.php"&gt;version bureau du site&lt;/a&gt;.</noteams>
     </team>
     <matches>
         <match>
@@ -3288,8 +3340,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     
     <nodes>
         <errors>
-            <!-- <league_already_exists> -->
-            <!-- <settings_file_copy_failed> -->
+            <league_already_exists>Il y a déjà une ligue avec ce nom.</league_already_exists>
+            <settings_file_copy_failed>La ligue a été créée, mais le fichier de paramètres n'a pas été copié correctement.</settings_file_copy_failed>
         </errors>
     </nodes>
 </admin>
@@ -3319,6 +3371,13 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <chaosrenegades>Pacte du Chaos</chaosrenegades>
     <underworlddenizens>Bas fond</underworlddenizens>
     <slann>Slann</slann>
+    <khorne>Khorne</khorne>
+	<oldworldalliance>Alliance du Vieux Monde</oldworldalliance>
+	<snotling>Snotling</snotling>
+	<blackorc>Orques Noirs</blackorc>
+	<imperialnobility>Noblesse Impériale</imperialnobility>
+	<amazons>Amazones</amazons>
+    <vampires>Vampires</vampires>
     <bretonnia>Bretonnien</bretonnia>
     <daemonsofkhorne>Démons de Khorne</daemonsofkhorne>
     <simyin>Simyin</simyin>
@@ -3338,12 +3397,15 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <beastmanrunner>Homme-bête</beastmanrunner>
     <chosenblocker>Guerrier du Chaos</chosenblocker>
     <minotaur>Minotaure</minotaur>
+    <chaostroll>Troll du Chaos</chaostroll>
+    <chaosogre>Ogre du Chaos</chaosogre>
     <!-- Chaos Dwarf -->
     <hobgoblinrunner>Hobgobelin</hobgoblinrunner>
     <chaosdwarfblocker>Bloqueur nain du Chaos</chaosdwarfblocker>
     <bullcentaurblitzer>Centaure Taureau</bullcentaurblitzer>
     <!-- <enslavedminotaur> -->
     <!-- Dark Elf -->
+    <darkelflineman>Trois-quart Elfe Noir</darkelflineman>
     <assassin>Assassin</assassin>
     <witchelf>Furie</witchelf>
     <!-- Dwarf -->
@@ -3404,17 +3466,23 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <mummy>Momie</mummy>
     <!-- Vampire -->
     <thralllineman>Serviteur</thralllineman>
-    <vampireblitzer>Vampire Blitzer</vampireblitzer>
+    <vampireblitzer>Blitzeur Vampire</vampireblitzer>
+    <vampirethrower>Lanceur Vampire</vampirethrower>
+    <vampirerunner>Coureur Vampire</vampirerunner>
+    <vargheist>Vargheist</vargheist>
     <!-- Wood Elf -->
     <wardancer>Danseur de guerre</wardancer>
     <!-- Chaos Renegades -->
     <renegadehumanlineman>Maraudeur</renegadehumanlineman>
+    <renegadehumanthrower>Renégat Lanceur</renegadehumanthrower>
     <renegadegoblin>Renégat Gobelin</renegadegoblin>
     <renegadeskavenlineman>Renégat Skaven</renegadeskavenlineman>
     <renegadedarkelflineman>Renégat Elfe Noir</renegadedarkelflineman>
     <renegadeorclineman>Renégat Orc</renegadeorclineman>
     <chaostroll>Troll du Chaos</chaostroll>
     <chaosogre>Ogre du Chaos</chaosogre>
+    <renegademinotaur>Renégat Minotaure</renegademinotaur>
+    <renegaderatogre>Renégat Rat Ogre</renegaderatogre>
     <!-- Underworld Denizens -->
     <!-- Khorne -->
     <!-- <pitfighter> -->
@@ -3433,7 +3501,8 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <!-- General -->
     <block>Blocage</block>
     <dauntless>Intrépidité</dauntless>
-    <dirtyplayer>Joueur Vicieux</dirtyplayer>
+    <dirtyplayerplus1>Joueur Déloyal (+1)</dirtyplayerplus1>
+    <dirtyplayerplus2>Joueur Déloyal (+2)</dirtyplayerplus2>
     <fend>Parade</fend>
     <frenzy>Frénésie</frenzy>
     <kick>Frappe Précise</kick>
@@ -3442,42 +3511,52 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <pro>Pro</pro>
     <shadowing>Poursuite</shadowing>
     <stripball>Arracher le ballon</stripball>
-    <surehands>Dextérité</surehands>
+    <surehands>Prise Sûre</surehands>
     <tackle>Tacle</tackle>
     <wrestle>Lutte</wrestle>
     <!-- Agility -->
     <catch>Réception</catch>
-    <divingcatch>Plongeon</divingcatch>
+    <divingcatch>Réception Plongeante</divingcatch>
     <divingtackle>Tacle Pongeant</divingtackle>
     <dodge>Esquive</dodge>
-    <jumpup>Bond</jumpup>
+    <jumpup>Rétablissement</jumpup>
     <leap>Saut</leap>
     <sidestep>Glissade contrôlée</sidestep>
     <sneakygit>Sournois</sneakygit>
     <sprint>Sprint</sprint>
     <surefeet>Équilibre</surefeet>
+    <defensive>Défenseur</defensive>
+    <safepairofhands>Libération contrôlée</safepairofhands>
     <!-- Passing -->
     <accurate>Précision</accurate>
-    <dumpoff>Passe Rapide</dumpoff>
-    <hailmarypass>Main de Dieu</hailmarypass>
+    <dumpoff>Délestage</dumpoff>
+    <hailmarypass>Passe Désespérée</hailmarypass>
     <leader>Chef</leader>
     <nervesofsteel>Nerfs d'Acier</nervesofsteel>
     <pass>Passe</pass>
-    <safethrow>Lancer Précis</safethrow>
+    <safepass>Passe Assurée</safepass>
+    <cannoneer>Canonnier</cannoneer>
+    <cloudburster>Perce-nuages</cloudburster>
+    <fumblerooskie>Fumblerooskie</fumblerooskie>
+    <runningpass>Passe dans la Course</runningpass>
+    <ontheball>Sur le Ballon</ontheball>
     <!-- Strength -->
     <breaktackle>Esquive en Force</breaktackle>
     <grab>Projection</grab>
     <guard>Garde</guard>
     <juggernaut>Juggernaut</juggernaut>
-    <mightyblow>Châtaigne</mightyblow>
+    <mightyblowplus1>Châtaigne (+1)</mightyblowplus1>
+    <mightyblowplus2>Châtaigne (+2)</mightyblowplus2>
     <multipleblock>Blocage Multiple</multipleblock>
-    <pilingon>Écrasement</pilingon>
+    <piledriver>Marteau-pilon</piledriver>
     <standfirm>Stabilité</standfirm>
-    <strongarm>Costaud</strongarm>
+    <strongarm>Bras Musclé</strongarm>
     <thickskull>Crâne Épais</thickskull>
+    <armbar>Clé de Bras</armbar>
+    <brawler>Bagarreur</brawler>
     <!-- Mutation -->
     <bighand>Main Démesurée</bighand>
-    <clawclaws>Griffes</clawclaws>
+    <claws>Griffes</claws>
     <disturbingpresence>Présence Perturbante</disturbingpresence>
     <extraarms>Bras Supplémentaires</extraarms>
     <foulappearance>Répulsion</foulappearance>
@@ -3486,35 +3565,51 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <tentacles>Tentacules</tentacles>
     <twoheads>Deux Têtes</twoheads>
     <verylonglegs>Très Longues Jambes</verylonglegs>
+    <ironhardskin>Peau de Fer</ironhardskin>
+    <monstrousmouth>Grande Gueule</monstrousmouth>
     <!-- Extraordinary -->
-    <alwayshungry>Toujours faim</alwayshungry>
-    <animosity>Animosité</animosity>
+    <alwayshungry>Toujours affamé</alwayshungry>
+    <animosityall>Animosité (tout coéquipier)</animosityall>
+	<animosityuwgoblin>Animosité (Underworld Goblin Linemen)</animosityuwgoblin>
+    <animosityorclinemen>Animosité (Orc Linemen)</animosityorclinemen>
+    <animositybigun>Animosité (Big Un Blockers)</animositybigun>
+    <animositydwarfhalfling>Animosité (tout coéquipier Nain ou Halfling)</animositydwarfhalfling>
+    <animositydwarfhuman>Animosité (tout coéquipier Nain ou Humain)</animositydwarfhuman>
     <ballchain>Chaîne et Boulet</ballchain>
-    <bloodlust>Soif de Sang</bloodlust>
+    <kickteammate>Botter de Coéquipier</kickteammate>
     <bombardier>Bombardier</bombardier>
     <bonehead>Cerveau Lent</bonehead>
     <chainsaw>Tronçonneuse</chainsaw>
     <decay>Décomposition</decay>
     <fanfavourite>Idole des Foules</fanfavourite>
+    <projectilevomit>Gerbe de Vomi</projectilevomit>
     <hypnoticgaze>Regard Hypnotique</hypnoticgaze>
-    <loner>Solitaire</loner>
-    <monstrousmouth>Grande Gueule</monstrousmouth>
+    <loner3plus>Solitaire (3+)</loner3plus>
+    <loner4plus>Solitaire (4+)</loner4plus>
+    <loner5plus>Solitaire (5+)</loner5plus>
     <nohands>Manchot</nohands>
     <nurglesrot>Pourriture de Nurgle</nurglesrot>
     <reallystupid>Gros Débile</reallystupid>
     <regeneration>Régénération</regeneration>
     <rightstuff>Poids Plume</rightstuff>
     <secretweapon>Arme Secrète</secretweapon>
+    <swarming>Déferlement</swarming>
     <stab>Poignard</stab>
     <stakes>Pieux</stakes>
     <stunty>Minus</stunty>
-    <swoop>Swoop</swoop>
+    <swoop>Piqué</swoop>
     <takeroot>Prendre Racine</takeroot>
     <throwteammate>Lancer un Coéquipier</throwteammate>
     <timmmber>Timmm-ber!</timmmber>
     <titchy>Microbe</titchy>
     <wildanimal>Animal Sauvage</wildanimal>
     <weepingblades>Dague suintante</weepingblades>
+    <animalsavagery>Sauvagerie Animale</animalsavagery>
+    <unchannelledfury>Fureur Débridée</unchannelledfury>
+    <pogostick>Echasse à Ressort</pogostick>
+    <lowcostlinemen>(Linemen à Vil Prix)</lowcostlinemen>
+    <bloodlust2plus>Soif de Sang (2+)</bloodlust2plus>
+    <bloodlust3plus>Soif de Sang (3+)</bloodlust3plus>
 </skill>
 
 <starplayer>
@@ -3622,6 +3717,126 @@ For example, english is in <en-GB>, french in <fr-FR>, .......
     <november>Novembre</november>
     <december>Décembre</december>
 </months>
+
+<specialrules>
+    <oldworldclassic>Classique du Vieux Monde</oldworldclassic>
+    <badlandsbrawl>Bagarre des Terres Arides</badlandsbrawl>
+    <briberyandcorruption>Chantage et Corruption</briberyandcorruption>
+    <elvenkingdomsleague>Ligue des Royaumes Elfiques</elvenkingdomsleague>
+    <lustriansuperleague>Super-ligue de Lustrie</lustriansuperleague>
+    <worldsedgesuperleague>Super-ligue du Bord du Monde</worldsedgesuperleague>
+    <mastersofundeath>Maîtres de la Non-vie</mastersofundeath>
+    <sylvanianspotlight>Spot de Sylvanie</sylvanianspotlight>
+    <halflingthimblecup>Coupe Dé à Coudre Halfling</halflingthimblecup>
+    <underworldchallenge>Défi des Bas-fonds</underworldchallenge>
+    <favouredof>Favori de...</favouredof>
+    <favouredofchaosundivided>Favori du Chaos Universel</favouredofchaosundivided>
+    <favouredofnurgle>Favori de Nurgle</favouredofnurgle>
+    <favouredofkhorne>Favori de Khorne</favouredofkhorne>
+    <favouredofslaanesh>Favori de Slaanesh</favouredofslaanesh>
+    <favouredoftzeentch>Favori de Tzeentch</favouredoftzeentch>
+    <lowcostlinemen>Linemen à Vil Prix</lowcostlinemen>
+    <twoforone>Deux pour Un</twoforone>
+	
+	<!--STAR PLAYER SPECIAL RULES AND DESCRIPTIONS-->
+	<beerbarrelbash>Beer Barrel Bash!</beerbarrelbash>
+	<beerbarrelbashdesc>Une fois par phase, au début de son activation, Thorsson peut faire une action spéciale Lancer de Tonneau. Sélectionnez un joueur adverse dans les trois cases de distance de Thorsson et lancez un D6. Sur un 3+, le joueur est immédiatement Plaqué. Cependant, sur un 1, c'est Thorsson qui est Plaqué.</beerbarrelbashdesc>
+	<blastit>C'est Parti!</blastit>
+	<blastitdesc>Une fois par match, quand Barik effectue une Passe Désespérée, il peut relancer le jet de déviation pour déterminer où la balle atterit, et ses coéquipiers qui tentent d'attraper la balle gagnent un modificateur de +1 sur leur jet de dé.</blastitdesc>
+	<blindrage>Fureur Aveugle</blindrage>
+	<blindragedesc>Akhorne peut choisir de relancer le D6 lorsqu'il effectue un jet d'Intrépidité.</blindragedesc>
+	<brutalblock>Blocage Brutal</brutalblock>
+	<brutalblockdesc>Une fois par match, quand Frank N Stein effectue un jet de Blessure contre un adversaire suite à une action de Blocage, il peut choisir d'ajouter un modificateur supplémentaire de +1 au jet de Blessure. Ce modificateur peut être appliqué après le jet de dés.</brutalblockdesc>
+	<burstofspeed>Pointe de Vitesse</burstofspeed>
+	<burstofspeeddesc>Une fois par match, Roxanna peut tenter de Foncer trois fois au lieu de deux. Vous pouvez déclarer que vous utilisez cette règle spéciale après que Roxanna a Foncé deux fois.</burstofspeeddesc>
+	<consummatepro>Grand Professionnel</consummatepro>
+	<consummateprodesc>Une fois par match, Griff peut relancer un dé qui a été jeté soit pour un jet d'un seul dé, soit pour un jet de plusieurs dés ou faisant partie d'un groupe de dés (il ne peut pas s'agir d'un dé jeté pour un jet d'Armure, de Blessure ou d'Elimination).</consummateprodesc>
+	<crushingblow>Coup Destructeur</crushingblow>
+	<crushingblowdesc>Une fois par match, quand un joueur adverse est Plaqué en résultat d'un Blocage de Zug / Varag, vous pouvez appliquer un modificateur additionnel de +1 au jet d'Armure. Ce modificateur peut être appliqué après le jet de dés.</crushingblowdesc>
+	<excuseme>Etes vous un Zoat?</excuseme>
+	<excusemedesc>Une fois par match, quand Zolcath est activé, il peut gagner le trait Regard Hypnotique. Vous devez déclarer que cette règle spéciale est utilisée quand Zolcath est activé.</excusemedesc>
+	<frenziedrush>Elan Frénétique</frenziedrush>
+	<frenziedrushdesc>Une fois par match, quand Glart effectue un Blitz, il peut gagner la compétence Frénésie. Vous devez déclarer que cette règle spéciale est utilisée quand Glart est activé. Glart ne peut pas utiliser la compétence Projection pendant un tour où il utilise cette règle spéciale.</frenziedrushdesc>
+	<furyotbg>Fureur du Dieu du Sang</furyotbg>
+	<furyotbgdesc>Une fois par match, si Scyla obtient un résultat de 1 au jet de Fureur Débridée après avoir déclaré une action de Blocage, au lieu d'appliquer le résultat habituel de Fureur Débridée, Scyla peut effectuer deux Blocages à la place.</furyotbgdesc>
+	<ghostlyflames>Flammes Fantômes</ghostlyflames>
+	<ghostlyflamesdesc>Une fois par mi-temps, lorsque Bryce effectue l'action spéciale Attaque à la Tronçonneuse dans le cadre d'une action de Blitz, il peut ajouter +4 au jet d'armure contre l'adversaire au lieu de +3.</ghostlyflamesdesc>
+	<goredbythebull>Encorné par le Taureau</goredbythebull>
+	<goredbythebulldesc>Une fois par match, quand Grashnak effectue une action de Blitz, il peut lancer un dé de Blocage supplémentaire, indépendemment de la caractéristique de Force de l'adversaire, jusqu'à un maximum de trois dés de Blocage. Si Grashnak effectue une seconde action de Blocage la compétence Frénésie, cette seconde action de Blocage bénéficie également de cette règle.</goredbythebulldesc>
+	<illbeback>Je Reviendrai!</illbeback>
+	<illbebackdesc>La première fois dans le match que Kreek Rustgouger est expulsé du fait du trait Arme Secrète, il n'est pas expulsé et peut continuer le match.</illbebackdesc>
+	<incorporeal>Ethérée</incorporeal>
+	<incorporealdesc>Une fois par match, après un test d'Agilité pour esquiver, Gretchen peut décider de modifier le résultat en y ajoutant sa caractéristique de Force.</incorporealdesc>
+	<indomitable>Indomptable</indomitable>
+	<indomitabledesc>Une fois par match, quand Karla / Willlow réussit son jet pour utiliser sa compétence Intrépide, elle peut augmenter sa caractéristique de Force pour être le double de celle de la cible de ce Blocage.</indomitabledesc>
+	<kaboom>Kaboom!</kaboom>
+	<kaboomdesc>Une fois par match, si un joueur de l'équipe adverse réceptionne une Bombe lancée par Bomber, vous poouvez choisir de la faire exploser immédiatement, au lieu de lancer un dé pour savoir si ce joueur peut la relancer.</kaboomdesc>
+	<lordofchaos>Seigneur du Chaos</lordofchaos>
+	<lordofchaosdesc>Une équipe qui inclut Lord Borak gagne une relance d'Equipe supplémentaire pour la première mi-temps. Si elle n'est pas utilisée pendant la première mi-temps, elle est transférée pour la seconde mi-temps. Cependant, si Lord Borak est retiré du jeu avant l'utilisation de cette relance, elle est alors perdue.</lordofchaosdesc>
+	<maximumcarnage>Carnage Maximum</maximumcarnage>
+	<maximumcarnagedesc>Une fois par match, après que Max ait effectué une action spéciale Tronçonneuse, il peut effectuer immédiatement une autre attaque spéciale Tronçonneuse qui cible un autre joueur.</maximumcarnagedesc>
+	<mesmerizingdance>Danse Hypnotisante</mesmerizingdance>
+	<mesmerizingdancedesc>Une fois par match, Eldril peut relancer un test d'Agilité raté quand il tente d'utiliser le trait Regard Hypnotique</mesmerizingdancedesc>
+	<oldpro>Vieux Pro</oldpro>
+	<oldprodesc>Une fois par match, Helmut peut utiliser sa compétence Pro pour relancer un seul dé d'un jet d'Armure.</oldprodesc>
+	<pumpupthecrowd>Haranguer le Public</pumpupthecrowd>
+	<pumpupthecrowddesc>Une fois par match, lorsque Skrorg causes une Blessure à un joueur adverse en résultat d'une action de Blocage, le coach qui contrôle Skrorg gagne une Relance d'Equipe. Si cette Relance n'a pas été utilisée avant la fin de la phase de jeu, elle est perdue.</pumpupthecrowddesc>
+	<raidingparty>Raid</raidingparty>
+	<raidingpartydesc>Une fois par phase de jeu, lorsque Ivar commence son activation, il peut choisir un coéquipier démarqué dans les cinq cases de portée. Le joueur choisi peut immédiatement se déplacer d'une case, en ignorant les Zones de Tacle, mais il doit finir ce Mouvement en Marquant un joueur adverse.</raidingpartydesc>
+	<ram>Bélier</ram>
+	<ramdesc>Une fois par match, quand un joueur adverse est Plaqué en résultat d'un Blocage de Rumbelow, vous pouvez appliquer un modificateur additionnel de +1 au jet d'Armure ou au jet de Blessure. Ce modificateur peut être appliqué après le jet de dés.</ramdesc>
+	<reliable>Fiable</reliable>
+	<reliabledesc>Si Deeproot commet une maladresse avec l'action Lancer de Coéquipier, le joueur lancé rebondit normalement mais atterit automatiquement sur ses pieds.</reliabledesc>
+	<savagemauling>Déchirement Sauvage</savagemauling>
+	<savagemaulingdesc>Une fois par match, lorsque Wilhelm effectue un jet de Blessure sur un joueur adverse, il peut choisir de relancer le résultat.</savagemaulingdesc>
+	<shottonothing>Tout ou Rien</shottonothing>
+	<shottonothingdesc>Une fois par match, quand Gloriel effectue une Passe, elle peut gagner la compétence Passe Désespérée. Vous devez déclarer que cette règle spéciale est utilisée quand Gloriel est activée.</shottonothingdesc>
+	<slayer>Tueur</slayer>
+	<slayerdesc>Une fois par match, quand un joueur adverse avec une caractéristique Force de 5 ou plus est Plaqué en résultat d'un Blocage de Grim, vous pouvez appliquer un modificateur additionnel de +1 au jet d'Armure ou de Blessure. Ce modificateur peut être appliqué après le jet de dés.</slayerdesc>
+	<sneakiestotl>Le Plus Sournois de Tous</sneakiestotl>
+	<sneakiestotldesc>Si votre équipe inclut le Black Gobbo, vou spouvez effectuer deux Agressions par tour d'équipe, tant que l'une d'elles est commise par le Black Gobbo</sneakiestotldesc>
+	<strongpassinggame>Jeu de Passe suprême</strongpassinggame>
+	<strongpassinggamedesc>Une fois par match, après avoir effectué le test de Passe quand il effectue une Passe, Skrull peut décider de modifier le jet de dé en lui ajoutant sa valeur de caractéristique de Force.</strongpassinggamedesc>
+	<theballista>La Baliste</theballista>
+	<theballistadesc>Une fois par match, si Morg rate le test de Passe quand il effectue une Passe ou un Lancer de Coéquipier, vous pouvez relancer le D6.</theballistadesc>
+	<treacherous>Traître</treacherous>
+	<treacherousdesc>Une fois par match, si un équipier sur une case adjacente à Hakflem est en possession du ballon quand Hakflem est activé, ce joueur peut être immédiatement Plaqué et Hakflem peut prendre possession du ballon. L'utilisation de cette règle spéciale n'entraîne pas de Turnover.</treacherousdesc>
+	<twoforone>Deux pour Un</twoforone>
+	<twoforonedesc>Grak et Crumbleberry/Les Jumeaux Swift doivent être recrutés ensemble et comptent comme deux champions. Cependant, si l'un des deux eest retiré du jeu à cause d'un résultat KO ou Eliiminé! sur le tableau de blessures, l'autre remplace le trait Solitaire(4+) par Solitaire(2+) .</twoforonedesc>
+	<whirlingdervish>Derviche Tourneur</whirlingdervish>
+	<whirlingdervishdesc>Une fois par activation, Fungus peut relancer le D6 qui détermine la direction dans laquelle il se déplace.</whirlingdervishdesc>
+	<wisdomotwd>Sagesse du Nain Blanc</wisdomotwd>
+	<wisdomotwddesc>Une fois par tour d'équipe, quand un des coéquipiers de Grombrindal se trouvant sur une case adjacente à lui est activé, ce joueur gagne la compétence Esquive en Force, Intrépide, Chataîgne (+1) ou Equilibre jusqu'à la fin de son activation.</wisdomotwddesc>
+	<lookintomyeyes>Regarde moi dans les Yeux</lookintomyeyes>
+	<lookintomyeyesdesc>Une fois par match, si Boa commence son activation en marquant un joueur adverse avec le ballon, il peut lancer un D6. Sur un 1, rien ne se passe. Sur un 2+, le joueur adverse perd possession du ballon, Boa gagne immédiatement la possession du ballon et l'activation de Boa se termine immédiatemment.</lookintomyeyesdesc>
+	<balefulhex>Hexa Maléfique</balefulhex>
+	<balefulhexdesc>Une fois par match, au début de l'activation d'Estelle, choisissez un joueur adverse dans un rayon de cinq quasees et lancez un D6. Sur un 2+ le joueur choisi perd sa Zone de Tacle, et ne pourra pas être activé avant la fin du prochain tour de l'équipe adverse.</balefulhexdesc>
+	<primalsavagery>Sauvagerie Primitive</primalsavagery>
+	<primalsavagerydesc>Une fois par match, lorsque Glotl échoue au jet d'Animal Sauvage, il peut s'en prendre à un joueur de l'équipe adverse au lieu d'un coéquipier.</primalsavagerydesc>
+	<watchout>Tention'!</watchout>
+	<watchoutdesc>La première fois que Withergrasp devient la cible d'une action de Blocage lors de chaque mi-temps, il compte comme ayant la compétence Esquive.</watchoutdesc>
+	<yoink>Yoink!</yoink>
+	<yoinkdesc>Une fois par match, lorsque Scrappa tente d'interférer sur une action de Passe, il peut lancer un D6. Sur un 2+, Scrappa n'a pas besoin d'effectuer un jet de dé pour Interférer avec l'action de Passe, à la place il effectue automatiquement une Interception et entre en possession du ballon.</yoinkdesc>
+	<kickemwtd>Kognez les tant qu'ils sont à terre!</kickemwtd>
+	<kickemwtddesc>Une fois par match, Nobbla peut effectuer une action spéciale d'Attaque de Tronçonneuse contre un joueur adverse A Terre ou Sonné. Celà ne compte pas comme une action d'Agression, et donc Nobbla ne peut pas être Expulsé lorsqu'il utilise cette capacité.</kickemwtddesc>
+	<thinkingmanstroll>Le Troll Intello</thinkingmanstroll>
+	<thinkingmanstrolldesc>Une fois par mi-temps, Ripper peut relancer un dé déjà jeté, que ce soit un dé unique ou un dé faisant partie d'un jet de dés multiple (mais ce ne peut pas être un dé lancé lors d'un jet d'Armure, de Blessure ou d'Elimination).</thinkingmanstrolldesc>
+	<putridregurgitation>Régurgitation Putride</putridregurgitation>
+	<putridregurgitationdesc>Une fois par match, Bilerot peut utiliser l'action spéciale Gerbe de Vomi. Cette action peut être utilisée même si Bilerot a déjà effectué une action de Blocage ce tour ci.</putridregurgitationdesc>
+	<allyoucaneat>Plus que vous ne pourrez en avaler</allyoucaneat>
+	<allyoucaneatdesc>Une fois par match, Cindy peut effectuer deux actions spéciales de Lancer de Bombe au lieu d'une, même si elle doit annoncer qu'elle va le faire avant d'effectuer la première action. Si elle le fait, immédiatement après avoir effectué la seconde action spéciale de Lancer de Bombe, lancez un D6. Sur un résultat de 1-3 Cindy est immédiatement Expulsée.</allyoucaneatdesc>
+	<asneakypair>Les Deux font la Paire</asneakypair>
+	<asneakypairdesc>Dribl &amp; Drull doivent être engagés en même temps, et comptent pour deux champions. De plus, lorsque Dribl ou Drull effectue une action de Poignard ou d'Agression sur un joueur adverse marqué simultanément par Dribl &amp; Drull, ils peuvent ajouter un modificateur de +1 au jet de Blessure.</asneakypairdesc>
+	<halflingluck>Chance du Halfling</halflingluck>
+	<halflingluckdesc>Une fois par match, Puggy  peut relancer un dé déjà jeté, que ce soit un dé unique, un dé faisant partie d'un jet de dés multiple ou un pool de dés (mais ce ne peut pas être un dé lancé lors d'un jet d'Armure, de Blessure ou d'Elimination).</halflingluckdesc>
+	<tastymorsel>Bouchée Savoureuse</tastymorsel>
+	<tastymorseldesc>Une fois par match, lorsque Karina rate un jet de Soif de Sang, elle peut choisir de mordre un joueur adverse qui a une FO de 3 ou moins, comme si c'était un Serviteur de son équipe. Karina ne peut pas mordre un champion avec cette règle spéciale.</tastymorseldesc>
+	<dwarfenscourge>Fléau des Nains</dwarfenscourge>
+	<dwarfenscourgedesc>Une fois par match, quand un joueur adverse est Mis à Terre en résultat d'une action de Blocage effectuée par Ivan, vous pouvez ajouter un modificateur additionnel de +1 sur le jet d'Armure ou sur le jet de Blessure. Si c'est contre un joueur Nain de n'importe quelle équipe, le modificateur est de +2.</dwarfenscourgedesc>
+	<staroftheshow>La Star du Spectacle</staroftheshow>
+	<staroftheshowdesc>Une fois par match, lorsque Luthor marque un Touchdown, le coach de son équipe gagne une Relance d'Equipe. Si cette Relance d'Equipe n'est pas utilisée avant la fin de la prochaine phase de jeu, elle est perdue.</staroftheshowdesc>
+</specialrules>
+
 
 </fr-FR>
 
