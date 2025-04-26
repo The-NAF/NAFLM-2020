@@ -5140,7 +5140,7 @@ $DEA = array (
                 'icon'          		=> 'valkyrie',
                 'pos_id'        		=> 501,
                 'is_bigguy'     		=> 0,
-                'pos_type'      		=> 'RN',
+                'pos_type'      		=> 'SP',
             )
         )
     ),    
@@ -9764,7 +9764,7 @@ $inducements = array (
         'cost' => 300000,
         'max'  => 1,
         'reduced_cost' => 100000,
-        'reduced_cost_races' => array(7),
+        'reduced_cost_races' => array(7,67),
 		'available_formats' => array('BB','SV'),
     ),
 	// Available only to the teams with the 'Badlands Brawl' special rule
