@@ -1,0 +1,23 @@
+version: '3.7'
+services:
+  web:
+    container_name: web
+    build: ./
+    restart: unless-stopped
+    ports:
+      - 80:80
+      - 443:443    
+    depends_on:
+      - db
+    networks:
+      - nafnet
+  db:
+    container_name: db
+    image: mysql:5.7.42-debian
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=naflm20_db
+    networks:
+      - nafnet
+networks:
+  nafnet:
